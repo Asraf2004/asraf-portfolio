@@ -77,10 +77,14 @@ const ParticleBackground = () => {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
         
+        // Get theme color
+        const isDark = document.documentElement.classList.contains('dark');
+        const particleColor = isDark ? 'rgba(0, 255, 65, ' : 'rgba(0, 100, 25, ';
+        
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 255, 65, ${p.opacity})`;
+        ctx.fillStyle = `${particleColor}${p.opacity})`;
         ctx.fill();
         
         // Connect nearby particles with lines
@@ -92,7 +96,7 @@ const ParticleBackground = () => {
           
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 255, 65, ${(1 - distance / 100) * 0.2})`;
+            ctx.strokeStyle = `${particleColor}${(1 - distance / 100) * 0.2})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -114,12 +118,14 @@ const ParticleBackground = () => {
   return (
     <canvas
       id="particles"
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 transition-opacity duration-500"
     />
   );
 };
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     // Load dark mode preference from localStorage
     const savedMode = localStorage.getItem("darkMode");
@@ -133,6 +139,11 @@ const Index = () => {
     
     // Set the document title
     document.title = "Asraf Ahamed A - Cybersecurity Enthusiast & Developer";
+    
+    // Simulate site loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -149,10 +160,12 @@ const Index = () => {
         }
       });
     });
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="bg-cyber-dark text-white min-h-screen flex flex-col">
+    <div className={`bg-cyber-dark text-white min-h-screen flex flex-col transition-all duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
       {/* Particle Background */}
       <ParticleBackground />
       

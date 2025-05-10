@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TryHackMe } from "@/components/icons/TryHackMe";
+import { Github, Linkedin } from "lucide-react";
 
 interface NavItemProps {
   href: string;
@@ -16,7 +18,7 @@ const NavItem = ({ href, label, active }: NavItemProps) => {
       <a 
         href={href} 
         className={cn(
-          "px-3 py-2 text-sm transition-colors duration-200 relative group",
+          "px-3 py-2 text-sm transition-colors duration-300 relative group",
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
         )}
       >
@@ -138,6 +140,38 @@ export function NavBar() {
           </nav>
           
           <div className="flex items-center space-x-3">
+            {/* Social Media Icons */}
+            <div className="hidden md:flex space-x-2 mr-2">
+              <a 
+                href="https://github.com/Asraf2004" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors p-1 hover:scale-110 transform duration-200"
+                aria-label="GitHub"
+              >
+                <Github size={18} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/asrafahamed/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors p-1 hover:scale-110 transform duration-200"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={18} />
+              </a>
+              <a 
+                href="https://tryhackme.com/p/asrafahamed08" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors p-1 hover:scale-110 transform duration-200"
+                aria-label="TryHackMe"
+              >
+                <TryHackMe size={18} />
+              </a>
+            </div>
+            
+            {/* Theme Toggle */}
             <Button 
               variant="ghost"
               size="icon"
@@ -178,6 +212,37 @@ export function NavBar() {
                 </a>
               </li>
             ))}
+            
+            {/* Mobile Social Media Links */}
+            <li className="px-6 py-4 flex space-x-4">
+              <a 
+                href="https://github.com/Asraf2004" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors"
+                aria-label="GitHub"
+              >
+                <Github size={20} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/asrafahamed/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+              <a 
+                href="https://tryhackme.com/p/asrafahamed08" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-cyber-neon transition-colors"
+                aria-label="TryHackMe"
+              >
+                <TryHackMe size={20} />
+              </a>
+            </li>
           </ul>
         </nav>
       )}

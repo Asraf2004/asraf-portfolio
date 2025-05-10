@@ -34,6 +34,13 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+    
+    /* Cyber theme colors - light mode */
+    --cyber-neon: #00d441;
+    --cyber-dark: #f3f3f5;
+    --cyber-darker: #e9e9ec;
+    --cyber-blue: #0ea5e9;
+    --cyber-purple: #8b5cf6;
   }
 
   .dark {
@@ -64,12 +71,20 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+    
+    /* Cyber theme colors - dark mode */
+    --cyber-neon: #00ff41;
+    --cyber-dark: #121212;
+    --cyber-darker: #0a0a0a;
+    --cyber-blue: #0ea5e9;
+    --cyber-purple: #8b5cf6;
   }
 }
 
 @layer base {
   * {
-    @apply border-border selection:bg-cyber-neon/20 selection:text-white;
+    @apply border-border selection:bg-cyber-neon/20 selection:text-white dark:selection:bg-cyber-neon/20 dark:selection:text-white;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   html {
     @apply scroll-smooth;
@@ -82,24 +97,24 @@
     @apply w-2;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-cyber-dark;
+    @apply bg-cyber-dark dark:bg-cyber-dark;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-cyber-neon/30 hover:bg-cyber-neon/50 transition-colors duration-200;
+    @apply bg-cyber-neon/30 dark:bg-cyber-neon/30 hover:bg-cyber-neon/50 dark:hover:bg-cyber-neon/50 transition-colors duration-200;
   }
 }
 
 @layer utilities {
   .neo-blur {
-    @apply backdrop-blur-2xl bg-black/40 border border-white/10;
+    @apply backdrop-blur-2xl bg-black/40 dark:bg-black/40 border border-white/10 dark:border-white/10;
   }
   
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;
+    @apply bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/10 dark:border-white/10 shadow-lg;
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-cyber-neon to-cyber-blue bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-cyber-neon to-cyber-blue dark:from-cyber-neon dark:to-cyber-blue bg-clip-text text-transparent;
   }
   
   .section-padding {
@@ -117,4 +132,76 @@
     animation: typing 3.5s steps(40, end),
     blink-caret 0.75s step-end infinite;
   }
+
+  /* Animation keyframes */
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation classes */
+  .fade-in-left {
+    animation: fadeInLeft 0.5s ease-out forwards;
+  }
+
+  .fade-in-right {
+    animation: fadeInRight 0.5s ease-out forwards;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  .fade-in-down {
+    animation: fadeInDown 0.5s ease-out forwards;
+  }
+
+  /* Glow effects */
+  .glow-on-hover {
+    @apply transition-all duration-300;
+  }
+  
+  .glow-on-hover:hover {
+    @apply shadow-[0_0_15px_rgba(0,255,65,0.8)] dark:shadow-[0_0_15px_rgba(0,255,65,0.8)];
+  }
 }
+

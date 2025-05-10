@@ -95,11 +95,11 @@ export function CertificationsSection() {
     <section id="certifications" ref={sectionRef} className="py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker">
       <div className="container mx-auto px-4">
         <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4",
+          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4 group",
           isVisible && "opacity-100 translate-y-0"
         )}>
           Certifications
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
         </h2>
         
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -107,17 +107,19 @@ export function CertificationsSection() {
             <div 
               key={index}
               className={cn(
-                "glass-card p-6 rounded-lg text-center transition-all duration-500 transform opacity-0 translate-y-4 hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10",
-                isVisible && `opacity-100 translate-y-0 delay-${(index % 4) * 1}00`
+                "glass-card p-6 rounded-lg text-center transition-all duration-700 opacity-0 translate-y-4 hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 group",
+                isVisible && `opacity-100 translate-y-0 delay-${(index % 4) * 1}00`,
+                (index % 2 === 0) ? "translate-x-[-30px]" : "translate-x-[30px]",
+                isVisible && "translate-x-0"
               )}
             >
               <div className="mb-4 flex justify-center">
-                <div className="w-14 h-14 bg-cyber-neon/10 rounded-full flex items-center justify-center">
+                <div className="w-14 h-14 bg-cyber-neon/10 rounded-full flex items-center justify-center group-hover:bg-cyber-neon/20 transition-all">
                   <FileCheck size={28} className="text-cyber-neon" />
                 </div>
               </div>
               
-              <h3 className="text-xl font-medium text-white mb-1">
+              <h3 className="text-xl font-medium text-white mb-1 group-hover:text-cyber-neon transition-colors">
                 {cert.title}
               </h3>
               
@@ -136,7 +138,7 @@ export function CertificationsSection() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform"
+                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
                   onClick={() => handleViewCertificate(cert)}
                 >
                   <Eye size={16} className="mr-1" />
@@ -145,7 +147,7 @@ export function CertificationsSection() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform"
+                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
                   onClick={() => handleDownloadCertificate(cert)}
                 >
                   <Download size={16} className="mr-1" />
@@ -177,7 +179,7 @@ export function CertificationsSection() {
           <div className="flex justify-end mt-4">
             <Button
               variant="outline"
-              className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10"
+              className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
               onClick={() => selectedCert && handleDownloadCertificate(selectedCert)}
             >
               <Download size={16} className="mr-2" />

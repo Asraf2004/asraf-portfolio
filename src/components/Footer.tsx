@@ -1,5 +1,6 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
+import { TryHackMe } from "@/components/icons/TryHackMe";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,10 +17,10 @@ export function Footer() {
           
           <div className="flex space-x-4">
             <a 
-              href="https://github.com/asrafahamed08" 
+              href="https://github.com/Asraf2004" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-cyber-neon transition-colors"
+              className="text-gray-400 hover:text-cyber-neon transition-colors hover:scale-110 transform duration-200"
               aria-label="GitHub"
             >
               <Github size={20} />
@@ -28,14 +29,23 @@ export function Footer() {
               href="https://linkedin.com/in/asrafahamed" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-cyber-neon transition-colors"
+              className="text-gray-400 hover:text-cyber-neon transition-colors hover:scale-110 transform duration-200"
               aria-label="LinkedIn"
             >
               <Linkedin size={20} />
             </a>
             <a 
+              href="https://tryhackme.com/p/asrafahamed08" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-cyber-neon transition-colors hover:scale-110 transform duration-200"
+              aria-label="TryHackMe"
+            >
+              <TryHackMe size={20} />
+            </a>
+            <a 
               href="mailto:asrafahamed08@gmail.com" 
-              className="text-gray-400 hover:text-cyber-neon transition-colors"
+              className="text-gray-400 hover:text-cyber-neon transition-colors hover:scale-110 transform duration-200"
               aria-label="Email"
             >
               <Mail size={20} />
