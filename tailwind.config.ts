@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,6 +25,13 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				cyber: {
+					neon: '#00ff41',
+					dark: '#121212',
+					darker: '#0a0a0a',
+					blue: '#0ea5e9',
+					purple: '#8b5cf6',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -84,11 +92,37 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'pulse-neon': {
+					'0%, 100%': { boxShadow: '0 0 10px #00ff41, 0 0 20px #00ff41' },
+					'50%': { boxShadow: '0 0 15px #00ff41, 0 0 30px #00ff41' },
+				},
+				'fade-in-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					},
+				},
+				'typing': {
+					from: { width: '0' },
+					to: { width: '100%' },
+				},
+				'blink-caret': {
+					'from, to': { borderColor: 'transparent' },
+					'50%': { borderColor: '#00ff41' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-neon': 'pulse-neon 2s ease-in-out infinite',
+				'fade-in-up': 'fade-in-up 0.5s ease-out',
+				'typing': 'typing 3.5s steps(40, end)',
+				'blink-caret': 'blink-caret 0.75s step-end infinite',
 			}
 		}
 	},
