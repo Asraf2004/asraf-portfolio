@@ -51,7 +51,7 @@ export function HeroSection() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10 pb-32"> {/* Added more bottom padding for scroll button */}
+      <div className="container mx-auto px-4 relative z-10"> 
         <div className="max-w-4xl mx-auto text-center">
           <p className={cn(
             "text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider transition-all duration-700 opacity-0",
@@ -120,34 +120,6 @@ export function HeroSection() {
               TryHackMe
             </a>
           </div>
-        </div>
-        
-        <div className={cn(
-          "absolute bottom-16 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-700 opacity-0",
-          visible && "opacity-100"
-        )}>
-          <a 
-            href="#about" 
-            className="flex flex-col items-center text-gray-400 hover:text-cyber-neon transition-colors duration-300 animate-bounce"
-          >
-            <span className="text-sm mb-2">Scroll Down</span>
-            <svg 
-              className="hover:scale-110 transition-transform" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path 
-                d="M12 5L12 19M12 19L18 13M12 19L6 13" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </section>

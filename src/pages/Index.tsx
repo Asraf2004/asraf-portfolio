@@ -125,6 +125,7 @@ const ParticleBackground = () => {
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
+  const [sections, setSections] = useState<Element[]>([]);
   
   useEffect(() => {
     // Load dark mode preference from localStorage
@@ -145,6 +146,22 @@ const Index = () => {
       setLoading(false);
     }, 500);
     
+    // Get all sections for animation
+    setSections(Array.from(document.querySelectorAll('section')));
+    
+    // Set up intersection observer for section animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('section').forEach((section) => {
+      observer.observe(section);
+    });
+    
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -161,7 +178,10 @@ const Index = () => {
       });
     });
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   return (

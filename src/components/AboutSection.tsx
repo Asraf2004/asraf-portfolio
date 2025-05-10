@@ -31,15 +31,15 @@ export function AboutSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className={cn(
-            "text-3xl font-bold mb-3 text-white relative pb-3 inline-block transition-all duration-700 opacity-0 translate-y-4",
+            "text-3xl font-bold mb-3 text-white relative pb-3 inline-block transition-all duration-700 opacity-0 translate-y-4 group",
             isVisible && "opacity-100 translate-y-0"
           )}>
             About Me
-            <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+            <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
           </h2>
           
           <div className={cn(
-            "mt-8 glass-card p-6 rounded-lg relative transition-all duration-700 delay-200 opacity-0 translate-y-4",
+            "mt-8 glass-card p-6 rounded-lg relative transition-all duration-700 delay-200 opacity-0 translate-y-4 fade-in-left",
             isVisible && "opacity-100 translate-y-0"
           )}>
             <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-cyber-neon"></div>
@@ -59,16 +59,16 @@ export function AboutSection() {
             </p>
             
             <div className="mt-6 flex gap-4 flex-wrap">
-              <div className="bg-cyber-neon/10 border border-cyber-neon/30 rounded-md px-4 py-2 text-cyber-neon">
+              <div className="bg-cyber-neon/10 border border-cyber-neon/30 rounded-md px-4 py-2 text-cyber-neon hover:bg-cyber-neon/20 transition-colors hover:scale-105 transform duration-200">
                 Bug Bounty
               </div>
-              <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-md px-4 py-2 text-cyber-blue">
+              <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-md px-4 py-2 text-cyber-blue hover:bg-cyber-blue/20 transition-colors hover:scale-105 transform duration-200">
                 CTF Enthusiast
               </div>
-              <div className="bg-cyber-purple/10 border border-cyber-purple/30 rounded-md px-4 py-2 text-cyber-purple">
+              <div className="bg-cyber-purple/10 border border-cyber-purple/30 rounded-md px-4 py-2 text-cyber-purple hover:bg-cyber-purple/20 transition-colors hover:scale-105 transform duration-200">
                 Web Security
               </div>
-              <div className="bg-white/10 border border-white/30 rounded-md px-4 py-2 text-white">
+              <div className="bg-white/10 border border-white/30 rounded-md px-4 py-2 text-white hover:bg-white/20 transition-colors hover:scale-105 transform duration-200">
                 Development
               </div>
             </div>

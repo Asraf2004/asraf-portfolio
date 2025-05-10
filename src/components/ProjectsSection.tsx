@@ -1,7 +1,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Github, ExternalLink, Eye, Download } from "lucide-react";
+import { Github, ExternalLink, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
@@ -76,82 +76,62 @@ export function ProjectsSection() {
           <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
         </h2>
         
-        <div className="mt-12 space-y-20">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <div 
               key={index}
               className={cn(
-                "flex flex-col md:flex-row items-center gap-8 transition-all duration-700 opacity-0",
-                isVisible && `opacity-100 delay-${index * 2}00`,
-                index % 2 === 0 
-                  ? "md:flex-row translate-x-[-50px]" 
-                  : "md:flex-row-reverse translate-x-[50px]",
-                isVisible && "translate-x-0"
+                "glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-700 opacity-0 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20",
+                isVisible && `opacity-100 delay-${index * 100}`,
+                index % 2 === 0 ? "fade-in-left" : "fade-in-right",
               )}
             >
-              {/* Project Image/Placeholder */}
-              <div className="w-full md:w-5/12 aspect-video">
-                <div className="glass-card h-full w-full rounded-lg overflow-hidden border border-white/5 hover:border-cyber-neon/30 group hover:shadow-lg hover:shadow-cyber-neon/20 flex items-center justify-center">
-                  <div className="text-cyber-neon text-6xl opacity-30 group-hover:opacity-50 transition-opacity">
-                    &lt;/&gt;
-                  </div>
+              <div className="h-40 rounded-lg bg-white/5 mb-4 flex items-center justify-center overflow-hidden">
+                <div className="text-cyber-neon text-5xl opacity-30 group-hover:opacity-50 transition-opacity">
+                  &lt;/&gt;
                 </div>
               </div>
               
-              {/* Project Details */}
-              <div className="w-full md:w-7/12 glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/20 transition-all group hover:scale-[1.01]">
-                <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-cyber-neon transition-colors">
-                  {project.title}
-                </h3>
-                
-                <p className="text-gray-400 mb-4 text-sm">
-                  {project.description}
-                </p>
-                
-                <div className="mb-6">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span 
-                        key={techIndex}
-                        className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10 group-hover:border-cyber-neon/20 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex flex-wrap gap-3">
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all transform hover:scale-105 hover:shadow-md hover:shadow-cyber-neon/30"
-                  >
-                    <Github size={16} />
-                    View on GitHub
-                  </a>
-                  {project.demoLink && (
-                    <a 
-                      href={project.demoLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all transform hover:scale-105 hover:shadow-md hover:shadow-cyber-neon/30"
+              <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-cyber-neon transition-colors">
+                {project.title}
+              </h3>
+              
+              <p className="text-gray-400 mb-4 text-sm">
+                {project.description}
+              </p>
+              
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, techIndex) => (
+                    <span 
+                      key={techIndex}
+                      className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10 group-hover:border-cyber-neon/20 transition-colors"
                     >
-                      <Eye size={16} />
-                      View Demo
-                    </a>
-                  )}
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    <Eye size={16} className="mr-1" />
-                    View Details
-                  </Button>
+                      {tech}
+                    </span>
+                  ))}
                 </div>
+              </div>
+              
+              <div className="flex gap-3 mt-4">
+                <a 
+                  href={project.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all transform hover:scale-105 hover:shadow-md hover:shadow-cyber-neon/30"
+                >
+                  <Github size={16} />
+                  View on GitHub
+                </a>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                  onClick={() => setSelectedProject(project)}
+                >
+                  <Eye size={16} className="mr-1" />
+                  View Details
+                </Button>
               </div>
             </div>
           ))}
@@ -194,6 +174,17 @@ export function ProjectsSection() {
                 <Github size={16} />
                 View on GitHub
               </a>
+              {selectedProject?.demoLink && (
+                <a 
+                  href={selectedProject.demoLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all transform hover:scale-105"
+                >
+                  <ExternalLink size={16} />
+                  View Demo
+                </a>
+              )}
             </div>
           </div>
         </DialogContent>

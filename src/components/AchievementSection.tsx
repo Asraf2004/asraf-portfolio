@@ -78,11 +78,11 @@ export function AchievementSection() {
     <section id="achievements" ref={sectionRef} className="py-20 bg-cyber-dark">
       <div className="container mx-auto px-4">
         <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4",
+          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4 group",
           isVisible && "opacity-100 translate-y-0"
         )}>
           Achievements
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
         </h2>
         
         <div className="mt-12 max-w-3xl mx-auto">
@@ -90,8 +90,9 @@ export function AchievementSection() {
             <div 
               key={index}
               className={cn(
-                "glass-card p-6 rounded-lg mb-6 flex items-start transition-all duration-700 opacity-0 translate-y-4 hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10",
-                isVisible && `opacity-100 translate-y-0 delay-${index * 2}00`
+                "glass-card p-6 rounded-lg mb-6 flex items-start transition-all duration-700 opacity-0 hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10",
+                isVisible && `opacity-100 delay-${index * 200}`,
+                index % 2 === 0 ? "fade-in-left" : "fade-in-right"
               )}
             >
               <div className="mr-4 p-3 bg-white/5 rounded-full">

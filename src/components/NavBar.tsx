@@ -177,6 +177,7 @@ export function NavBar() {
               size="icon"
               className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110"
               onClick={toggleDarkMode}
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </Button>
