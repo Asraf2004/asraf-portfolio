@@ -1,7 +1,6 @@
-
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, User, GitHub, Linkedin, Check, Send, AlertCircle } from "lucide-react";
+import { Mail, Phone, User, Github, Linkedin, Check, Send, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -83,7 +82,7 @@ export function ContactSection() {
       href: "tel:+916388066908"
     },
     {
-      icon: <GitHub className="text-cyber-neon" size={20} />,
+      icon: <Github className="text-cyber-neon" size={20} />,
       label: "GitHub",
       value: "github.com/asrafahamed08",
       href: "https://github.com/asrafahamed08"
