@@ -50,7 +50,7 @@ export function HeroSection() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pb-24"> {/* Added padding to bottom for scroll button */}
         <div className="max-w-4xl mx-auto text-center">
           <p className={cn(
             "text-cyber-neon font-mono mb-2 tracking-wider transition-all duration-700 opacity-0",
@@ -83,19 +83,19 @@ export function HeroSection() {
             "flex flex-wrap justify-center gap-3 transition-all duration-700 delay-500 transform translate-y-4 opacity-0",
             visible && "translate-y-0 opacity-100"
           )}>
-            <Button className="bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2">
+            <Button className="bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 hover:scale-105 transition-transform">
               Download Resume
               <Download size={16} />
             </Button>
-            <Button variant="outline" className="border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2">
+            <Button variant="outline" className="border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 hover:scale-105 transition-transform">
               Contact Me
               <ArrowRight size={16} />
             </Button>
-            <Button variant="ghost" className="text-white hover:bg-white/10 gap-2">
+            <Button variant="ghost" className="text-white hover:bg-white/10 gap-2 hover:scale-105 transition-transform">
               <Github size={18} />
               GitHub
             </Button>
-            <Button variant="ghost" className="text-white hover:bg-white/10 gap-2">
+            <Button variant="ghost" className="text-white hover:bg-white/10 gap-2 hover:scale-105 transition-transform">
               <Linkedin size={18} />
               LinkedIn
             </Button>
@@ -103,7 +103,7 @@ export function HeroSection() {
         </div>
         
         <div className={cn(
-          "absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-700 opacity-0",
+          "absolute bottom-12 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-700 opacity-0",
           visible && "opacity-100"
         )}>
           <a 
@@ -112,7 +112,7 @@ export function HeroSection() {
           >
             <span className="text-sm mb-2">Scroll Down</span>
             <svg 
-              className="animate-bounce" 
+              className="animate-bounce hover:scale-110 transition-transform" 
               width="24" 
               height="24" 
               viewBox="0 0 24 24" 

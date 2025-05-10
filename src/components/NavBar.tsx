@@ -23,7 +23,7 @@ const NavItem = ({ href, label, active }: NavItemProps) => {
         {label}
         <span 
           className={cn(
-            "absolute left-0 -bottom-1 w-0 h-0.5 bg-cyber-neon transition-all duration-200 group-hover:w-full",
+            "absolute left-0 -bottom-1 w-0 h-0.5 bg-cyber-neon transition-all duration-300 group-hover:w-full",
             active ? "w-full" : ""
           )}
         />
@@ -78,24 +78,34 @@ export function NavBar() {
     };
     
     window.addEventListener("scroll", handleScroll);
+    
+    // Load dark mode preference from localStorage
+    const savedMode = localStorage.getItem("darkMode");
+    if (savedMode !== null) {
+      const isDark = savedMode === "true";
+      setIsDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   
-  // Initial dark mode setup
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
-  
   // Toggle dark/light mode
   const toggleDarkMode = () => {
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-    } else {
+    const newMode = !isDarkMode;
+    if (newMode) {
       document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode(newMode);
+    localStorage.setItem("darkMode", String(newMode));
   };
 
   return (
@@ -131,7 +141,7 @@ export function NavBar() {
             <Button 
               variant="ghost"
               size="icon"
-              className="rounded-full text-gray-300 hover:text-cyber-neon"
+              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110"
               onClick={toggleDarkMode}
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -141,7 +151,7 @@ export function NavBar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-gray-300 hover:text-cyber-neon md:hidden"
+              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110 md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
