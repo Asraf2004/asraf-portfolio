@@ -6,7 +6,7 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function EducationSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
 
   return (
     <section 

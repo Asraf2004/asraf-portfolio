@@ -18,7 +18,7 @@ export function ScrollDownButton({ onClick, isVisible = true }: ScrollDownButton
       <button 
         onClick={onClick}
         aria-label="Scroll to next section"
-        className="p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 hover:border-cyber-neon/30 hover:scale-110 transition-all duration-300 animate-bounce"
+        className="p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 hover:border-cyber-neon/30 hover:scale-110 transition-all duration-300 animate-bounce shadow-sm hover:shadow-cyber-neon/20"
       >
         <ArrowDown className="w-6 h-6 text-cyber-neon" />
       </button>

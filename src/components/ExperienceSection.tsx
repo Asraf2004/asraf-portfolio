@@ -6,7 +6,7 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
   
   const responsibilities = [
     "Developed full-stack web components using PHP and MySQL",

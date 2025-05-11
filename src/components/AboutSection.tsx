@@ -5,7 +5,7 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function AboutSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(ref);
+  const { isVisible } = useSectionAnimation(ref);
   
   return (
     <section 

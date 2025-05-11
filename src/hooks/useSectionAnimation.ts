@@ -39,5 +39,14 @@ export function useSectionAnimation(ref: RefObject<HTMLElement>) {
     }
   };
 
-  return { isVisible, scrollToNextSection };
+  // Animation states for typing animation
+  const getTypingAnimationClass = (isVisible: boolean) => {
+    return isVisible ? "typing-animation" : "";
+  };
+
+  return { 
+    isVisible, 
+    scrollToNextSection, 
+    typingAnimationClass: getTypingAnimationClass(isVisible) 
+  };
 }

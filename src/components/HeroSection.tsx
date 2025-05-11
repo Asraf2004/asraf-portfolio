@@ -9,8 +9,8 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 export function HeroSection() {
   const [visible, setVisible] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const ref = useRef(null);
-  const isVisible = useSectionAnimation(ref);
+  const ref = useRef<HTMLDivElement>(null);
+  const { isVisible, typingAnimationClass } = useSectionAnimation(ref);
   
   const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
   
@@ -20,17 +20,43 @@ export function HeroSection() {
     
     // Reset typing animation when section comes into view
     if (isVisible) {
+      let typingInterval: number;
       let index = 0;
-      setTypedText("");
+      let isTyping = true;
+      let pauseCount = 0;
       
-      const typingInterval = setInterval(() => {
-        setTypedText(fullText.substring(0, index));
-        index++;
-        
-        if (index > fullText.length) {
-          clearInterval(typingInterval);
+      const animateTyping = () => {
+        if (isTyping) {
+          // Typing forward
+          setTypedText(fullText.substring(0, index));
+          index++;
+          
+          if (index > fullText.length) {
+            isTyping = false;
+            pauseCount = 0;
+          }
+        } else {
+          // Pause at the end before erasing
+          pauseCount++;
+          
+          if (pauseCount > 20) { // Pause for ~1 second (20 * 50ms)
+            // Start erasing
+            setTypedText(fullText.substring(0, index));
+            index--;
+            
+            if (index <= 0) {
+              isTyping = true;
+              pauseCount = 0;
+            }
+          }
         }
-      }, 50);
+      };
+      
+      setTypedText("");
+      index = 0;
+      isTyping = true;
+      
+      typingInterval = window.setInterval(animateTyping, 50);
       
       return () => clearInterval(typingInterval);
     }
@@ -76,7 +102,7 @@ export function HeroSection() {
           </h1>
           
           <div className="h-6 sm:h-8 mb-4">
-            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.2s"}}>
+            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible", typingAnimationClass)} style={{transitionDelay: "0.2s"}}>
               {typedText}<span className="border-r-2 border-cyber-neon dark:border-cyber-neon animate-blink-caret"></span>
             </h2>
           </div>
