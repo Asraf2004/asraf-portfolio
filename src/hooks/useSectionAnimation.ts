@@ -29,5 +29,15 @@ export function useSectionAnimation(ref: RefObject<HTMLElement>) {
     };
   }, [ref]);
 
-  return isVisible;
+  // Function to scroll to the next section
+  const scrollToNextSection = () => {
+    if (ref.current) {
+      const nextSection = ref.current.nextElementSibling as HTMLElement;
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  return { isVisible, scrollToNextSection };
 }

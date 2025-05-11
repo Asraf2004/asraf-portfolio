@@ -4,17 +4,18 @@ import { cn } from "@/lib/utils";
 import { ContactInfo } from "./contact/ContactInfo";
 import { ContactForm } from "./contact/ContactForm";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
+import { ScrollDownButton } from "./common/ScrollDownButton";
 
 export function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible, scrollToNextSection } = useSectionAnimation(sectionRef);
 
   return (
     <section 
       id="contact" 
       ref={sectionRef} 
       className={cn(
-        "py-20 bg-cyber-dark fade-in-section",
+        "py-20 bg-cyber-dark fade-in-section relative",
         isVisible && "is-visible"
       )}
     >
@@ -45,6 +46,9 @@ export function ContactSection() {
           </div>
         </div>
       </div>
+      
+      {/* Scroll Down Button */}
+      <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
     </section>
   );
 }
