@@ -25,7 +25,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://github.com/Asraf2004" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"
@@ -38,7 +38,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://www.linkedin.com/in/asrafahamed/" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"
@@ -51,7 +51,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://tryhackme.com/p/asrafahamed08" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"

@@ -66,9 +66,9 @@ export function NavBar() {
     <motion.header 
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300", 
+        "fixed top-0 left-0 w-full z-50 transition-all duration-500", 
         isScrolled 
           ? "bg-cyber-darker/80 backdrop-blur-md border-b border-cyber-neon/20 py-2" 
           : "bg-transparent py-4"
@@ -112,13 +112,13 @@ export function NavBar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110 md:hidden"
+              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-500 hover:scale-110 md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <motion.div
                 initial={false}
                 animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </motion.div>

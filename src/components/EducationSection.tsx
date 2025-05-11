@@ -14,11 +14,10 @@ export function EducationSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl font-bold mb-8 text-white text-center relative inline-block group"
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-3xl font-bold mb-8 text-white text-center relative inline-block"
         >
           Education
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
         </motion.h2>
         
         <div className="mt-12 max-w-3xl mx-auto">
@@ -26,8 +25,8 @@ export function EducationSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
-            transition={{ duration: 0.7 }}
-            className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-300"
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500"
           >
             <div className="flex items-center mb-4">
               <div className="bg-cyber-neon/20 p-3 rounded-full mr-4">
@@ -48,7 +47,7 @@ export function EducationSection() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: false }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
               className="pl-16"
             >
               <div className="flex items-center gap-2 text-gray-400 mb-4">
@@ -60,7 +59,7 @@ export function EducationSection() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: false }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
                 className="bg-white/5 rounded-lg p-4 border border-white/10"
               >
                 <span className="text-lg font-medium text-cyber-neon">8.88</span>
@@ -71,7 +70,7 @@ export function EducationSection() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: false }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.5, duration: 0.7, ease: "easeOut" }}
                 className="mt-4 text-gray-300"
               >
                 <p>
