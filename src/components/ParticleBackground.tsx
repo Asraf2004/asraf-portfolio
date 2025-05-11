@@ -106,7 +106,7 @@ export const ParticleBackground = () => {
   return (
     <canvas
       id="particles"
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 transition-opacity duration-500"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10" // Added -z-10 to ensure it's behind all content
     />
   );
 };

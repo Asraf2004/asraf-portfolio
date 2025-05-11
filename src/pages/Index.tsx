@@ -58,24 +58,27 @@ const Index = () => {
 
   return (
     <div className={`bg-cyber-dark text-white min-h-screen flex flex-col transition-all duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-      {/* Particle Background - Continuous Background Animation */}
+      {/* Particle Background - Continuous Background Animation - Placed first but with negative z-index */}
       <ParticleBackground />
       
-      <NavBar />
-      
-      <main className="flex-1 relative z-10">
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <AchievementSection />
-        <CertificationsSection />
-        <EducationSection />
-        <ExperienceSection />
-        <ContactSection />
-      </main>
-      
-      <Footer />
+      {/* All content with positive z-index */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <NavBar />
+        
+        <main className="flex-1">
+          <HeroSection />
+          <AboutSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <AchievementSection />
+          <CertificationsSection />
+          <EducationSection />
+          <ExperienceSection />
+          <ContactSection />
+        </main>
+        
+        <Footer />
+      </div>
     </div>
   );
 };
