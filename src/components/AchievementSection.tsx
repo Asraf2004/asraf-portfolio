@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Trophy, Target, Award, Eye, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { motion, useInView } from "framer-motion";
+import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 interface Achievement {
   icon: React.ReactNode;
@@ -16,7 +16,7 @@ interface Achievement {
 
 export function AchievementSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+  const isVisible = useSectionAnimation(sectionRef);
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   
   const achievements: Achievement[] = [
@@ -60,101 +60,61 @@ export function AchievementSection() {
   };
 
   return (
-    <section id="achievements" ref={sectionRef} className="py-20 bg-cyber-dark">
+    <section 
+      id="achievements" 
+      ref={sectionRef} 
+      className={cn(
+        "py-20 bg-cyber-dark fade-in-section",
+        isVisible && "is-visible"
+      )}
+    >
       <div className="container mx-auto px-4">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl font-bold mb-8 text-white text-center relative inline-block"
-        >
+        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
           Achievements
-          <motion.span 
-            initial={{ width: "0%" }}
-            animate={isInView ? { width: "50%" } : { width: "0%" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="absolute bottom-0 left-0 h-1 bg-cyber-neon"
-          ></motion.span>
-        </motion.h2>
+          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+        </h2>
         
         <div className="mt-12 max-w-3xl mx-auto">
-          {achievements.map((achievement, index) => {
-            const itemRef = useRef(null);
-            const isItemInView = useInView(itemRef, { once: false, amount: 0.3 });
-            
-            return (
-              <motion.div 
-                key={index}
-                ref={itemRef}
-                initial={{ 
-                  opacity: 0, 
-                  x: achievement.direction === "left" ? -30 : 30 
-                }}
-                animate={isItemInView ? { 
-                  opacity: 1, 
-                  x: 0 
-                } : { 
-                  opacity: 0, 
-                  x: achievement.direction === "left" ? -30 : 30 
-                }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="glass-card p-6 rounded-lg mb-6 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300"
-              >
-                <div className="mr-4 p-3 bg-white/5 rounded-full">
-                  {achievement.icon}
-                </div>
+          {achievements.map((achievement, index) => (
+            <div 
+              key={index}
+              className="glass-card p-6 rounded-lg mb-6 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300"
+            >
+              <div className="mr-4 p-3 bg-white/5 rounded-full">
+                {achievement.icon}
+              </div>
+              
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  {achievement.title}
+                </h3>
+                <p className="text-gray-300 mb-4">
+                  {achievement.description}
+                </p>
                 
-                <div className="flex-1">
-                  <motion.h3 
-                    initial={{ opacity: 0 }}
-                    animate={isItemInView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
-                    className="text-xl font-semibold text-white mb-2"
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                    onClick={() => handleViewAchievement(achievement)}
                   >
-                    {achievement.title}
-                  </motion.h3>
-                  <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={isItemInView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ delay: 0.2, duration: 0.3 }}
-                    className="text-gray-300 mb-4"
+                    <Eye size={16} className="mr-1" />
+                    View Certificate
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                    onClick={() => handleDownloadAchievement(achievement)}
                   >
-                    {achievement.description}
-                  </motion.p>
-                  
-                  <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={isItemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
-                    transition={{ delay: 0.3, duration: 0.3 }}
-                    className="flex gap-2"
-                  >
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                        onClick={() => handleViewAchievement(achievement)}
-                      >
-                        <Eye size={16} className="mr-1" />
-                        View Certificate
-                      </Button>
-                    </motion.div>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                        onClick={() => handleDownloadAchievement(achievement)}
-                      >
-                        <Download size={16} className="mr-1" />
-                        Download
-                      </Button>
-                    </motion.div>
-                  </motion.div>
+                    <Download size={16} className="mr-1" />
+                    Download
+                  </Button>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       
@@ -167,10 +127,7 @@ export function AchievementSection() {
           
           {selectedAchievement?.image && (
             <div className="mt-4 flex justify-center">
-              <motion.img 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
+              <img
                 src={selectedAchievement.image} 
                 alt={`${selectedAchievement.title}`} 
                 className="max-h-[70vh] object-contain"
