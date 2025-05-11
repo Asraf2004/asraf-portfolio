@@ -18,15 +18,20 @@ export function EducationSection() {
       )}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
+        <h2 className={cn(
+          "text-3xl font-bold mb-8 text-white text-center section-header",
+          isVisible && "is-visible"
+        )}>
           Education
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
         
         <div className="mt-12 max-w-3xl mx-auto">
-          <div className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500">
+          <div className={cn(
+            "hover-card glass-card p-6 rounded-lg border border-white/5 fade-in-component",
+            isVisible && "is-visible"
+          )} style={{transitionDelay: "0.2s"}}>
             <div className="flex items-center mb-4">
-              <div className="bg-cyber-neon/20 p-3 rounded-full mr-4">
+              <div className="bg-cyber-neon/20 p-3 rounded-full mr-4 hover-button">
                 <GraduationCap size={28} className="text-cyber-neon" />
               </div>
               
@@ -46,12 +51,18 @@ export function EducationSection() {
                 <span>2022 - 2026</span>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+              <div className={cn(
+                "bg-white/5 rounded-lg p-4 border border-white/10 hover-button fade-in-component",
+                isVisible && "is-visible"
+              )} style={{transitionDelay: "0.3s"}}>
                 <span className="text-lg font-medium text-cyber-neon">8.88</span>
                 <span className="text-gray-300 ml-2">CGPA (up to 5th semester)</span>
               </div>
               
-              <div className="mt-4 text-gray-300">
+              <div className={cn(
+                "mt-4 text-gray-300 fade-in-component",
+                isVisible && "is-visible"
+              )} style={{transitionDelay: "0.4s"}}>
                 <p>
                   Studying core computer science subjects with focus on cybersecurity, 
                   networking, and software development.

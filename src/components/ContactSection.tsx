@@ -19,19 +19,27 @@ export function ContactSection() {
       )}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
+        <h2 className={cn(
+          "text-3xl font-bold mb-8 text-white text-center section-header",
+          isVisible && "is-visible"
+        )}>
           Contact Me
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
         
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Contact Information */}
-          <div className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500">
+          <div className={cn(
+            "hover-card glass-card p-6 rounded-lg fade-in-component", 
+            isVisible && "is-visible"
+          )} style={{transitionDelay: "0.2s"}}>
             <ContactInfo isInView={isVisible} />
           </div>
           
           {/* Contact Form */}
-          <div className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500">
+          <div className={cn(
+            "hover-card glass-card p-6 rounded-lg fade-in-component", 
+            isVisible && "is-visible"
+          )} style={{transitionDelay: "0.3s"}}>
             <h3 className="text-xl text-white font-semibold mb-6">Send a Message</h3>
             <ContactForm isInView={isVisible} />
           </div>

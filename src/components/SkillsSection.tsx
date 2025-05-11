@@ -17,11 +17,19 @@ interface SkillItemProps {
   icon: React.ReactNode;
   title: string;
   skills: string[];
+  index: number;
+  isVisible: boolean;
 }
 
-const SkillItem = ({ icon, title, skills }: SkillItemProps) => {
+const SkillItem = ({ icon, title, skills, index, isVisible }: SkillItemProps) => {
   return (
-    <div className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/50 hover:shadow-cyber-neon/20 hover:shadow-lg transition-all duration-300">
+    <div 
+      className={cn(
+        "hover-card glass-card p-6 rounded-lg border border-white/5 fade-in-component",
+        isVisible && "is-visible"
+      )} 
+      style={{transitionDelay: `${0.1 * (index + 1)}s`}}
+    >
       <div className="flex items-center mb-4">
         <div className="mr-3 text-cyber-neon">
           {icon}
@@ -30,10 +38,10 @@ const SkillItem = ({ icon, title, skills }: SkillItemProps) => {
       </div>
       
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
+        {skills.map((skill, skillIndex) => (
           <span
-            key={index}
-            className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 hover:border-cyber-neon/30 hover:bg-white/10 transition-colors duration-300"
+            key={skillIndex}
+            className="hover-button px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 transition-colors duration-300"
           >
             {skill}
           </span>
@@ -90,9 +98,11 @@ export function SkillsSection() {
       )}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
+        <h2 className={cn(
+          "text-3xl font-bold mb-8 text-white text-center section-header",
+          isVisible && "is-visible"
+        )}>
           My Skills
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -102,6 +112,8 @@ export function SkillsSection() {
               icon={skill.icon}
               title={skill.title}
               skills={skill.skills}
+              index={index}
+              isVisible={isVisible}
             />
           ))}
         </div>

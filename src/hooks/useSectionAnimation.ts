@@ -7,6 +7,7 @@ export function useSectionAnimation(ref: RefObject<HTMLElement>) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Update visibility state when intersection changes
         setIsVisible(entry.isIntersecting);
       },
       {

@@ -2,9 +2,8 @@
 import { ArrowRight, Github, Linkedin, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
-import { useRef } from "react";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function HeroSection() {
@@ -19,19 +18,23 @@ export function HeroSection() {
     // Animation to reveal the hero section
     setVisible(true);
     
-    // Typing effect
-    let index = 0;
-    const typingInterval = setInterval(() => {
-      setTypedText(fullText.substring(0, index));
-      index++;
+    // Reset typing animation when section comes into view
+    if (isVisible) {
+      let index = 0;
+      setTypedText("");
       
-      if (index > fullText.length) {
-        clearInterval(typingInterval);
-      }
-    }, 50);
-    
-    return () => clearInterval(typingInterval);
-  }, []);
+      const typingInterval = setInterval(() => {
+        setTypedText(fullText.substring(0, index));
+        index++;
+        
+        if (index > fullText.length) {
+          clearInterval(typingInterval);
+        }
+      }, 50);
+      
+      return () => clearInterval(typingInterval);
+    }
+  }, [isVisible]);
 
   return (
     <section 
@@ -64,30 +67,30 @@ export function HeroSection() {
       
       <div className="container mx-auto px-4 relative z-20"> 
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider">
+          <p className={cn("text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider fade-in-component", isVisible && "is-visible")}>
             Hello, my name is
           </p>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3">
+          <h1 className={cn("text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3 fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.1s"}}>
             Asraf Ahamed A
           </h1>
           
           <div className="h-6 sm:h-8 mb-4">
-            <h2 className="typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300">
+            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.2s"}}>
               {typedText}<span className="border-r-2 border-cyber-neon dark:border-cyber-neon animate-blink-caret"></span>
             </h2>
           </div>
           
-          <p className="text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+          <p className={cn("text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.3s"}}>
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button className="bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all hover:shadow-md hover:shadow-cyber-neon/30">
+          <div className={cn("flex flex-wrap justify-center gap-3 stagger-children", isVisible && "is-visible")}>
+            <Button className="hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all">
               Download Resume
               <Download size={16} />
             </Button>
-            <Button variant="outline" className="border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 transition-all hover:shadow-md hover:shadow-cyber-neon/30">
+            <Button variant="outline" className="hover-button border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 transition-all">
               Contact Me
               <ArrowRight size={16} />
             </Button>
@@ -95,7 +98,7 @@ export function HeroSection() {
               href="https://github.com/Asraf2004" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
             >
               <Github size={18} />
               GitHub
@@ -104,7 +107,7 @@ export function HeroSection() {
               href="https://www.linkedin.com/in/asrafahamed/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
             >
               <Linkedin size={18} />
               LinkedIn
@@ -113,7 +116,7 @@ export function HeroSection() {
               href="https://tryhackme.com/p/asrafahamed08" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
             >
               <TryHackMe size={18} />
               TryHackMe

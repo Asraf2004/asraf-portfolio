@@ -18,12 +18,17 @@ export function AboutSection() {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-3 text-white relative pb-3 inline-block">
+          <h2 className={cn(
+            "text-3xl font-bold mb-3 text-white relative pb-3 section-header",
+            isVisible && "is-visible"
+          )}>
             About Me
-            <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon group-hover:w-full transition-all duration-300"></span>
           </h2>
           
-          <div className="mt-8 glass-card p-6 rounded-lg relative">
+          <div className={cn(
+            "mt-8 glass-card p-6 rounded-lg relative hover-card fade-in-component", 
+            isVisible && "is-visible"
+          )} style={{transitionDelay: "0.2s"}}>
             <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-cyber-neon"></div>
             <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-cyber-neon"></div>
             
@@ -40,17 +45,20 @@ export function AboutSection() {
               team projects.
             </p>
             
-            <div className="mt-6 flex gap-4 flex-wrap">
-              <div className="bg-cyber-neon/10 border border-cyber-neon/30 rounded-md px-4 py-2 text-cyber-neon hover:bg-cyber-neon/20 transition-colors transform duration-200">
+            <div className={cn(
+              "mt-6 flex gap-4 flex-wrap stagger-children",
+              isVisible && "is-visible"
+            )}>
+              <div className="hover-button bg-cyber-neon/10 border border-cyber-neon/30 rounded-md px-4 py-2 text-cyber-neon hover:bg-cyber-neon/20 transition-colors transform duration-200">
                 Bug Bounty
               </div>
-              <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-md px-4 py-2 text-cyber-blue hover:bg-cyber-blue/20 transition-colors transform duration-200">
+              <div className="hover-button bg-cyber-blue/10 border border-cyber-blue/30 rounded-md px-4 py-2 text-cyber-blue hover:bg-cyber-blue/20 transition-colors transform duration-200">
                 CTF Enthusiast
               </div>
-              <div className="bg-cyber-purple/10 border border-cyber-purple/30 rounded-md px-4 py-2 text-cyber-purple hover:bg-cyber-purple/20 transition-colors transform duration-200">
+              <div className="hover-button bg-cyber-purple/10 border border-cyber-purple/30 rounded-md px-4 py-2 text-cyber-purple hover:bg-cyber-purple/20 transition-colors transform duration-200">
                 Web Security
               </div>
-              <div className="bg-white/10 border border-white/30 rounded-md px-4 py-2 text-white hover:bg-white/20 transition-colors transform duration-200">
+              <div className="hover-button bg-white/10 border border-white/30 rounded-md px-4 py-2 text-white hover:bg-white/20 transition-colors transform duration-200">
                 Development
               </div>
             </div>
