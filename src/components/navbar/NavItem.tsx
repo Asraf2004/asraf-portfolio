@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface NavItemProps {
   href: string;
@@ -9,7 +10,7 @@ interface NavItemProps {
 
 export const NavItem = ({ href, label, active }: NavItemProps) => {
   return (
-    <li>
+    <motion.li whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
       <a 
         href={href} 
         className={cn(
@@ -18,13 +19,22 @@ export const NavItem = ({ href, label, active }: NavItemProps) => {
         )}
       >
         {label}
+        <motion.span 
+          className={cn(
+            "absolute left-0 -bottom-1 h-0.5 bg-cyber-neon",
+            active ? "w-full" : "w-0"
+          )}
+          initial={false}
+          animate={{ width: active ? "100%" : "0%" }}
+          transition={{ duration: 0.3 }}
+        />
         <span 
           className={cn(
             "absolute left-0 -bottom-1 w-0 h-0.5 bg-cyber-neon transition-all duration-300 group-hover:w-full",
-            active ? "w-full" : ""
+            active ? "opacity-0" : "opacity-100"
           )}
         />
       </a>
-    </li>
+    </motion.li>
   );
 };

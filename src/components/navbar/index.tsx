@@ -7,6 +7,7 @@ import { NavItem } from "./NavItem";
 import { ThemeToggle } from "./ThemeToggle";
 import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function NavBar() {
   const [activeSection, setActiveSection] = useState("home");
@@ -62,7 +63,10 @@ export function NavBar() {
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header 
+    <motion.header 
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300", 
         isScrolled 
@@ -72,9 +76,14 @@ export function NavBar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <a href="#home" className="text-xl font-bold text-gradient">
+          <motion.a 
+            href="#home" 
+            className="text-xl font-bold text-gradient"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
             Asraf<span className="text-cyber-neon">.</span>
-          </a>
+          </motion.a>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
@@ -106,20 +115,28 @@ export function NavBar() {
               className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110 md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <motion.div
+                initial={false}
+                animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.div>
             </Button>
           </div>
         </div>
       </div>
       
       {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <MobileMenu 
-          sections={sections} 
-          activeSection={activeSection} 
-          onItemClick={closeMobileMenu}
-        />
-      )}
-    </header>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <MobileMenu 
+            sections={sections} 
+            activeSection={activeSection} 
+            onItemClick={closeMobileMenu}
+          />
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
