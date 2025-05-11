@@ -7,12 +7,13 @@ import { NavItem } from "./NavItem";
 import { ThemeToggle } from "./ThemeToggle";
 import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 
 export function NavBar() {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
   
   const sections = [
     { id: "home", label: "Home" },
@@ -27,9 +28,10 @@ export function NavBar() {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
+    // Subscribe to scroll updates to check the current section
+    const unsubscribeScroll = scrollY.on("change", (latest) => {
       // Update navbar background
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(latest > 10);
       
       // Update active section based on scroll position
       const current = sections
@@ -40,25 +42,23 @@ export function NavBar() {
           const rect = element.getBoundingClientRect();
           return {
             id: section.id,
-            position: rect.top + window.scrollY - 100
+            position: rect.top + latest - 100
           };
         })
         .filter(section => section.position > -1)
         .sort((a, b) => a.position - b.position);
         
-      if (current.length > 0 && window.scrollY > 100) {
+      if (current.length > 0 && latest > 100) {
         setActiveSection(current[0].id);
       } else {
         setActiveSection("home");
       }
-    };
-    
-    window.addEventListener("scroll", handleScroll);
+    });
     
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      unsubscribeScroll();
     };
-  }, []);
+  }, [scrollY]);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -68,7 +68,7 @@ export function NavBar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-500", 
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300", 
         isScrolled 
           ? "bg-cyber-darker/80 backdrop-blur-md border-b border-cyber-neon/20 py-2" 
           : "bg-transparent py-4"
@@ -112,7 +112,7 @@ export function NavBar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-500 hover:scale-110 md:hidden"
+              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110 md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <motion.div

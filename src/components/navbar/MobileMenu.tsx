@@ -1,6 +1,5 @@
 
 import { SocialLinks } from "./SocialLinks";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 interface MobileMenuProps {
@@ -18,14 +17,27 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
       transition={{ duration: 0.2 }}
       className="md:hidden bg-cyber-darker/95 backdrop-blur-lg border-b border-cyber-neon/20"
     >
-      <ul className="flex flex-col py-4">
+      <motion.ul 
+        className="flex flex-col py-4"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.05
+            }
+          }
+        }}
+      >
         {sections.map((section) => (
           <motion.li 
             key={section.id} 
             className="px-6 py-2"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
+            }}
             whileHover={{ x: 5 }}
           >
             <a 
@@ -36,6 +48,13 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               onClick={onItemClick}
             >
               {section.label}
+              {activeSection === section.id && (
+                <motion.span 
+                  layoutId="mobileActiveIndicator"
+                  className="ml-2 inline-block w-1 h-1 bg-cyber-neon rounded-full"
+                  transition={{ duration: 0.3 }}
+                />
+              )}
             </a>
           </motion.li>
         ))}
@@ -43,13 +62,14 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
         {/* Mobile Social Media Links */}
         <motion.li 
           className="px-6 py-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { delay: 0.3 } }
+          }}
         >
           <SocialLinks iconSize={20} />
         </motion.li>
-      </ul>
+      </motion.ul>
     </motion.nav>
   );
 };

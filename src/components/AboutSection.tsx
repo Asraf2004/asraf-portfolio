@@ -1,31 +1,43 @@
 
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 export function AboutSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  
+  const fadeInVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
   
   return (
-    <section id="about" ref={sectionRef} className="py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker">
+    <section 
+      id="about" 
+      ref={ref} 
+      className="py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker"
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl font-bold mb-3 text-white relative pb-3 inline-block group"
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={fadeInVariants}
+            className="text-3xl font-bold mb-3 text-white relative pb-3 inline-block"
           >
             About Me
-            <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-1 bg-cyber-neon group-hover:w-full transition-all duration-300"></span>
           </motion.h2>
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.7 }}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={fadeInVariants}
             className="mt-8 glass-card p-6 rounded-lg relative"
           >
             <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-cyber-neon"></div>
@@ -33,9 +45,8 @@ export function AboutSection() {
             
             <motion.p 
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: false }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
               className="text-gray-300 mb-4 leading-relaxed"
             >
               I'm Asraf Ahamed, a passionate cybersecurity and web development enthusiast currently 
@@ -46,9 +57,8 @@ export function AboutSection() {
             
             <motion.p 
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              viewport={{ once: false }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
               className="text-gray-300 mb-4 leading-relaxed"
             >
               My interests lie in bug bounty hunting, CTF competitions, and building security tools.
@@ -57,10 +67,9 @@ export function AboutSection() {
             </motion.p>
             
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, staggerChildren: 0.1 }}
-              viewport={{ once: false }}
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
               className="mt-6 flex gap-4 flex-wrap"
             >
               <motion.div 

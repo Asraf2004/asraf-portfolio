@@ -12,7 +12,7 @@ import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { useEffect, useState } from "react";
 
-// Particle animation component
+// Particle animation component - continuous background animation
 const ParticleBackground = () => {
   useEffect(() => {
     // Particle animation logic
@@ -59,7 +59,7 @@ const ParticleBackground = () => {
 
     createParticles();
 
-    // Animation loop
+    // Animation loop - CONTINUOUS ANIMATION
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -108,7 +108,7 @@ const ParticleBackground = () => {
       requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(); // Start the continuous animation loop
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
@@ -145,32 +145,6 @@ const Index = () => {
       setLoading(false);
     }, 500);
     
-    // Set up intersection observer for section animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          
-          // Re-trigger animations by removing and adding animation classes
-          const animateElements = entry.target.querySelectorAll('[data-aos]');
-          animateElements.forEach(el => {
-            const animationClass = el.getAttribute('data-aos');
-            if (animationClass) {
-              el.classList.remove(animationClass);
-              setTimeout(() => el.classList.add(animationClass), 50);
-            }
-          });
-        } else {
-          // Optional: reset animation when element is out of view
-          // entry.target.classList.remove('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('section').forEach((section) => {
-      observer.observe(section);
-    });
-    
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -189,13 +163,12 @@ const Index = () => {
     
     return () => {
       clearTimeout(timer);
-      observer.disconnect();
     };
   }, []);
 
   return (
     <div className={`bg-cyber-dark text-white min-h-screen flex flex-col transition-all duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-      {/* Particle Background */}
+      {/* Particle Background - Continuous Background Animation */}
       <ParticleBackground />
       
       <NavBar />

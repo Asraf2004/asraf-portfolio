@@ -12,11 +12,10 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
   const iconVariants = {
     initial: { scale: 1 },
     hover: { 
-      scale: 1.2,
-      rotate: 5,
+      scale: 1.15,
       transition: { type: "spring", stiffness: 400, damping: 10 }
     },
-    tap: { scale: 0.9 }
+    tap: { scale: 0.95 }
   };
 
   return (
@@ -25,7 +24,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://github.com/Asraf2004" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-300 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"
@@ -38,7 +37,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://www.linkedin.com/in/asrafahamed/" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-300 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"
@@ -51,14 +50,14 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         href="https://tryhackme.com/p/asrafahamed08" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-300 hover:text-cyber-neon transition-colors duration-500 p-1"
+        className="text-gray-300 hover:text-cyber-neon transition-colors duration-300 p-1"
         variants={iconVariants}
         initial="initial"
         whileHover="hover"
         whileTap="tap"
         aria-label="TryHackMe"
       >
-        <TryHackMe size={iconSize} />
+        <TryHackMe size={iconSize} className="fill-current" />
       </motion.a>
     </div>
   );

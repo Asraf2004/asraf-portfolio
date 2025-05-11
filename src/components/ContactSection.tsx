@@ -1,14 +1,23 @@
-import { useEffect, useState, useRef } from "react";
+
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, User, Github, Linkedin, Check, Send, AlertCircle } from "lucide-react";
+import { Mail, Phone, User, Github, Linkedin, Check, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { motion, useInView } from "framer-motion";
+import { useState } from "react";
+import { TryHackMe } from "./icons/TryHackMe";
 
 export function ContactSection() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+  const leftColumnRef = useRef<HTMLDivElement>(null);
+  const rightColumnRef = useRef<HTMLDivElement>(null);
+  const isLeftInView = useInView(leftColumnRef, { once: false, amount: 0.3 });
+  const isRightInView = useInView(rightColumnRef, { once: false, amount: 0.3 });
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,26 +26,6 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,25 +87,41 @@ export function ContactSection() {
   return (
     <section id="contact" ref={sectionRef} className="py-20 bg-cyber-dark">
       <div className="container mx-auto px-4">
-        <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4",
-          isVisible && "opacity-100 translate-y-0"
-        )}>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl font-bold mb-8 text-white text-center relative inline-block"
+        >
           Contact Me
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
-        </h2>
+          <motion.span 
+            initial={{ width: "0%" }}
+            animate={isInView ? { width: "50%" } : { width: "0%" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="absolute bottom-0 left-0 h-1 bg-cyber-neon"
+          ></motion.span>
+        </motion.h2>
         
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Contact Information */}
-          <div className={cn(
-            "glass-card p-6 rounded-lg transition-all duration-700 opacity-0 translate-y-4",
-            isVisible && "opacity-100 translate-y-0 delay-100"
-          )}>
+          <motion.div
+            ref={leftColumnRef}
+            initial={{ opacity: 0, x: -20 }}
+            animate={isLeftInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500"
+          >
             <h3 className="text-xl text-white font-semibold mb-6">Get in Touch</h3>
             
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
-                <div key={index} className="flex items-start">
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isLeftInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  className="flex items-start"
+                >
                   <div className="bg-white/5 rounded-full p-3 mr-4">
                     {info.icon}
                   </div>
@@ -132,36 +137,51 @@ export function ContactSection() {
                       {info.value}
                     </a>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
             
-            <div className="mt-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={isLeftInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ delay: 0.5, duration: 0.3 }}
+              className="mt-10"
+            >
               <p className="text-gray-300 mb-4">
                 Also find me on TryHackMe:
               </p>
-              <a 
+              <motion.a 
                 href="https://tryhackme.com/p/asrafahamed08" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-cyber-neon/10 border border-cyber-neon/20 hover:border-cyber-neon/40 rounded-lg text-white transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
+                <TryHackMe size={18} className="text-cyber-neon" />
                 <span>tryhackme.com/p/asrafahamed08</span>
                 <ExternalLinkIcon size={16} />
-              </a>
-            </div>
-          </div>
+              </motion.a>
+            </motion.div>
+          </motion.div>
           
           {/* Contact Form */}
-          <div className={cn(
-            "glass-card p-6 rounded-lg transition-all duration-700 opacity-0 translate-y-4",
-            isVisible && "opacity-100 translate-y-0 delay-200"
-          )}>
+          <motion.div
+            ref={rightColumnRef}
+            initial={{ opacity: 0, x: 20 }}
+            animate={isRightInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-500"
+          >
             <h3 className="text-xl text-white font-semibold mb-6">Send a Message</h3>
             
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
-                <div>
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isRightInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.1, duration: 0.3 }}
+                >
                   <label htmlFor="name" className="text-sm text-gray-300 mb-1 block">
                     Full Name
                   </label>
@@ -177,9 +197,13 @@ export function ContactSection() {
                     />
                     <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   </div>
-                </div>
+                </motion.div>
                 
-                <div>
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isRightInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
                   <label htmlFor="email" className="text-sm text-gray-300 mb-1 block">
                     Email Address
                   </label>
@@ -196,9 +220,13 @@ export function ContactSection() {
                     />
                     <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   </div>
-                </div>
+                </motion.div>
                 
-                <div>
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isRightInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
+                >
                   <label htmlFor="message" className="text-sm text-gray-300 mb-1 block">
                     Message
                   </label>
@@ -211,33 +239,41 @@ export function ContactSection() {
                     required
                     className="bg-white/5 border-white/10 focus:border-cyber-neon/50 min-h-32"
                   />
-                </div>
+                </motion.div>
                 
-                <Button 
-                  type="submit" 
-                  className="w-full flex items-center justify-center gap-2 bg-cyber-neon hover:bg-cyber-neon/80 text-black font-medium"
-                  disabled={isSubmitting || submitted}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isRightInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.4, duration: 0.3 }}
+                  whileHover={!isSubmitting && !submitted ? { scale: 1.02 } : {}}
+                  whileTap={!isSubmitting && !submitted ? { scale: 0.98 } : {}}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader size={16} className="animate-spin" />
-                      Sending...
-                    </>
-                  ) : submitted ? (
-                    <>
-                      <Check size={16} />
-                      Message Sent
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      Send Message
-                    </>
-                  )}
-                </Button>
+                  <Button 
+                    type="submit" 
+                    className="w-full flex items-center justify-center gap-2 bg-cyber-neon hover:bg-cyber-neon/80 text-black font-medium"
+                    disabled={isSubmitting || submitted}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader size={16} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : submitted ? (
+                      <>
+                        <Check size={16} />
+                        Message Sent
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

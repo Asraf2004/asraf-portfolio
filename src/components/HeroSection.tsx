@@ -4,11 +4,16 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 export function HeroSection() {
   const [visible, setVisible] = useState(false);
   const [typedText, setTypedText] = useState("");
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.3 });
   
   const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
   
@@ -27,12 +32,25 @@ export function HeroSection() {
       }
     }, 50);
     
+    // Trigger animations when component comes into view
+    if (isInView) {
+      controls.start({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: "easeOut" }
+      });
+    }
+    
     return () => clearInterval(typingInterval);
-  }, []);
+  }, [isInView]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden">
-      {/* Animated background elements */}
+    <section 
+      ref={ref}
+      id="home" 
+      className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden"
+    >
+      {/* Animated background elements - continuous loop */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           {Array.from({ length: 20 }).map((_, index) => (
@@ -55,8 +73,7 @@ export function HeroSection() {
       <div className="container mx-auto px-4 relative z-10"> 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          animate={controls}
           className="max-w-4xl mx-auto text-center"
         >
           <motion.p 

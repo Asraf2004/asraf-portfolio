@@ -1,9 +1,10 @@
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { FileCheck, CheckCircle, Eye, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { motion, useInView } from "framer-motion";
 
 interface Certification {
   title: string;
@@ -13,30 +14,10 @@ interface Certification {
 }
 
 export function CertificationsSection() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
   const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
   
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   const certifications: Certification[] = [
     {
       title: "Pre-Security",
@@ -94,67 +75,94 @@ export function CertificationsSection() {
   return (
     <section id="certifications" ref={sectionRef} className="py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker">
       <div className="container mx-auto px-4">
-        <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4 group",
-          isVisible && "opacity-100 translate-y-0"
-        )}>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl font-bold mb-8 text-white text-center relative inline-block"
+        >
           Certifications
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
-        </h2>
+          <motion.span 
+            initial={{ width: "0%" }}
+            animate={isInView ? { width: "50%" } : { width: "0%" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="absolute bottom-0 left-0 h-1 bg-cyber-neon"
+          ></motion.span>
+        </motion.h2>
         
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {certifications.map((cert, index) => (
-            <div 
-              key={index}
-              className={cn(
-                "glass-card p-6 rounded-lg text-center transition-all duration-700 opacity-0 translate-y-4 hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 group",
-                isVisible && `opacity-100 translate-y-0 delay-${(index % 4) * 100}`,
-                index % 2 === 0 ? "fade-in-left" : "fade-in-right"
-              )}
-            >
-              <div className="mb-4 flex justify-center">
-                <div className="w-14 h-14 bg-cyber-neon/10 rounded-full flex items-center justify-center group-hover:bg-cyber-neon/20 transition-all">
-                  <FileCheck size={28} className="text-cyber-neon" />
+          {certifications.map((cert, index) => {
+            const itemRef = useRef(null);
+            const isItemInView = useInView(itemRef, { once: false, amount: 0.3 });
+            // Alternate animations based on index
+            const direction = index % 2 === 0 ? "left" : "right";
+            
+            return (
+              <motion.div 
+                key={index}
+                ref={itemRef}
+                initial={{ 
+                  opacity: 0, 
+                  x: direction === "left" ? -20 : 20 
+                }}
+                animate={isItemInView ? { 
+                  opacity: 1, 
+                  x: 0 
+                } : { 
+                  opacity: 0, 
+                  x: direction === "left" ? -20 : 20 
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="glass-card p-6 rounded-lg text-center hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 group"
+              >
+                <div className="mb-4 flex justify-center">
+                  <div className="w-14 h-14 bg-cyber-neon/10 rounded-full flex items-center justify-center group-hover:bg-cyber-neon/20 transition-all">
+                    <FileCheck size={28} className="text-cyber-neon" />
+                  </div>
                 </div>
-              </div>
-              
-              <h3 className="text-xl font-medium text-white mb-1 group-hover:text-cyber-neon transition-colors">
-                {cert.title}
-              </h3>
-              
-              <p className="text-gray-400 text-sm mb-4">
-                Issued by {cert.issuer}
-              </p>
-              
-              <div className="flex justify-center items-center gap-2 mt-4">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400">
-                  <CheckCircle className="mr-1" size={12} />
-                  Verified
-                </span>
-              </div>
-              
-              <div className="mt-4 flex justify-center gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                  onClick={() => handleViewCertificate(cert)}
-                >
-                  <Eye size={16} className="mr-1" />
-                  View
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                  onClick={() => handleDownloadCertificate(cert)}
-                >
-                  <Download size={16} className="mr-1" />
-                  Download
-                </Button>
-              </div>
-            </div>
-          ))}
+                
+                <h3 className="text-xl font-medium text-white mb-1 group-hover:text-cyber-neon transition-colors">
+                  {cert.title}
+                </h3>
+                
+                <p className="text-gray-400 text-sm mb-4">
+                  Issued by {cert.issuer}
+                </p>
+                
+                <div className="flex justify-center items-center gap-2 mt-4">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400">
+                    <CheckCircle className="mr-1" size={12} />
+                    Verified
+                  </span>
+                </div>
+                
+                <div className="mt-4 flex justify-center gap-2">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                      onClick={() => handleViewCertificate(cert)}
+                    >
+                      <Eye size={16} className="mr-1" />
+                      View
+                    </Button>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                      onClick={() => handleDownloadCertificate(cert)}
+                    >
+                      <Download size={16} className="mr-1" />
+                      Download
+                    </Button>
+                  </motion.div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
       
@@ -167,7 +175,10 @@ export function CertificationsSection() {
           
           {selectedCert?.image && (
             <div className="mt-4 flex justify-center">
-              <img 
+              <motion.img 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4 }}
                 src={selectedCert.image} 
                 alt={`${selectedCert.title} Certificate`} 
                 className="max-h-[70vh] object-contain"
