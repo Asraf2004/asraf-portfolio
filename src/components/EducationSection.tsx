@@ -1,48 +1,34 @@
 
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { GraduationCap, Calendar } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function EducationSection() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   return (
     <section id="education" ref={sectionRef} className="py-20 bg-cyber-darker">
       <div className="container mx-auto px-4">
-        <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4",
-          isVisible && "opacity-100 translate-y-0"
-        )}>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl font-bold mb-8 text-white text-center relative inline-block group"
+        >
           Education
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
-        </h2>
+          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
+        </motion.h2>
         
         <div className="mt-12 max-w-3xl mx-auto">
-          <div className={cn(
-            "glass-card p-6 rounded-lg transition-all duration-700 opacity-0 translate-y-4 border border-white/5 hover:border-cyber-neon/30",
-            isVisible && "opacity-100 translate-y-0"
-          )}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.7 }}
+            className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-300"
+          >
             <div className="flex items-center mb-4">
               <div className="bg-cyber-neon/20 p-3 rounded-full mr-4">
                 <GraduationCap size={28} className="text-cyber-neon" />
@@ -58,25 +44,43 @@ export function EducationSection() {
               </div>
             </div>
             
-            <div className="pl-16">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{ delay: 0.3 }}
+              className="pl-16"
+            >
               <div className="flex items-center gap-2 text-gray-400 mb-4">
                 <Calendar size={16} />
                 <span>2022 - 2026</span>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.4 }}
+                className="bg-white/5 rounded-lg p-4 border border-white/10"
+              >
                 <span className="text-lg font-medium text-cyber-neon">8.88</span>
                 <span className="text-gray-300 ml-2">CGPA (up to 5th semester)</span>
-              </div>
+              </motion.div>
               
-              <div className="mt-4 text-gray-300">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.5 }}
+                className="mt-4 text-gray-300"
+              >
                 <p>
                   Studying core computer science subjects with focus on cybersecurity, 
                   networking, and software development.
                 </p>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

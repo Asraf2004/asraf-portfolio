@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Github, ExternalLink, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { motion } from "framer-motion";
 
 interface Project {
   title: string;
@@ -11,80 +12,67 @@ interface Project {
   technologies: string[];
   github: string;
   demoLink?: string;
+  direction: "left" | "right";
 }
 
 export function ProjectsSection() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   const projects: Project[] = [
     {
       title: "PenTesting Framework - GUI Based",
       description: "A user-friendly GUI-based penetration testing toolkit with comprehensive scanning capabilities.",
       technologies: ["Python", "Flask", "SQLite", "JavaScript", "HTML/CSS"],
-      github: "https://github.com/Asraf2004"
+      github: "https://github.com/Asraf2004",
+      direction: "left"
     },
     {
       title: "ARP Spoofer/Sniffer",
       description: "Tool using libpcap to detect and analyze ARP spoofing attacks in real-time on local networks.",
       technologies: ["C", "libpcap", "Network Security", "Linux"],
-      github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main"
+      github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main",
+      direction: "right"
     },
     {
       title: "Socket-Based Message Echo Server",
       description: "TCP Python server that handles and echoes complete client messages with robust error handling.",
       technologies: ["Python", "Networking", "Socket Programming", "Multithreading"],
-      github: "https://github.com/Asraf2004/Socket"
+      github: "https://github.com/Asraf2004/Socket",
+      direction: "left"
     },
     {
       title: "IoT-Based Smart Egg Incubator",
       description: "Automated temperature and humidity control system for optimal egg incubation with remote monitoring.",
       technologies: ["IoT", "Arduino", "Sensors", "Mobile App"],
-      github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator"
+      github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator",
+      direction: "right"
     }
   ];
 
   return (
     <section id="projects" ref={sectionRef} className="py-20 bg-gradient-to-b from-cyber-darker to-cyber-dark">
       <div className="container mx-auto px-4">
-        <h2 className={cn(
-          "text-3xl font-bold mb-12 text-white text-center relative inline-block transition-all duration-700 opacity-0 translate-y-4 group",
-          isVisible && "opacity-100 translate-y-0"
-        )}>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl font-bold mb-12 text-white text-center relative inline-block group"
+        >
           Projects
           <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon transition-all duration-300 group-hover:w-full"></span>
-        </h2>
+        </motion.h2>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div 
+            <motion.div 
               key={index}
-              className={cn(
-                "glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 transition-all duration-700 opacity-0 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20",
-                isVisible && `opacity-100 delay-${index * 100}`,
-                index % 2 === 0 ? "fade-in-left" : "fade-in-right",
-              )}
+              initial={{ opacity: 0, x: project.direction === "left" ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="glass-card p-6 rounded-lg border border-white/5 hover:border-cyber-neon/30 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20 transition-all duration-300"
             >
               <div className="h-40 rounded-lg bg-white/5 mb-4 flex items-center justify-center overflow-hidden">
                 <div className="text-cyber-neon text-5xl opacity-30 group-hover:opacity-50 transition-opacity">
@@ -103,37 +91,45 @@ export function ProjectsSection() {
               <div className="mb-4">
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
-                    <span 
+                    <motion.span 
                       key={techIndex}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false }}
+                      transition={{ delay: 0.1 * techIndex }}
                       className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10 group-hover:border-cyber-neon/20 transition-colors"
                     >
                       {tech}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
               
               <div className="flex gap-3 mt-4">
-                <a 
+                <motion.a 
                   href={project.github} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all transform hover:scale-105 hover:shadow-md hover:shadow-cyber-neon/30"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all hover:shadow-md hover:shadow-cyber-neon/30"
                 >
                   <Github size={16} />
                   View on GitHub
-                </a>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                  onClick={() => setSelectedProject(project)}
-                >
-                  <Eye size={16} className="mr-1" />
-                  View Details
-                </Button>
+                </motion.a>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <Eye size={16} className="mr-1" />
+                    View Details
+                  </Button>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
