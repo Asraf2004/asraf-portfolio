@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { 
@@ -118,7 +117,7 @@ export function SkillsSection() {
   ];
 
   return (
-    <section id="skills" ref={sectionRef} className="py-20 bg-cyber-darker">
+    <section id="skills" ref={sectionRef} className="py-20 bg-cyber-darker dark:bg-cyber-darker relative z-10">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}

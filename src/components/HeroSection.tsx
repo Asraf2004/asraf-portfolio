@@ -1,4 +1,3 @@
-
 import { ArrowRight, Github, Linkedin, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -48,10 +47,10 @@ export function HeroSection() {
     <section 
       ref={ref}
       id="home" 
-      className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden z-10"
     >
       {/* Animated background elements - continuous loop */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           {Array.from({ length: 20 }).map((_, index) => (
             <div 
@@ -70,7 +69,7 @@ export function HeroSection() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10"> 
+      <div className="container mx-auto px-4 relative z-20"> 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={controls}

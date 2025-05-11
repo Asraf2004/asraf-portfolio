@@ -210,9 +210,9 @@
   
   /* Section visibility animations with proper z-index */
   section {
-    @apply relative z-10;
-    opacity: 0;
-    transform: translateY(20px);
+    @apply relative z-10 bg-cyber-dark dark:bg-cyber-dark; /* Added background to ensure visibility */
+    opacity: 1; /* Changed from 0 to 1 to ensure sections are visible */
+    transform: translateY(0); /* Reset transform to ensure sections are in their proper position */
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
   
