@@ -8,12 +8,15 @@ import { ThemeToggle } from "./ThemeToggle";
 import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export function NavBar() {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const sections = [
     { id: "home", label: "Home" },
@@ -28,39 +31,37 @@ export function NavBar() {
   ];
 
   useEffect(() => {
+    // Get current page from URL path
+    const path = location.pathname;
+    if (path === "/") {
+      setActiveSection("home");
+    } else {
+      const sectionId = path.substring(1); // Remove leading slash
+      if (sections.some(section => section.id === sectionId)) {
+        setActiveSection(sectionId);
+      }
+    }
+    
     // Subscribe to scroll updates to check the current section
     const unsubscribeScroll = scrollY.on("change", (latest) => {
       // Update navbar background
       setIsScrolled(latest > 10);
-      
-      // Update active section based on scroll position
-      const current = sections
-        .map((section) => {
-          const element = document.getElementById(section.id);
-          if (!element) return { id: section.id, position: -Infinity };
-          
-          const rect = element.getBoundingClientRect();
-          return {
-            id: section.id,
-            position: rect.top + latest - 100
-          };
-        })
-        .filter(section => section.position > -1)
-        .sort((a, b) => a.position - b.position);
-        
-      if (current.length > 0 && latest > 100) {
-        setActiveSection(current[0].id);
-      } else {
-        setActiveSection("home");
-      }
     });
     
     return () => {
       unsubscribeScroll();
     };
-  }, [scrollY]);
+  }, [scrollY, location.pathname]);
 
-  const closeMobileMenu = () => setMobileMenuOpen(false);
+  const handleNavigation = (sectionId: string) => {
+    setActiveSection(sectionId);
+    if (sectionId === "home") {
+      navigate("/");
+    } else {
+      navigate(`/${sectionId}`);
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <motion.header 
@@ -76,14 +77,14 @@ export function NavBar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <motion.a 
-            href="#home" 
-            className="text-xl font-bold text-gradient"
+          <motion.div
+            onClick={() => handleNavigation("home")}
+            className="text-xl font-bold text-gradient cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             Asraf<span className="text-cyber-neon">.</span>
-          </motion.a>
+          </motion.div>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
@@ -91,7 +92,7 @@ export function NavBar() {
               {sections.map((section) => (
                 <NavItem 
                   key={section.id} 
-                  href={`#${section.id}`} 
+                  onClick={() => handleNavigation(section.id)}
                   label={section.label} 
                   active={activeSection === section.id} 
                 />
@@ -133,7 +134,7 @@ export function NavBar() {
           <MobileMenu 
             sections={sections} 
             activeSection={activeSection} 
-            onItemClick={closeMobileMenu}
+            onItemClick={handleNavigation}
           />
         )}
       </AnimatePresence>

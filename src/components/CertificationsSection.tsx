@@ -15,7 +15,7 @@ interface Certification {
 
 export function CertificationsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
   const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
   
   const certifications: Certification[] = [
@@ -77,12 +77,15 @@ export function CertificationsSection() {
       id="certifications" 
       ref={sectionRef} 
       className={cn(
-        "py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker fade-in-section",
+        "py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker fade-in-section min-h-screen flex items-center",
         isVisible && "is-visible"
       )}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
+        <h2 className={cn(
+          "text-3xl font-bold mb-8 text-white text-center relative inline-block section-header",
+          isVisible && "is-visible"
+        )}>
           Certifications
           <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
@@ -91,30 +94,61 @@ export function CertificationsSection() {
           {certifications.map((cert, index) => (
             <div 
               key={index}
-              className="glass-card p-6 rounded-lg text-center hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 group"
+              className={cn(
+                "glass-card p-6 rounded-lg text-center hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 group fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index}s`}}
+              data-aos="fade-up"
+              data-aos-delay={50 * index}
             >
-              <div className="mb-4 flex justify-center">
+              <div className={cn(
+                "mb-4 flex justify-center fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index + 0.1}s`}}
+              >
                 <div className="w-14 h-14 bg-cyber-neon/10 rounded-full flex items-center justify-center group-hover:bg-cyber-neon/20 transition-all">
                   <FileCheck size={28} className="text-cyber-neon" />
                 </div>
               </div>
               
-              <h3 className="text-xl font-medium text-white mb-1 group-hover:text-cyber-neon transition-colors">
+              <h3 className={cn(
+                "text-xl font-medium text-white mb-1 group-hover:text-cyber-neon transition-colors fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index + 0.2}s`}}
+              >
                 {cert.title}
               </h3>
               
-              <p className="text-gray-400 text-sm mb-4">
+              <p className={cn(
+                "text-gray-400 text-sm mb-4 fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index + 0.3}s`}}
+              >
                 Issued by {cert.issuer}
               </p>
               
-              <div className="flex justify-center items-center gap-2 mt-4">
+              <div className={cn(
+                "flex justify-center items-center gap-2 mt-4 fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index + 0.4}s`}}
+              >
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400">
                   <CheckCircle className="mr-1" size={12} />
                   Verified
                 </span>
               </div>
               
-              <div className="mt-4 flex justify-center gap-2">
+              <div className={cn(
+                "mt-4 flex justify-center gap-2 fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.05 * index + 0.5}s`}}
+              >
                 <Button 
                   variant="outline" 
                   size="sm" 

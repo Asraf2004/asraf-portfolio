@@ -2,56 +2,19 @@
 import { ArrowRight, Github, Linkedin, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function HeroSection() {
-  const [visible, setVisible] = useState(false);
-  const [typedText, setTypedText] = useState("");
-  const [typingComplete, setTypingComplete] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { isVisible, typingAnimationClass } = useSectionAnimation(ref);
+  const { isVisible } = useSectionAnimation(ref);
   
-  const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
-  
-  useEffect(() => {
-    // Animation to reveal the hero section
-    setVisible(true);
-    
-    // Reset typing animation when section comes into view
-    if (isVisible && !typingComplete) {
-      let typingInterval: number;
-      let index = 0;
-      
-      const animateTyping = () => {
-        // Type forward only
-        setTypedText(fullText.substring(0, index));
-        index++;
-        
-        if (index > fullText.length) {
-          clearInterval(typingInterval);
-          setTypingComplete(true);
-        }
-      };
-      
-      setTypedText("");
-      index = 0;
-      
-      typingInterval = window.setInterval(animateTyping, 50);
-      
-      return () => clearInterval(typingInterval);
-    }
-  }, [isVisible, typingComplete]);
-
   return (
     <section 
       ref={ref}
       id="home" 
-      className={cn(
-        "min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden z-10 fade-in-section",
-        isVisible && "is-visible"
-      )}
+      className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden z-10"
       data-aos="fade-up"
     >
       {/* Animated background elements - stops after 5 seconds */}
@@ -76,61 +39,90 @@ export function HeroSection() {
       
       <div className="container mx-auto px-4 relative z-20"> 
         <div className="max-w-4xl mx-auto text-center">
-          <p className={cn("text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider fade-in-component", isVisible && "is-visible")}
-             data-aos="fade-up" data-aos-delay="100">
+          {/* Static name and title - no animation */}
+          <p className="text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider">
             Hello, my name is
           </p>
           
-          <h1 className={cn("text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3 fade-in-component", isVisible && "is-visible")}
-              data-aos="fade-up" data-aos-delay="200" style={{transitionDelay: "0.1s"}}>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3">
             Asraf Ahamed A
           </h1>
           
           <div className="h-6 sm:h-8 mb-4">
-            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible")}
-                data-aos="fade-up" data-aos-delay="300" style={{transitionDelay: "0.2s"}}>
-              {typedText}<span className={`border-r-2 border-cyber-neon dark:border-cyber-neon ${typingComplete ? 'animate-none opacity-0' : 'animate-blink-caret'}`}></span>
+            <h2 className="font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300">
+              Cybersecurity Enthusiast | Web Pentester | Developer
             </h2>
           </div>
           
-          <p className={cn("text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto fade-in-component", isVisible && "is-visible")}
-             data-aos="fade-up" data-aos-delay="400" style={{transitionDelay: "0.3s"}}>
+          <p className="text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
           </p>
           
-          <div className={cn("flex flex-wrap justify-center gap-3 stagger-children", isVisible && "is-visible")}
-               data-aos="fade-up" data-aos-delay="500">
-            <Button className="hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all">
+          {/* Animated buttons with bottom-to-top animation */}
+          <div className={cn(
+            "flex flex-wrap justify-center gap-3",
+            isVisible && "is-visible"
+          )}>
+            <Button 
+              className={cn(
+                "hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all fade-in-component", 
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: "0.1s"}}
+            >
               Download Resume
               <Download size={16} />
             </Button>
-            <Button variant="outline" className="hover-button border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 transition-all">
+            
+            <Button 
+              variant="outline" 
+              className={cn(
+                "hover-button border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 transition-all fade-in-component", 
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: "0.2s"}}
+            >
               Contact Me
               <ArrowRight size={16} />
             </Button>
+            
             <a 
               href="https://github.com/Asraf2004" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className={cn(
+                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: "0.3s"}}
             >
               <Github size={18} />
               GitHub
             </a>
+            
             <a 
               href="https://www.linkedin.com/in/asrafahamed/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className={cn(
+                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: "0.4s"}}
             >
               <Linkedin size={18} />
               LinkedIn
             </a>
+            
             <a 
               href="https://tryhackme.com/p/asrafahamed08" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all"
+              className={cn(
+                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: "0.5s"}}
             >
               <TryHackMe size={18} />
               TryHackMe

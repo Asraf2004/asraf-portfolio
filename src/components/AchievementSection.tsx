@@ -16,7 +16,7 @@ interface Achievement {
 
 export function AchievementSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   
   const achievements: Achievement[] = [
@@ -64,12 +64,15 @@ export function AchievementSection() {
       id="achievements" 
       ref={sectionRef} 
       className={cn(
-        "py-20 bg-cyber-dark fade-in-section",
+        "py-20 bg-cyber-dark fade-in-section min-h-screen flex items-center",
         isVisible && "is-visible"
       )}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-white text-center relative inline-block">
+        <h2 className={cn(
+          "text-3xl font-bold mb-8 text-white text-center relative inline-block section-header",
+          isVisible && "is-visible"
+        )}>
           Achievements
           <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
@@ -78,21 +81,47 @@ export function AchievementSection() {
           {achievements.map((achievement, index) => (
             <div 
               key={index}
-              className="glass-card p-6 rounded-lg mb-6 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300"
+              className={cn(
+                "glass-card p-6 rounded-lg mb-6 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.1 * (index + 1)}s`}}
+              data-aos="fade-up"
+              data-aos-delay={100 * (index + 1)}
             >
-              <div className="mr-4 p-3 bg-white/5 rounded-full">
+              <div className={cn(
+                "mr-4 p-3 bg-white/5 rounded-full fade-in-component",
+                isVisible && "is-visible"
+              )}
+              style={{transitionDelay: `${0.1 * (index + 1) + 0.1}s`}}
+              >
                 {achievement.icon}
               </div>
               
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className={cn(
+                  "text-xl font-semibold text-white mb-2 fade-in-component",
+                  isVisible && "is-visible"
+                )}
+                style={{transitionDelay: `${0.1 * (index + 1) + 0.2}s`}}
+                >
                   {achievement.title}
                 </h3>
-                <p className="text-gray-300 mb-4">
+                <p className={cn(
+                  "text-gray-300 mb-4 fade-in-component",
+                  isVisible && "is-visible"
+                )}
+                style={{transitionDelay: `${0.1 * (index + 1) + 0.3}s`}}
+                >
                   {achievement.description}
                 </p>
                 
-                <div className="flex gap-2">
+                <div className={cn(
+                  "flex gap-2 fade-in-component",
+                  isVisible && "is-visible"
+                )}
+                style={{transitionDelay: `${0.1 * (index + 1) + 0.4}s`}}
+                >
                   <Button 
                     variant="outline" 
                     size="sm" 
