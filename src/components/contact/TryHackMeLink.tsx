@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { TryHackMe } from "@/components/icons/TryHackMe";
 import { ExternalLinkIcon } from "./icons/ExternalLinkIcon";
+import { Cloud } from "lucide-react";
 
 interface TryHackMeLinkProps {
   isInView: boolean;
@@ -26,6 +27,7 @@ export const TryHackMeLink = ({ isInView }: TryHackMeLinkProps) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
+        <Cloud size={18} className="text-cyber-neon mr-1" />
         <TryHackMe size={18} className="text-cyber-neon" />
         <span>tryhackme.com/p/asrafahamed08</span>
         <ExternalLinkIcon size={16} />

@@ -72,11 +72,11 @@ export function ProjectsSection() {
       id="projects" 
       ref={sectionRef} 
       className={cn(
-        "min-h-screen flex items-center py-16 bg-cyber-dark relative fade-in-section",
+        "min-h-screen flex flex-col justify-center items-center py-16 bg-cyber-dark relative fade-in-section",
         isVisible && "is-visible"
       )}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 mb-16">
         <h2 
           className={cn(
             "text-3xl font-bold mb-8 text-white text-center section-header",
@@ -213,10 +213,8 @@ export function ProjectsSection() {
         </DialogContent>
       </Dialog>
 
-      {/* Scroll Down Button */}
-      <div className="relative">
-        <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
-      </div>
+      {/* Single Scroll Down Button properly positioned */}
+      <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
     </section>
   );
 }

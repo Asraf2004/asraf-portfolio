@@ -1,5 +1,5 @@
 
-import { ArrowRight, Github, Linkedin, Download, Mail } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Download, Mail, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRef, useEffect, useState } from "react";
@@ -178,6 +178,7 @@ export function HeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
+              <Cloud size={16} className="text-cyber-neon mr-1" />
               <TryHackMe size={18} />
               TryHackMe
             </motion.a>

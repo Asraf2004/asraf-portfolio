@@ -99,6 +99,11 @@
     position: relative;
     overflow: hidden;
   }
+
+  h2 {
+    @apply text-center mx-auto;
+  }
+  
   ::-webkit-scrollbar {
     @apply w-2;
   }
@@ -134,6 +139,19 @@
 
   img.lazy-loaded {
     opacity: 1;
+  }
+
+  /* Responsive base adjustments */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      font-size: 18px;
+    }
   }
 }
 
@@ -205,9 +223,9 @@
   
   .section-header::after {
     content: '';
-    @apply absolute left-0 bottom-0 h-1 bg-cyber-neon;
+    @apply absolute left-1/2 -translate-x-1/2 bottom-0 h-1 bg-cyber-neon;
     width: 0;
-    transition: width 0.6s ease;
+    transition: width 0.4s ease;
   }
   
   /* Remove the default underline for section headers */
@@ -217,7 +235,7 @@
   
   /* Only show underline on hover */
   .section-header:hover::after {
-    width: 50%;
+    width: 100%;
   }
   
   /* Hover effects for interactive elements */
@@ -345,5 +363,16 @@
   /* Animation for blinking caret */
   .animate-blink-caret {
     animation: blink-caret 0.75s step-end infinite;
+  }
+
+  /* Responsive utilities */
+  @media (max-width: 768px) {
+    .container {
+      @apply px-4;
+    }
+    
+    .section-padding {
+      @apply py-12 px-4;
+    }
   }
 }
