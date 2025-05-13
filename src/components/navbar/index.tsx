@@ -92,6 +92,7 @@ export function NavBar() {
               {sections.map((section) => (
                 <NavItem 
                   key={section.id} 
+                  href={`/${section.id === "home" ? "" : section.id}`}
                   onClick={() => handleNavigation(section.id)}
                   label={section.label} 
                   active={activeSection === section.id} 

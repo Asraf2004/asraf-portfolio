@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 interface MobileMenuProps {
   sections: Array<{ id: string; label: string }>;
   activeSection: string;
-  onItemClick: () => void;
+  onItemClick: (sectionId: string) => void; // Updated to accept sectionId parameter
 }
 
 export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuProps) => {
@@ -45,7 +45,10 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               className={`block py-2 text-base transition-colors duration-200 ${
                 activeSection === section.id ? "text-cyber-neon" : "text-gray-300"
               }`}
-              onClick={onItemClick}
+              onClick={(e) => {
+                e.preventDefault();
+                onItemClick(section.id); // Pass the section id to the callback
+              }}
             >
               {section.label}
               {activeSection === section.id && (

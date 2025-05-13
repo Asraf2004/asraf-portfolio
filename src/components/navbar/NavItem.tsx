@@ -6,9 +6,10 @@ interface NavItemProps {
   href: string;
   label: string;
   active: boolean;
+  onClick?: () => void; // Added onClick as an optional prop
 }
 
-export const NavItem = ({ href, label, active }: NavItemProps) => {
+export const NavItem = ({ href, label, active, onClick }: NavItemProps) => {
   return (
     <motion.li 
       whileHover={{ scale: 1.03 }} 
@@ -16,6 +17,10 @@ export const NavItem = ({ href, label, active }: NavItemProps) => {
     >
       <a 
         href={href} 
+        onClick={(e) => {
+          e.preventDefault(); // Prevent default navigation
+          if (onClick) onClick(); // Call the onClick handler if provided
+        }}
         className={cn(
           "px-3 py-2 text-sm transition-colors duration-300 relative group",
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
