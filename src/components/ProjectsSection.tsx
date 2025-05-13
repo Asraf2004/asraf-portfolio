@@ -1,3 +1,4 @@
+
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Github, ExternalLink, Eye } from "lucide-react";
@@ -55,7 +56,14 @@ export function ProjectsSection() {
   const scrollToNextSection = () => {
     const achievementsSection = document.getElementById("achievements");
     if (achievementsSection) {
-      achievementsSection.scrollIntoView({ behavior: 'smooth' });
+      const navbarHeight = 70;
+      const elementPosition = achievementsSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -64,7 +72,7 @@ export function ProjectsSection() {
       id="projects" 
       ref={sectionRef} 
       className={cn(
-        "py-16 bg-gradient-to-b from-cyber-darker to-cyber-dark relative fade-in-section",
+        "min-h-screen flex items-center py-16 bg-cyber-dark relative fade-in-section",
         isVisible && "is-visible"
       )}
     >
@@ -94,8 +102,17 @@ export function ProjectsSection() {
                 </div>
               </div>
               
-              <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-cyber-neon transition-colors">
+              <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-cyber-neon transition-colors flex items-center">
                 {project.title}
+                <a 
+                  href={project.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="ml-2 text-gray-400 hover:text-cyber-neon transition-colors"
+                  aria-label={`Visit GitHub repository for ${project.title}`}
+                >
+                  <Github size={16} />
+                </a>
               </h3>
               
               <p className="text-gray-400 mb-3 text-sm">

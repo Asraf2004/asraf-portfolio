@@ -39,7 +39,15 @@ const Index = () => {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // Add offset for navbar height
+      const navbarHeight = 70; // Approximate navbar height
+      const elementPosition = section.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
   
@@ -84,22 +92,6 @@ const Index = () => {
     // Lazy load images after a short delay
     const lazyLoadTimer = setTimeout(lazyLoadImages, 1000);
     
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const href = this.getAttribute('href');
-        if (!href) return;
-        
-        const targetElement = document.querySelector(href);
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-    
     return () => {
       clearTimeout(timer);
       clearTimeout(lazyLoadTimer);
@@ -116,6 +108,7 @@ const Index = () => {
         <NavBar />
         
         <main className="flex-1 w-full">
+          {/* Each section is now set to min-height: 100vh to ensure equal heights */}
           <div ref={heroRef} className="relative">
             <HeroSection />
             <div className={cn("relative", isHeroVisible && "visible")}>

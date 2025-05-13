@@ -39,11 +39,13 @@ export function NavBar() {
       ).filter(Boolean);
       
       const viewportHeight = window.innerHeight;
+      
+      // Modified logic to better detect current section based on position
       const currentSection = sectionElements.find(element => {
         if (!element) return false;
         const rect = element.getBoundingClientRect();
-        // Consider a section visible if its top is within the middle third of the viewport
-        return rect.top < viewportHeight / 2 && rect.bottom > viewportHeight / 3;
+        // Consider a section visible if its top is within the first quarter of the viewport
+        return rect.top <= 100 && rect.bottom > viewportHeight / 4;
       });
       
       if (currentSection) {
@@ -60,7 +62,15 @@ export function NavBar() {
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Smooth scroll with offset adjustment to prevent content being hidden under navbar
+      const navbarHeight = 70; // Approximate navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
     setMobileMenuOpen(false);
   };

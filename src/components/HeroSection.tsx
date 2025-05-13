@@ -2,13 +2,32 @@
 import { ArrowRight, Github, Linkedin, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(ref);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
+  
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        setTypedText(fullText.slice(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 50); // Adjust typing speed as needed
+    
+    // Clean up on component unmount
+    return () => clearInterval(typingInterval);
+  }, [isVisible]);
   
   return (
     <section 
@@ -49,8 +68,9 @@ export function HeroSection() {
           </h1>
           
           <div className="h-6 sm:h-8 mb-4">
-            <h2 className="font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300">
-              Cybersecurity Enthusiast | Web Pentester | Developer
+            <h2 className="font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 typing-container">
+              {typedText}
+              <span className="animate-blink-caret border-r-2 border-cyber-neon ml-1"></span>
             </h2>
           </div>
           
@@ -81,6 +101,19 @@ export function HeroSection() {
                 isVisible && "is-visible"
               )}
               style={{transitionDelay: "0.2s"}}
+              onClick={() => {
+                const contactSection = document.getElementById("contact");
+                if (contactSection) {
+                  const navbarHeight = 70;
+                  const elementPosition = contactSection.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                  
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
             >
               Contact Me
               <ArrowRight size={16} />
