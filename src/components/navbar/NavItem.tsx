@@ -6,7 +6,7 @@ interface NavItemProps {
   href: string;
   label: string;
   active: boolean;
-  onClick?: () => void; // Added onClick as an optional prop
+  onClick?: () => void;
 }
 
 export const NavItem = ({ href, label, active, onClick }: NavItemProps) => {
@@ -18,8 +18,8 @@ export const NavItem = ({ href, label, active, onClick }: NavItemProps) => {
       <a 
         href={href} 
         onClick={(e) => {
-          e.preventDefault(); // Prevent default navigation
-          if (onClick) onClick(); // Call the onClick handler if provided
+          e.preventDefault();
+          if (onClick) onClick();
         }}
         className={cn(
           "px-3 py-2 text-sm transition-colors duration-300 relative group",

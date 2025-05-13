@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -94,7 +95,9 @@
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
   section {
-    @apply min-h-screen flex flex-col justify-center bg-cyber-dark dark:bg-cyber-dark py-16;
+    @apply min-h-screen flex flex-col justify-center items-center bg-cyber-dark dark:bg-cyber-dark py-16;
+    position: relative;
+    overflow: hidden;
   }
   ::-webkit-scrollbar {
     @apply w-2;
@@ -151,6 +154,11 @@
     @apply py-16 md:py-20 px-4 sm:px-6 lg:px-12;
   }
 
+  /* Center content vertically and horizontally in sections */
+  .center-content {
+    @apply flex flex-col items-center justify-center;
+  }
+
   /* Typing animation for hero section */
   .typing-container {
     @apply inline-block relative;
@@ -190,7 +198,7 @@
   .stagger-children > *:nth-child(5) { transition-delay: 0.5s; }
   .stagger-children > *:nth-child(6) { transition-delay: 0.6s; }
   
-  /* Section header with animated underline */
+  /* Section header with animated underline only on hover */
   .section-header {
     @apply relative inline-block;
   }
@@ -202,12 +210,13 @@
     transition: width 0.6s ease;
   }
   
+  /* Remove the default underline for section headers */
   .section-header.is-visible::after {
-    width: 50%;
+    width: 0;
   }
   
-  /* Section headers with hover underline - always visible on hover */
-  h2.section-header:hover::after {
+  /* Only show underline on hover */
+  .section-header:hover::after {
     width: 50%;
   }
   

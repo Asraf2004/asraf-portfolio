@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useRef, useEffect, useState } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
+import { motion } from "framer-motion";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,9 +24,8 @@ export function HeroSection() {
       } else {
         clearInterval(typingInterval);
       }
-    }, 50); // Adjust typing speed as needed
+    }, 50);
     
-    // Clean up on component unmount
     return () => clearInterval(typingInterval);
   }, [isVisible]);
   
@@ -34,9 +34,8 @@ export function HeroSection() {
       ref={ref}
       id="home" 
       className="min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden z-10"
-      data-aos="fade-up"
     >
-      {/* Animated background elements - stops after 5 seconds */}
+      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           {Array.from({ length: 20 }).map((_, index) => (
@@ -56,29 +55,49 @@ export function HeroSection() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-20"> 
+      <div className="container mx-auto px-4 relative z-20 flex flex-col items-center justify-center"> 
         <div className="max-w-4xl mx-auto text-center">
-          {/* Static name and title - no animation */}
-          <p className="text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider">
+          {/* Name and title */}
+          <motion.p 
+            className="text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             Hello, my name is
-          </p>
+          </motion.p>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3">
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             Asraf Ahamed A
-          </h1>
+          </motion.h1>
           
-          <div className="h-6 sm:h-8 mb-4">
+          <motion.div 
+            className="h-6 sm:h-8 mb-4"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <h2 className="font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 typing-container">
               {typedText}
               <span className="animate-blink-caret border-r-2 border-cyber-neon ml-1"></span>
             </h2>
-          </div>
+          </motion.div>
           
-          <p className="text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+          <motion.p 
+            className="text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
-          </p>
+          </motion.p>
           
-          {/* Animated buttons with bottom-to-top animation */}
+          {/* Animated buttons */}
           <div className={cn(
             "flex flex-wrap justify-center gap-3",
             isVisible && "is-visible"
@@ -147,7 +166,7 @@ export function HeroSection() {
               LinkedIn
             </a>
             
-            <a 
+            <motion.a 
               href="https://tryhackme.com/p/asrafahamed08" 
               target="_blank" 
               rel="noopener noreferrer"
@@ -156,10 +175,12 @@ export function HeroSection() {
                 isVisible && "is-visible"
               )}
               style={{transitionDelay: "0.5s"}}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <TryHackMe size={18} />
               TryHackMe
-            </a>
+            </motion.a>
           </div>
         </div>
       </div>
