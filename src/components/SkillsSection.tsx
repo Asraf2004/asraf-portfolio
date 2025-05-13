@@ -53,7 +53,7 @@ const SkillItem = ({ icon, title, skills, index, isVisible }: SkillItemProps) =>
 
 export function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isVisible = useSectionAnimation(sectionRef);
+  const { isVisible, scrollToNextSection } = useSectionAnimation(sectionRef);
   
   const skillsData = [
     {
