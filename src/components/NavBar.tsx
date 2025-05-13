@@ -1,2 +1,4 @@
 
-export { NavBar } from "./navbar";
+import { navbar as NavBar } from "./navbar";
+
+export { NavBar };

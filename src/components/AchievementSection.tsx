@@ -64,25 +64,25 @@ export function AchievementSection() {
       id="achievements" 
       ref={sectionRef} 
       className={cn(
-        "py-20 bg-cyber-dark fade-in-section min-h-screen flex items-center",
+        "py-16 bg-cyber-dark fade-in-section min-h-screen flex flex-col justify-center items-center",
         isVisible && "is-visible"
       )}
     >
       <div className="container mx-auto px-4">
         <h2 className={cn(
-          "text-3xl font-bold mb-8 text-white text-center relative inline-block section-header",
+          "text-3xl font-bold mb-6 text-white text-center relative inline-block section-header mx-auto",
           isVisible && "is-visible"
         )}>
           Achievements
           <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
         </h2>
         
-        <div className="mt-12 max-w-3xl mx-auto">
+        <div className="mt-8 max-w-3xl mx-auto">
           {achievements.map((achievement, index) => (
             <div 
               key={index}
               className={cn(
-                "glass-card p-6 rounded-lg mb-6 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component",
+                "glass-card p-5 rounded-lg mb-5 flex items-start hover:border-cyber-neon/30 hover:shadow-md hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component",
                 isVisible && "is-visible"
               )}
               style={{transitionDelay: `${0.1 * (index + 1)}s`}}
@@ -108,7 +108,7 @@ export function AchievementSection() {
                   {achievement.title}
                 </h3>
                 <p className={cn(
-                  "text-gray-300 mb-4 fade-in-component",
+                  "text-gray-300 mb-3 fade-in-component",
                   isVisible && "is-visible"
                 )}
                 style={{transitionDelay: `${0.1 * (index + 1) + 0.3}s`}}
@@ -159,7 +159,7 @@ export function AchievementSection() {
               <img
                 src={selectedAchievement.image} 
                 alt={`${selectedAchievement.title}`} 
-                className="max-h-[70vh] object-contain"
+                className="max-h-[60vh] object-contain"
               />
             </div>
           )}

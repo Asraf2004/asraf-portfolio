@@ -1,6 +1,5 @@
 
 import { Github, Linkedin, Cloud } from "lucide-react";
-import { TryHackMe } from "@/components/icons/TryHackMe";
 import { motion } from "framer-motion";
 
 interface SocialLinksProps {
@@ -57,10 +56,7 @@ export const SocialLinks = ({ className = "", iconSize = 18 }: SocialLinksProps)
         whileTap="tap"
         aria-label="TryHackMe"
       >
-        <div className="flex items-center">
-          <Cloud size={iconSize} className="text-cyber-neon mr-1" />
-          <TryHackMe size={iconSize} className="fill-current" />
-        </div>
+        <Cloud size={iconSize} className="text-cyber-neon" />
       </motion.a>
     </div>
   );

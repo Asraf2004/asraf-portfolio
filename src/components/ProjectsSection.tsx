@@ -76,27 +76,27 @@ export function ProjectsSection() {
         isVisible && "is-visible"
       )}
     >
-      <div className="container mx-auto px-4 mb-16">
+      <div className="container mx-auto px-4">
         <h2 
           className={cn(
-            "text-3xl font-bold mb-8 text-white text-center section-header",
+            "text-3xl font-bold mb-6 text-white text-center section-header mx-auto",
             isVisible && "is-visible"
           )}
         >
           Projects
         </h2>
         
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {projects.map((project, index) => (
             <div 
               key={index}
               className={cn(
-                "glass-card p-4 rounded-lg border border-white/5 hover:border-cyber-neon/30 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20 transition-all duration-300 fade-in-component",
+                "glass-card p-4 rounded-lg border border-white/5 hover:border-cyber-neon/30 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20 transition-all duration-300 fade-in-component h-full",
                 isVisible && "is-visible"
               )}
               style={{ transitionDelay: `${0.1 * index}s` }}
             >
-              <div className="h-32 rounded-lg bg-white/5 mb-3 flex items-center justify-center overflow-hidden">
+              <div className="h-28 rounded-lg bg-white/5 mb-3 flex items-center justify-center overflow-hidden">
                 <div className="text-cyber-neon text-4xl opacity-30 group-hover:opacity-50 transition-opacity">
                   &lt;/&gt;
                 </div>
@@ -213,8 +213,10 @@ export function ProjectsSection() {
         </DialogContent>
       </Dialog>
 
-      {/* Single Scroll Down Button properly positioned */}
-      <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
+      {/* Single scroll down button */}
+      <div className="mt-8">
+        <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
+      </div>
     </section>
   );
 }
