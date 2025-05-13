@@ -51,7 +51,7 @@ export function NavBar() {
     return () => {
       unsubscribeScroll();
     };
-  }, [scrollY, location.pathname]);
+  }, [scrollY, location.pathname, sections]);
 
   const handleNavigation = (sectionId: string) => {
     setActiveSection(sectionId);
