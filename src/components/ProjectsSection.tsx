@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Github, ExternalLink, Eye } from "lucide-react";
@@ -19,7 +18,7 @@ interface Project {
 
 export function ProjectsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { isVisible, scrollToNextSection } = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
   const projects: Project[] = [
@@ -52,6 +51,13 @@ export function ProjectsSection() {
       direction: "right"
     }
   ];
+  
+  const scrollToNextSection = () => {
+    const achievementsSection = document.getElementById("achievements");
+    if (achievementsSection) {
+      achievementsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section 
@@ -191,7 +197,9 @@ export function ProjectsSection() {
       </Dialog>
 
       {/* Scroll Down Button */}
-      <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
+      <div className="relative">
+        <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
+      </div>
     </section>
   );
 }

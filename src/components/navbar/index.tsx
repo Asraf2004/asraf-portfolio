@@ -8,15 +8,12 @@ import { ThemeToggle } from "./ThemeToggle";
 import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { useNavigate, useLocation } from "react-router-dom";
 
 export function NavBar() {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
-  const navigate = useNavigate();
-  const location = useLocation();
   
   const sections = [
     { id: "home", label: "Home" },
@@ -31,34 +28,39 @@ export function NavBar() {
   ];
 
   useEffect(() => {
-    // Get current page from URL path
-    const path = location.pathname;
-    if (path === "/") {
-      setActiveSection("home");
-    } else {
-      const sectionId = path.substring(1); // Remove leading slash
-      if (sections.some(section => section.id === sectionId)) {
-        setActiveSection(sectionId);
-      }
-    }
-    
     // Subscribe to scroll updates to check the current section
     const unsubscribeScroll = scrollY.on("change", (latest) => {
       // Update navbar background
       setIsScrolled(latest > 10);
+      
+      // Check which section is currently visible in the viewport
+      const sectionElements = sections.map(section => 
+        document.getElementById(section.id)
+      ).filter(Boolean);
+      
+      const viewportHeight = window.innerHeight;
+      const currentSection = sectionElements.find(element => {
+        if (!element) return false;
+        const rect = element.getBoundingClientRect();
+        // Consider a section visible if its top is within the middle third of the viewport
+        return rect.top < viewportHeight / 2 && rect.bottom > viewportHeight / 3;
+      });
+      
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
     });
     
     return () => {
       unsubscribeScroll();
     };
-  }, [scrollY, location.pathname, sections]);
+  }, [scrollY, sections]);
 
   const handleNavigation = (sectionId: string) => {
     setActiveSection(sectionId);
-    if (sectionId === "home") {
-      navigate("/");
-    } else {
-      navigate(`/${sectionId}`);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
     setMobileMenuOpen(false);
   };
@@ -92,7 +94,7 @@ export function NavBar() {
               {sections.map((section) => (
                 <NavItem 
                   key={section.id} 
-                  href={`/${section.id === "home" ? "" : section.id}`}
+                  href={`#${section.id}`}
                   onClick={() => handleNavigation(section.id)}
                   label={section.label} 
                   active={activeSection === section.id} 

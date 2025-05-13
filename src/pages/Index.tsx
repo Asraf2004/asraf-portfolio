@@ -21,6 +21,7 @@ const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
   const achievementsRef = useRef<HTMLDivElement>(null);
   const certificationsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,7 @@ const Index = () => {
   const { isVisible: isHeroVisible } = useSectionAnimation(heroRef);
   const { isVisible: isAboutVisible } = useSectionAnimation(aboutRef);
   const { isVisible: isSkillsVisible } = useSectionAnimation(skillsRef);
+  const { isVisible: isProjectsVisible } = useSectionAnimation(projectsRef);
   const { isVisible: isAchievementsVisible } = useSectionAnimation(achievementsRef);
   const { isVisible: isCertificationsVisible } = useSectionAnimation(certificationsRef);
   const { isVisible: isEducationVisible } = useSectionAnimation(educationRef);
@@ -135,7 +137,12 @@ const Index = () => {
             </div>
           </div>
           
-          <ProjectsSection />
+          <div ref={projectsRef} className="relative">
+            <ProjectsSection />
+            <div className={cn("relative", isProjectsVisible && "visible")}>
+              <ScrollDownButton onClick={() => scrollToSection("achievements")} isVisible={isProjectsVisible} />
+            </div>
+          </div>
           
           <div ref={achievementsRef} className="relative">
             <AchievementSection />

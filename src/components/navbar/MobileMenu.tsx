@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 interface MobileMenuProps {
   sections: Array<{ id: string; label: string }>;
   activeSection: string;
-  onItemClick: (sectionId: string) => void; // Updated to accept sectionId parameter
+  onItemClick: (sectionId: string) => void;
 }
 
 export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuProps) => {
@@ -47,7 +47,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               }`}
               onClick={(e) => {
                 e.preventDefault();
-                onItemClick(section.id); // Pass the section id to the callback
+                onItemClick(section.id);
               }}
             >
               {section.label}

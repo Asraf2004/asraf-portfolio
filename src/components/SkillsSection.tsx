@@ -41,7 +41,10 @@ const SkillItem = ({ icon, title, skills, index, isVisible }: SkillItemProps) =>
         {skills.map((skill, skillIndex) => (
           <span
             key={skillIndex}
-            className="hover-button px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 transition-colors duration-300"
+            className={cn(
+              "hover-button px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 transition-colors duration-300",
+              isVisible && "is-visible"
+            )}
           >
             {skill}
           </span>
@@ -53,7 +56,7 @@ const SkillItem = ({ icon, title, skills, index, isVisible }: SkillItemProps) =>
 
 export function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { isVisible, scrollToNextSection } = useSectionAnimation(sectionRef);
+  const { isVisible } = useSectionAnimation(sectionRef);
   
   const skillsData = [
     {
