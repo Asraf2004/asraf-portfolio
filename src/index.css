@@ -84,7 +84,8 @@
 @layer base {
   * {
     @apply border-border selection:bg-cyber-neon/20 selection:text-white dark:selection:bg-cyber-neon/20 dark:selection:text-white;
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    scroll-behavior: smooth;
+    transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out, color 0.4s ease-in-out, transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
   }
   html {
     @apply scroll-smooth;
@@ -115,6 +116,20 @@
   html:not(.dark) {
     color-scheme: light;
   }
+
+  /* Optimized image loading */
+  img {
+    @apply transition-opacity duration-500;
+    loading: lazy;
+  }
+
+  img.lazy-load {
+    opacity: 0;
+  }
+
+  img.lazy-loaded {
+    opacity: 1;
+  }
 }
 
 @layer utilities {
@@ -134,7 +149,7 @@
     @apply py-16 md:py-20 px-4 sm:px-6 lg:px-12;
   }
 
-  /* Enhanced typing animation that loops */
+  /* Enhanced typing animation that runs once */
   .typing-container {
     display: inline-block;
     overflow: hidden;
@@ -142,11 +157,6 @@
     border-right: 3px solid transparent;
   }
   
-  .typing-animation {
-    animation: typing 4s steps(40, end) infinite,
-    blink-caret 0.75s step-end infinite;
-  }
-
   /* Section fade-in animations - optimized for bottom-to-top transition */
   .fade-in-section {
     opacity: 0;
@@ -194,6 +204,11 @@
   }
   
   .section-header.is-visible::after {
+    width: 50%;
+  }
+  
+  /* Section headers with hover underline - always visible on hover */
+  h2.section-header:hover::after {
     width: 50%;
   }
   
@@ -260,24 +275,26 @@
     }
   }
   
-  /* Enhanced typing animation that loops */
-  @keyframes typing {
-    0%, 100% {
-      width: 0;
-    }
-    25%, 75% {
-      width: 100%;
-    }
-  }
-  
+  /* Blink caret animation */
   @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: var(--cyber-neon) }
   }
   
-  @keyframes pulse-neon {
-    0%, 100% { box-shadow: 0 0 10px var(--cyber-neon), 0 0 20px var(--cyber-neon); }
-    50% { box-shadow: 0 0 15px var(--cyber-neon), 0 0 30px var(--cyber-neon); }
+  /* Pulse animation that runs once and stops */
+  @keyframes pulse-neon-once {
+    0% { 
+      box-shadow: 0 0 10px var(--cyber-neon), 0 0 20px var(--cyber-neon);
+      opacity: 0.1;
+    }
+    50% { 
+      box-shadow: 0 0 15px var(--cyber-neon), 0 0 30px var(--cyber-neon);
+      opacity: 0.3;
+    }
+    100% { 
+      box-shadow: 0 0 10px var(--cyber-neon), 0 0 20px var(--cyber-neon);
+      opacity: 0.1;
+    }
   }
   
   /* Animation classes */
@@ -328,5 +345,10 @@
   .neon-text {
     @apply text-cyber-neon;
     text-shadow: 0 0 5px rgba(0, 255, 65, 0.5), 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  /* Animation for blinking caret */
+  .animate-blink-caret {
+    animation: blink-caret 0.75s step-end infinite;
   }
 }

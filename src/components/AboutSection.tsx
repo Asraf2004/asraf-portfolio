@@ -15,31 +15,35 @@ export function AboutSection() {
         "py-20 bg-gradient-to-b from-cyber-dark to-cyber-darker fade-in-section",
         isVisible && "is-visible"
       )}
+      data-aos="fade-up"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className={cn(
             "text-3xl font-bold mb-3 text-white relative pb-3 section-header",
             isVisible && "is-visible"
-          )}>
+          )}
+          data-aos="fade-up" data-aos-delay="100">
             About Me
           </h2>
           
           <div className={cn(
             "mt-8 glass-card p-6 rounded-lg relative hover-card fade-in-component", 
             isVisible && "is-visible"
-          )} style={{transitionDelay: "0.2s"}}>
+          )} 
+          data-aos="fade-up" data-aos-delay="200"
+          style={{transitionDelay: "0.2s"}}>
             <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-cyber-neon"></div>
             <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-cyber-neon"></div>
             
-            <p className="text-gray-300 mb-4 leading-relaxed">
+            <p className="text-gray-300 mb-4 leading-relaxed" data-aos="fade-up" data-aos-delay="300">
               I'm Asraf Ahamed, a passionate cybersecurity and web development enthusiast currently 
               pursuing B.E. in Computer Science and Engineering at K.S. Rangasamy College of Technology.
               With a CGPA of 8.88, I've built a strong foundation in programming, secure coding practices, 
               and network security.
             </p>
             
-            <p className="text-gray-300 mb-4 leading-relaxed">
+            <p className="text-gray-300 mb-4 leading-relaxed" data-aos="fade-up" data-aos-delay="400">
               My interests lie in bug bounty hunting, CTF competitions, and building security tools.
               I enjoy solving real-world security problems and sharing knowledge through workshops and 
               team projects.
@@ -48,7 +52,8 @@ export function AboutSection() {
             <div className={cn(
               "mt-6 flex gap-4 flex-wrap stagger-children",
               isVisible && "is-visible"
-            )}>
+            )}
+            data-aos="fade-up" data-aos-delay="500">
               <div className="hover-button bg-cyber-neon/10 border border-cyber-neon/30 rounded-md px-4 py-2 text-cyber-neon hover:bg-cyber-neon/20 transition-colors transform duration-200">
                 Bug Bounty
               </div>

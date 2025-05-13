@@ -55,10 +55,32 @@ const Index = () => {
     // Set the document title
     document.title = "Asraf Ahamed A - Cybersecurity Enthusiast & Developer";
     
+    // Add a meta tag for preloading important resources
+    const linkPreload = document.createElement('link');
+    linkPreload.rel = 'preload';
+    linkPreload.as = 'font';
+    linkPreload.href = '/fonts/main-font.woff2'; // Adjust to your actual font path
+    linkPreload.type = 'font/woff2';
+    linkPreload.crossOrigin = 'anonymous';
+    document.head.appendChild(linkPreload);
+    
     // Simulate site loading
     const timer = setTimeout(() => {
       setLoading(false);
     }, 500);
+    
+    // Lazy load images once the main content is loaded
+    const lazyLoadImages = () => {
+      const imgElements = document.querySelectorAll('img[loading="lazy"]');
+      imgElements.forEach(img => {
+        if (img instanceof HTMLImageElement) {
+          img.classList.add('lazy-loaded');
+        }
+      });
+    };
+    
+    // Lazy load images after a short delay
+    const lazyLoadTimer = setTimeout(lazyLoadImages, 1000);
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -78,12 +100,13 @@ const Index = () => {
     
     return () => {
       clearTimeout(timer);
+      clearTimeout(lazyLoadTimer);
     };
   }, []);
 
   return (
     <div className={`bg-cyber-dark text-white min-h-screen flex flex-col transition-all duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-      {/* Particle Background - Continuous Background Animation - Placed first but with lowest z-index */}
+      {/* Particle Background - Background Animation that stops after 5 seconds - Placed first but with lowest z-index */}
       <ParticleBackground />
       
       {/* All content with positive z-index */}

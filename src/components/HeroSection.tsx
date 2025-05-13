@@ -9,6 +9,7 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 export function HeroSection() {
   const [visible, setVisible] = useState(false);
   const [typedText, setTypedText] = useState("");
+  const [typingComplete, setTypingComplete] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { isVisible, typingAnimationClass } = useSectionAnimation(ref);
   
@@ -19,48 +20,29 @@ export function HeroSection() {
     setVisible(true);
     
     // Reset typing animation when section comes into view
-    if (isVisible) {
+    if (isVisible && !typingComplete) {
       let typingInterval: number;
       let index = 0;
-      let isTyping = true;
-      let pauseCount = 0;
       
       const animateTyping = () => {
-        if (isTyping) {
-          // Typing forward
-          setTypedText(fullText.substring(0, index));
-          index++;
-          
-          if (index > fullText.length) {
-            isTyping = false;
-            pauseCount = 0;
-          }
-        } else {
-          // Pause at the end before erasing
-          pauseCount++;
-          
-          if (pauseCount > 20) { // Pause for ~1 second (20 * 50ms)
-            // Start erasing
-            setTypedText(fullText.substring(0, index));
-            index--;
-            
-            if (index <= 0) {
-              isTyping = true;
-              pauseCount = 0;
-            }
-          }
+        // Type forward only
+        setTypedText(fullText.substring(0, index));
+        index++;
+        
+        if (index > fullText.length) {
+          clearInterval(typingInterval);
+          setTypingComplete(true);
         }
       };
       
       setTypedText("");
       index = 0;
-      isTyping = true;
       
       typingInterval = window.setInterval(animateTyping, 50);
       
       return () => clearInterval(typingInterval);
     }
-  }, [isVisible]);
+  }, [isVisible, typingComplete]);
 
   return (
     <section 
@@ -70,8 +52,9 @@ export function HeroSection() {
         "min-h-screen flex items-center justify-center relative bg-cyber-dark dark:bg-cyber-dark overflow-hidden z-10 fade-in-section",
         isVisible && "is-visible"
       )}
+      data-aos="fade-up"
     >
-      {/* Animated background elements - continuous loop */}
+      {/* Animated background elements - stops after 5 seconds */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           {Array.from({ length: 20 }).map((_, index) => (
@@ -84,7 +67,7 @@ export function HeroSection() {
                 top: Math.random() * 100 + '%',
                 left: Math.random() * 100 + '%',
                 opacity: Math.random() * 0.3,
-                animation: `pulse-neon ${Math.random() * 8 + 4}s ease-in-out infinite ${Math.random() * 5}s`
+                animation: `pulse-neon-once ${Math.random() * 5 + 3}s ease-in-out forwards ${Math.random() * 2}s`
               }}
             />
           ))}
@@ -93,25 +76,30 @@ export function HeroSection() {
       
       <div className="container mx-auto px-4 relative z-20"> 
         <div className="max-w-4xl mx-auto text-center">
-          <p className={cn("text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider fade-in-component", isVisible && "is-visible")}>
+          <p className={cn("text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider fade-in-component", isVisible && "is-visible")}
+             data-aos="fade-up" data-aos-delay="100">
             Hello, my name is
           </p>
           
-          <h1 className={cn("text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3 fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.1s"}}>
+          <h1 className={cn("text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3 fade-in-component", isVisible && "is-visible")}
+              data-aos="fade-up" data-aos-delay="200" style={{transitionDelay: "0.1s"}}>
             Asraf Ahamed A
           </h1>
           
           <div className="h-6 sm:h-8 mb-4">
-            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible", typingAnimationClass)} style={{transitionDelay: "0.2s"}}>
-              {typedText}<span className="border-r-2 border-cyber-neon dark:border-cyber-neon animate-blink-caret"></span>
+            <h2 className={cn("typing-container font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 fade-in-component", isVisible && "is-visible")}
+                data-aos="fade-up" data-aos-delay="300" style={{transitionDelay: "0.2s"}}>
+              {typedText}<span className={`border-r-2 border-cyber-neon dark:border-cyber-neon ${typingComplete ? 'animate-none opacity-0' : 'animate-blink-caret'}`}></span>
             </h2>
           </div>
           
-          <p className={cn("text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto fade-in-component", isVisible && "is-visible")} style={{transitionDelay: "0.3s"}}>
+          <p className={cn("text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto fade-in-component", isVisible && "is-visible")}
+             data-aos="fade-up" data-aos-delay="400" style={{transitionDelay: "0.3s"}}>
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
           </p>
           
-          <div className={cn("flex flex-wrap justify-center gap-3 stagger-children", isVisible && "is-visible")}>
+          <div className={cn("flex flex-wrap justify-center gap-3 stagger-children", isVisible && "is-visible")}
+               data-aos="fade-up" data-aos-delay="500">
             <Button className="hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all">
               Download Resume
               <Download size={16} />
