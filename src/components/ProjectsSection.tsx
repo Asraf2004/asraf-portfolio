@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
-import { ScrollDownButton } from "./common/ScrollDownButton";
 
 interface Project {
   title: string;
@@ -52,20 +51,6 @@ export function ProjectsSection() {
       direction: "right"
     }
   ];
-  
-  const scrollToNextSection = () => {
-    const achievementsSection = document.getElementById("achievements");
-    if (achievementsSection) {
-      const navbarHeight = 70;
-      const elementPosition = achievementsSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <section 
@@ -212,11 +197,6 @@ export function ProjectsSection() {
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Single scroll down button */}
-      <div className="mt-8">
-        <ScrollDownButton onClick={scrollToNextSection} isVisible={isVisible} />
-      </div>
     </section>
   );
 }
