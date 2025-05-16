@@ -3,15 +3,9 @@ import { useRef } from "react";
 import { NavBar } from "@/components/NavBar";
 import { CertificationsSection } from "@/components/CertificationsSection";
 import { Footer } from "@/components/Footer";
-import { useNavigate } from "react-router-dom";
 
 const CertificationsPage = () => {
-  const navigate = useNavigate();
   const certificationsRef = useRef<HTMLDivElement>(null);
-  
-  const navigateToNextPage = () => {
-    navigate('/education');
-  };
   
   return (
     <div className="bg-cyber-dark text-white min-h-screen flex flex-col">
@@ -21,7 +15,7 @@ const CertificationsPage = () => {
         <main className="flex-1 w-full">
           <div ref={certificationsRef} className="relative">
             <CertificationsSection />
-            {/* Removed ScrollDownButton */}
+            {/* No scroll down button */}
           </div>
         </main>
         

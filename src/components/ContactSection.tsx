@@ -10,7 +10,7 @@ export function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(sectionRef);
 
-  // Animation variants similar to Skills section
+  // Animation variants styled like the Skills section
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

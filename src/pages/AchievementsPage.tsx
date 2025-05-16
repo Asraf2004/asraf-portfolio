@@ -3,15 +3,9 @@ import { useRef } from "react";
 import { NavBar } from "@/components/NavBar";
 import { AchievementSection } from "@/components/AchievementSection";
 import { Footer } from "@/components/Footer";
-import { useNavigate } from "react-router-dom";
 
 const AchievementsPage = () => {
-  const navigate = useNavigate();
   const achievementsRef = useRef<HTMLDivElement>(null);
-  
-  const navigateToNextPage = () => {
-    navigate('/certifications');
-  };
   
   return (
     <div className="bg-cyber-dark text-white min-h-screen flex flex-col">
@@ -21,7 +15,7 @@ const AchievementsPage = () => {
         <main className="flex-1 w-full">
           <div ref={achievementsRef} className="relative">
             <AchievementSection />
-            {/* Removed ScrollDownButton */}
+            {/* No scroll down button */}
           </div>
         </main>
         

@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { NavBar } from "@/components/NavBar";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
-import { useNavigate } from "react-router-dom";
 
 const ContactPage = () => {
   const contactRef = useRef<HTMLDivElement>(null);
@@ -16,7 +15,7 @@ const ContactPage = () => {
         <main className="flex-1 w-full">
           <div ref={contactRef} className="relative">
             <ContactSection />
-            {/* No scroll button on the last page */}
+            {/* No scroll button */}
           </div>
         </main>
         

@@ -3,15 +3,9 @@ import { useRef } from "react";
 import { NavBar } from "@/components/NavBar";
 import { AboutSection } from "@/components/AboutSection";
 import { Footer } from "@/components/Footer";
-import { useNavigate } from "react-router-dom";
 
 const AboutPage = () => {
-  const navigate = useNavigate();
   const aboutRef = useRef<HTMLDivElement>(null);
-  
-  const navigateToNextPage = () => {
-    navigate('/skills');
-  };
   
   return (
     <div className="bg-cyber-dark text-white min-h-screen flex flex-col">
@@ -21,7 +15,7 @@ const AboutPage = () => {
         <main className="flex-1 w-full">
           <div ref={aboutRef} className="relative">
             <AboutSection />
-            {/* Removed ScrollDownButton */}
+            {/* No scroll down button */}
           </div>
         </main>
         

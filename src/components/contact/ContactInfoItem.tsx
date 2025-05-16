@@ -11,11 +11,25 @@ interface ContactInfoItemProps {
 }
 
 export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: ContactInfoItemProps) => {
+  // Animation variants similar to other sections
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        ease: "easeInOut",
+        delay: 0.1 * index
+      }
+    }
+  };
+  
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 10 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-      transition={{ delay: 0.1 * index, duration: 0.3 }}
+      variants={itemVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
       className="flex items-start"
     >
       <div className="bg-white/5 rounded-full p-3 mr-4">
