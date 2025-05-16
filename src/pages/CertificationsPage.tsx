@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { NavBar } from "@/components/NavBar";
 import { CertificationsSection } from "@/components/CertificationsSection";
 import { Footer } from "@/components/Footer";
-import { ScrollDownButton } from "@/components/common/ScrollDownButton";
 import { useNavigate } from "react-router-dom";
 
 const CertificationsPage = () => {
@@ -22,9 +21,7 @@ const CertificationsPage = () => {
         <main className="flex-1 w-full">
           <div ref={certificationsRef} className="relative">
             <CertificationsSection />
-            <div className="relative">
-              <ScrollDownButton onClick={navigateToNextPage} isVisible={true} />
-            </div>
+            {/* Removed ScrollDownButton */}
           </div>
         </main>
         

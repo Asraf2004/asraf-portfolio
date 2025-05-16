@@ -1,4 +1,3 @@
-
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -100,7 +99,7 @@ const Index = () => {
 
   return (
     <div className={`bg-cyber-dark text-white min-h-screen flex flex-col transition-all duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-      {/* Particle Background - Background Animation that stops after 5 seconds - Placed first but with lowest z-index */}
+      {/* Particle Background */}
       <ParticleBackground />
       
       {/* All content with positive z-index */}
@@ -118,51 +117,30 @@ const Index = () => {
           
           <div ref={aboutRef} className="relative">
             <AboutSection />
-            <div className={cn("relative", isAboutVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("skills")} isVisible={isAboutVisible} />
-            </div>
           </div>
           
           <div ref={skillsRef} className="relative">
             <SkillsSection />
-            <div className={cn("relative", isSkillsVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("projects")} isVisible={isSkillsVisible} />
-            </div>
           </div>
           
           <div ref={projectsRef} className="relative">
             <ProjectsSection />
-            <div className={cn("relative", isProjectsVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("achievements")} isVisible={isProjectsVisible} />
-            </div>
           </div>
           
           <div ref={achievementsRef} className="relative">
             <AchievementSection />
-            <div className={cn("relative", isAchievementsVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("certifications")} isVisible={isAchievementsVisible} />
-            </div>
           </div>
           
           <div ref={certificationsRef} className="relative">
             <CertificationsSection />
-            <div className={cn("relative", isCertificationsVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("education")} isVisible={isCertificationsVisible} />
-            </div>
           </div>
           
           <div ref={educationRef} className="relative">
             <EducationSection />
-            <div className={cn("relative", isEducationVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("experience")} isVisible={isEducationVisible} />
-            </div>
           </div>
           
           <div ref={experienceRef} className="relative">
             <ExperienceSection />
-            <div className={cn("relative", isExperienceVisible && "visible")}>
-              <ScrollDownButton onClick={() => scrollToSection("contact")} isVisible={isExperienceVisible} />
-            </div>
           </div>
           
           <ContactSection />

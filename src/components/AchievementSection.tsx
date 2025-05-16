@@ -70,11 +70,11 @@ export function AchievementSection() {
     >
       <div className="container mx-auto px-4">
         <h2 className={cn(
-          "text-3xl font-bold mb-6 text-white text-center relative inline-block section-header mx-auto",
+          "text-3xl font-bold mb-6 text-white text-center section-header mx-auto",
           isVisible && "is-visible"
         )}>
           Achievements
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+          {/* Removed the permanent underline span */}
         </h2>
         
         <div className="mt-8 max-w-3xl mx-auto">

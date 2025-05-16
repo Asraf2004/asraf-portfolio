@@ -22,6 +22,20 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
   
+  // Animation variants for form elements
+  const formItemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.6, 
+        ease: "easeInOut",
+        delay: 0.1 * custom
+      }
+    })
+  };
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -56,9 +70,10 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
     <form onSubmit={handleSubmit}>
       <div className="space-y-4">
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
+          custom={1}
+          variants={formItemVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
         >
           <label htmlFor="name" className="text-sm text-gray-300 mb-1 block">
             Full Name
@@ -78,9 +93,10 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
         </motion.div>
         
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          custom={2}
+          variants={formItemVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
         >
           <label htmlFor="email" className="text-sm text-gray-300 mb-1 block">
             Email Address
@@ -101,9 +117,10 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
         </motion.div>
         
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ delay: 0.3, duration: 0.3 }}
+          custom={3}
+          variants={formItemVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
         >
           <label htmlFor="message" className="text-sm text-gray-300 mb-1 block">
             Message
@@ -120,9 +137,10 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
         </motion.div>
         
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ delay: 0.4, duration: 0.3 }}
+          custom={4}
+          variants={formItemVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
           whileHover={!isSubmitting && !submitted ? { scale: 1.02 } : {}}
           whileTap={!isSubmitting && !submitted ? { scale: 0.98 } : {}}
         >

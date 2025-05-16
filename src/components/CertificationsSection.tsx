@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { FileCheck, CheckCircle, Eye, Download } from "lucide-react";
@@ -87,7 +86,7 @@ export function CertificationsSection() {
           isVisible && "is-visible"
         )}>
           Certifications
-          <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-cyber-neon"></span>
+          {/* Removed the permanent underline span */}
         </h2>
         
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">

@@ -36,9 +36,26 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
     }
   ];
 
+  // Animation variants
+  const titleVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeInOut" }
+    }
+  };
+
   return (
     <>
-      <h3 className="text-xl text-white font-semibold mb-6">Get in Touch</h3>
+      <motion.h3 
+        className="text-xl text-white font-semibold mb-6"
+        variants={titleVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        Get in Touch
+      </motion.h3>
       
       <div className="space-y-6">
         {contactInfo.map((info, index) => (
