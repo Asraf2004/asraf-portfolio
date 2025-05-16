@@ -1,4 +1,3 @@
-
 import { ArrowRight, Github, Linkedin, Download, Mail, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -178,8 +177,7 @@ export function HeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Cloud size={16} className="text-cyber-neon mr-1" />
-              <TryHackMe size={18} />
+              <Cloud size={18} className="text-cyber-neon" />
               TryHackMe
             </motion.a>
           </div>
