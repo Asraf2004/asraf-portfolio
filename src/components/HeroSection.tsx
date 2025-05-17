@@ -1,4 +1,3 @@
-
 import { ArrowRight, Github, Linkedin, Download, Mail, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -6,12 +5,14 @@ import { useRef, useEffect, useState } from "react";
 import { TryHackMe } from "./icons/TryHackMe";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(ref);
   const [typedText, setTypedText] = useState("");
   const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
+  const { toast } = useToast();
   
   useEffect(() => {
     if (!isVisible) return;
@@ -30,13 +31,38 @@ export function HeroSection() {
   }, [isVisible]);
   
   const handleDownloadResume = () => {
-    // Create a link element to trigger the download
-    const link = document.createElement('a');
-    link.href = '/asraf-ahamed-resume.pdf'; // Path to resume PDF in public folder
-    link.download = 'Asraf-Ahamed-Resume.pdf'; // Name that will be used for downloaded file
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Create a link element to trigger the download
+      const link = document.createElement('a');
+      link.href = '/asraf-ahamed-resume.pdf'; // Path to resume PDF in public folder
+      link.download = 'Asraf-Ahamed-Resume.pdf'; // Name that will be used for downloaded file
+      
+      // Check if the file exists before triggering download
+      fetch(link.href)
+        .then(response => {
+          if (response.ok) {
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } else {
+            toast({
+              title: "Resume not found",
+              description: "Please upload your resume to the public folder named 'asraf-ahamed-resume.pdf'",
+              variant: "destructive",
+            });
+          }
+        })
+        .catch(error => {
+          toast({
+            title: "Download failed",
+            description: "Unable to download resume. Please try again later.",
+            variant: "destructive",
+          });
+          console.error("Error downloading resume:", error);
+        });
+    } catch (error) {
+      console.error("Error in download handler:", error);
+    }
   };
   
   return (
@@ -71,7 +97,7 @@ export function HeroSection() {
           <motion.p 
             className="text-cyber-neon dark:text-cyber-neon font-mono mb-2 tracking-wider"
             initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             Hello, my name is
@@ -80,7 +106,7 @@ export function HeroSection() {
           <motion.h1 
             className="text-4xl sm:text-5xl md:text-6xl font-bold text-white dark:text-white mb-3"
             initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             Asraf Ahamed A
@@ -89,7 +115,7 @@ export function HeroSection() {
           <motion.div 
             className="h-6 sm:h-8 mb-4"
             initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <h2 className="font-mono text-lg sm:text-xl text-gray-300 dark:text-gray-300 typing-container">
@@ -101,7 +127,7 @@ export function HeroSection() {
           <motion.p 
             className="text-gray-300 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto"
             initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.

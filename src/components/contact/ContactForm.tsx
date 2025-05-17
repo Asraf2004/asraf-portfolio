@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Mail, User, Check, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,20 +20,6 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
-  
-  // Animation variants for form elements
-  const formItemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: (custom: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.6, 
-        ease: "easeInOut",
-        delay: 0.1 * custom
-      }
-    })
-  };
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -69,12 +54,7 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-4">
-        <motion.div 
-          custom={1}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="name" className="text-sm text-gray-300 mb-1 block">
             Full Name
           </label>
@@ -90,14 +70,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             />
             <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
-        </motion.div>
+        </div>
         
-        <motion.div 
-          custom={2}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="email" className="text-sm text-gray-300 mb-1 block">
             Email Address
           </label>
@@ -114,14 +89,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             />
             <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
-        </motion.div>
+        </div>
         
-        <motion.div 
-          custom={3}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="message" className="text-sm text-gray-300 mb-1 block">
             Message
           </label>
@@ -134,16 +104,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             required
             className="bg-white/5 border-white/10 focus:border-cyber-neon/50 min-h-32"
           />
-        </motion.div>
+        </div>
         
-        <motion.div 
-          custom={4}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          whileHover={!isSubmitting && !submitted ? { scale: 1.02 } : {}}
-          whileTap={!isSubmitting && !submitted ? { scale: 0.98 } : {}}
-        >
+        <div>
           <Button 
             type="submit" 
             className="w-full flex items-center justify-center gap-2 bg-cyber-neon hover:bg-cyber-neon/80 text-black font-medium"
@@ -166,7 +129,7 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
               </>
             )}
           </Button>
-        </motion.div>
+        </div>
       </div>
     </form>
   );

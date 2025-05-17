@@ -1,7 +1,6 @@
 
-import { motion } from "framer-motion";
-import { ExternalLinkIcon } from "./icons/ExternalLinkIcon";
 import { Cloud } from "lucide-react";
+import { ExternalLinkIcon } from "./icons/ExternalLinkIcon";
 
 interface TryHackMeLinkProps {
   isInView: boolean;
@@ -9,27 +8,20 @@ interface TryHackMeLinkProps {
 
 export const TryHackMeLink = ({ isInView }: TryHackMeLinkProps) => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 10 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-      transition={{ delay: 0.5, duration: 0.3 }}
-      className="mt-8"
-    >
+    <div className="mt-8">
       <p className="text-gray-300 mb-3">
         Also find me on TryHackMe:
       </p>
-      <motion.a 
+      <a 
         href="https://tryhackme.com/p/asrafahamed08" 
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-cyber-neon/10 border border-cyber-neon/20 hover:border-cyber-neon/40 rounded-lg text-white transition-colors"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
       >
         <Cloud size={18} className="text-cyber-neon" />
         <span>tryhackme.com/p/asrafahamed08</span>
         <ExternalLinkIcon size={16} />
-      </motion.a>
-    </motion.div>
+      </a>
+    </div>
   );
 };

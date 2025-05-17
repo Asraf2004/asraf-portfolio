@@ -1,6 +1,5 @@
 
 import { Mail, Phone, Github, Linkedin } from "lucide-react";
-import { motion } from "framer-motion";
 import { ContactInfoItem } from "./ContactInfoItem";
 import { TryHackMeLink } from "./TryHackMeLink";
 
@@ -36,26 +35,11 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
     }
   ];
 
-  // Animation variants
-  const titleVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeInOut" }
-    }
-  };
-
   return (
     <>
-      <motion.h3 
-        className="text-xl text-white font-semibold mb-6"
-        variants={titleVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
+      <h3 className="text-xl text-white font-semibold mb-6">
         Get in Touch
-      </motion.h3>
+      </h3>
       
       <div className="space-y-6">
         {contactInfo.map((info, index) => (

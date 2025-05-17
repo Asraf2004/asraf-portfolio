@@ -1,8 +1,7 @@
 
-import { Github, Linkedin, ArrowUp } from "lucide-react";
+import { Github, Linkedin, ArrowUp, Cloud } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { TryHackMe } from "./icons/TryHackMe";
 import { Button } from "./ui/button";
 
 export function Footer() {
@@ -28,11 +27,6 @@ export function Footer() {
           <div className="text-center md:text-left mb-4 md:mb-0">
             <p className="text-gray-400 text-sm">
               &copy; {new Date().getFullYear()} Asraf Ahamed | All rights reserved
-            </p>
-            <p className="text-gray-500 text-xs mt-1">
-              <a href="https://www.flaticon.com/free-icons/cloud" target="_blank" rel="noreferrer" className="hover:text-gray-300 transition-colors">
-                TryHackMe icon created by Freepik - Flaticon
-              </a>
             </p>
           </div>
           
@@ -66,7 +60,7 @@ export function Footer() {
                 whileTap={{ scale: 0.9 }}
                 className="text-gray-400 hover:text-cyber-neon transition-colors"
               >
-                <TryHackMe size={20} />
+                <Cloud size={20} className="text-cyber-neon" />
               </motion.a>
             </div>
             
