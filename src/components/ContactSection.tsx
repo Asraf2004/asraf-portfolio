@@ -21,12 +21,12 @@ export function ContactSection() {
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Contact Information */}
-          <div className="glass-card p-6 rounded-lg">
+          <div className="hover-card glass-card p-6 rounded-lg">
             <ContactInfo isInView={false} />
           </div>
           
           {/* Contact Form */}
-          <div className="glass-card p-6 rounded-lg">
+          <div className="hover-card glass-card p-6 rounded-lg">
             <h3 className="text-xl text-white font-semibold mb-4">
               Send a Message
             </h3>
