@@ -27,7 +27,7 @@ const HomePage = () => {
         <main className="flex-1 w-full">
           <div ref={heroRef} className="relative">
             <HeroSection />
-            <div className="relative">
+            <div className="relative flex justify-center pb-8">
               <ScrollDownButton onClick={navigateToNextPage} isVisible={true} />
             </div>
           </div>

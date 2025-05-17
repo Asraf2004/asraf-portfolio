@@ -1,3 +1,4 @@
+
 import { ArrowRight, Github, Linkedin, Download, Mail, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,16 @@ export function HeroSection() {
     
     return () => clearInterval(typingInterval);
   }, [isVisible]);
+  
+  const handleDownloadResume = () => {
+    // Create a link element to trigger the download
+    const link = document.createElement('a');
+    link.href = '/asraf-ahamed-resume.pdf'; // Path to resume PDF in public folder
+    link.download = 'Asraf-Ahamed-Resume.pdf'; // Name that will be used for downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   
   return (
     <section 
@@ -107,6 +118,7 @@ export function HeroSection() {
                 isVisible && "is-visible"
               )}
               style={{transitionDelay: "0.1s"}}
+              onClick={handleDownloadResume}
             >
               Download Resume
               <Download size={16} />
