@@ -31,38 +31,27 @@ export function HeroSection() {
   }, [isVisible]);
   
   const handleDownloadResume = () => {
-    try {
-      // Create a link element to trigger the download
-      const link = document.createElement('a');
-      link.href = '/asraf-ahamed-resume.pdf'; // Path to resume PDF in public folder
-      link.download = 'Asraf-Ahamed-Resume.pdf'; // Name that will be used for downloaded file
-      
-      // Check if the file exists before triggering download
-      fetch(link.href)
-        .then(response => {
-          if (response.ok) {
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          } else {
-            toast({
-              title: "Resume not found",
-              description: "Please upload your resume to the public folder named 'asraf-ahamed-resume.pdf'",
-              variant: "destructive",
-            });
-          }
-        })
-        .catch(error => {
-          toast({
-            title: "Download failed",
-            description: "Unable to download resume. Please try again later.",
-            variant: "destructive",
-          });
-          console.error("Error downloading resume:", error);
-        });
-    } catch (error) {
-      console.error("Error in download handler:", error);
-    }
+    const fileName = "asraf-ahamed-resume.pdf";
+    const fileUrl = `/${fileName}`;
+    
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = "Asraf-Ahamed-Resume.pdf";
+    document.body.appendChild(link);
+    
+    // Attempt to download the file
+    link.click();
+    
+    // Clean up
+    document.body.removeChild(link);
+    
+    // Show toast notification
+    toast({
+      title: "Resume download initiated",
+      description: "If the download doesn't start, please check if the resume file exists in the public folder.",
+      variant: "default",
+    });
   };
   
   return (

@@ -1,7 +1,6 @@
 
-import { Mail, Phone, Github, Linkedin } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Cloud } from "lucide-react";
 import { ContactInfoItem } from "./ContactInfoItem";
-import { TryHackMeLink } from "./TryHackMeLink";
 
 interface ContactInfoProps {
   isInView: boolean;
@@ -32,6 +31,12 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
       label: "LinkedIn",
       value: "linkedin.com/in/asrafahamed",
       href: "https://linkedin.com/in/asrafahamed"
+    },
+    {
+      icon: <Cloud className="text-cyber-neon" size={20} />,
+      label: "TryHackMe",
+      value: "tryhackme.com/p/asrafahamed08",
+      href: "https://tryhackme.com/p/asrafahamed08"
     }
   ];
 
@@ -50,12 +55,10 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
             value={info.value}
             href={info.href}
             index={index}
-            isInView={isInView}
+            isInView={false} // Always pass false to disable animations
           />
         ))}
       </div>
-      
-      <TryHackMeLink isInView={isInView} />
     </>
   );
 };
