@@ -11,9 +11,9 @@ interface ContactInfoItemProps {
 }
 
 export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: ContactInfoItemProps) => {
-  // Animation variants for each contact info item with bottom-to-top animation
+  // Animation variants for each contact info item with smooth bottom-to-top animation
   const itemVariant = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,

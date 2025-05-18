@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Cloud } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NavItem } from "./NavItem";
 import { ThemeToggle } from "./ThemeToggle";
@@ -60,35 +61,18 @@ export function NavBar() {
   const handleNavigation = (sectionId: string) => {
     setActiveSection(sectionId);
     
-    // Special handling for Contact section to show footer as well
-    if (sectionId === "contact") {
-      const contactSection = document.getElementById(sectionId);
-      if (contactSection) {
-        // Get window height to calculate how much to scroll
-        const windowHeight = window.innerHeight;
-        const contactSectionHeight = contactSection.clientHeight;
-        
-        // Calculate position - scroll past the contact section to show the footer
-        // We scroll to a position that shows both contact section and footer
-        window.scrollTo({
-          top: document.body.scrollHeight - windowHeight * 0.9, // Adjust to show footer
-          behavior: 'smooth'
-        });
-      }
-    } else {
-      // Normal navigation for other sections
-      const element = document.getElementById(sectionId);
-      if (element) {
-        // Smooth scroll with offset adjustment to prevent content being hidden under navbar
-        const navbarHeight = 70; // Approximate navbar height
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
+    // Get the section element
+    const element = document.getElementById(sectionId);
+    if (element) {
+      // Smooth scroll with offset adjustment to prevent content being hidden under navbar
+      const navbarHeight = 70; // Approximate navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
     
     setMobileMenuOpen(false);

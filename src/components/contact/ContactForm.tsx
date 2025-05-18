@@ -52,7 +52,7 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
     }, 1500);
   };
 
-  // Animation variants for form elements
+  // Animation variants for form elements - smooth bottom-to-top without blinking
   const formItemVariants = {
     hidden: { y: 30, opacity: 0 },
     visible: (custom: number) => ({
@@ -61,7 +61,7 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
       transition: { 
         duration: 0.5, 
         ease: "easeOut",
-        delay: custom * 0.1 + 0.3
+        delay: custom * 0.1
       }
     })
   };

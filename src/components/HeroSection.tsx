@@ -127,17 +127,27 @@ export function HeroSection() {
             "flex flex-wrap justify-center gap-4",
             isVisible && "is-visible"
           )}>
-            <Button 
-              className={cn(
-                "hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all fade-in-component", 
+            <div className="flex items-center gap-4">
+              <Button 
+                className={cn(
+                  "hover-button bg-cyber-neon text-black hover:bg-cyber-neon/80 gap-2 transition-all fade-in-component", 
+                  isVisible && "is-visible"
+                )}
+                style={{transitionDelay: "0.1s"}}
+                onClick={handleDownloadResume}
+              >
+                Download Resume
+                <Download size={16} />
+              </Button>
+              
+              <div className={cn(
+                "text-xl font-semibold text-cyber-neon fade-in-component",
                 isVisible && "is-visible"
               )}
-              style={{transitionDelay: "0.1s"}}
-              onClick={handleDownloadResume}
-            >
-              Download Resume
-              <Download size={16} />
-            </Button>
+              style={{transitionDelay: "0.2s"}}>
+                Asraf's Portfolio
+              </div>
+            </div>
             
             {/* Social links */}
             <div className={cn(
