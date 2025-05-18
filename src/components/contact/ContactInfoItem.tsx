@@ -11,26 +11,11 @@ interface ContactInfoItemProps {
 }
 
 export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: ContactInfoItemProps) => {
-  // Animation variants similar to other sections
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.6,
-        ease: "easeInOut",
-        delay: 0.1 * index
-      }
-    }
-  };
-  
+  // Animation completely disabled by rendering a regular div instead of motion.div
   return (
-    <motion.div 
-      variants={itemVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+    <div 
       className="flex items-start"
+      style={{ opacity: 1, transform: "translateY(0)" }}
     >
       <div className="bg-white/5 rounded-full p-3 mr-4">
         {icon}
@@ -47,6 +32,6 @@ export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: C
           {value}
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 };

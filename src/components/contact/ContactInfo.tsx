@@ -46,7 +46,7 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
         Get in Touch
       </h3>
       
-      <div className="space-y-6">
+      <div className="space-y-6" style={{ opacity: 1, visibility: "visible" }}>
         {contactInfo.map((info, index) => (
           <ContactInfoItem 
             key={index}
@@ -55,7 +55,7 @@ export const ContactInfo = ({ isInView }: ContactInfoProps) => {
             value={info.value}
             href={info.href}
             index={index}
-            isInView={false} // Always pass false to disable animations
+            isInView={true} // Set to true to ensure it's always visible
           />
         ))}
       </div>
