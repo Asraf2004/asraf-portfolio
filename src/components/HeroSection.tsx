@@ -139,14 +139,6 @@ export function HeroSection() {
                 Download Resume
                 <Download size={16} />
               </Button>
-              
-              <div className={cn(
-                "text-xl font-semibold text-cyber-neon fade-in-component",
-                isVisible && "is-visible"
-              )}
-              style={{transitionDelay: "0.2s"}}>
-                Asraf's Portfolio
-              </div>
             </div>
             
             {/* Social links */}

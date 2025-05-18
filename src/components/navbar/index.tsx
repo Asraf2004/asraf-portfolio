@@ -1,159 +1,142 @@
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { WebsiteLogo } from "./WebsiteLogo";
 import { NavItem } from "./NavItem";
 import { ThemeToggle } from "./ThemeToggle";
 import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { Menu } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useMobile } from "@/hooks/use-mobile";
 
 export function NavBar() {
-  const [activeSection, setActiveSection] = useState("home");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { scrollY } = useScroll();
+  const isMobile = useMobile();
   
-  const sections = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "achievements", label: "Achievements" },
-    { id: "certifications", label: "Certifications" },
-    { id: "education", label: "Education" },
-    { id: "experience", label: "Experience" },
-    { id: "contact", label: "Contact" },
-  ];
-
+  // Handle scroll event to change navbar appearance
   useEffect(() => {
-    // Subscribe to scroll updates to check the current section
-    const unsubscribeScroll = scrollY.on("change", (latest) => {
-      // Update navbar background
-      setIsScrolled(latest > 10);
-      
-      // Check which section is currently visible in the viewport
-      const sectionElements = sections.map(section => 
-        document.getElementById(section.id)
-      ).filter(Boolean);
-      
-      const viewportHeight = window.innerHeight;
-      
-      // Modified logic to better detect current section based on position
-      const currentSection = sectionElements.find(element => {
-        if (!element) return false;
-        const rect = element.getBoundingClientRect();
-        // Consider a section visible if its top is within the first quarter of the viewport
-        return rect.top <= 100 && rect.bottom > viewportHeight / 4;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection.id);
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
       }
-    });
-    
-    return () => {
-      unsubscribeScroll();
     };
-  }, [scrollY, sections]);
-
-  const handleNavigation = (sectionId: string) => {
-    setActiveSection(sectionId);
     
-    // Get the section element
-    const element = document.getElementById(sectionId);
-    if (element) {
-      // Smooth scroll with offset adjustment to prevent content being hidden under navbar
-      const navbarHeight = 70; // Approximate navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-    
-    setMobileMenuOpen(false);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
-
+  
+  // Navigation links
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/skills", label: "Skills" },
+    { href: "/projects", label: "Projects" },
+    { href: "/achievements", label: "Achievements" },
+    { href: "/certifications", label: "Certifications" },
+    { href: "/education", label: "Education" },
+    { href: "/experience", label: "Experience" },
+    { href: "#contact", label: "Contact", isAnchor: true },
+  ];
+  
+  // Handle smooth scroll for anchor links
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, isAnchor?: boolean) => {
+    if (isAnchor) {
+      e.preventDefault();
+      const targetId = e.currentTarget.getAttribute("href")?.replace("#", "");
+      const targetElement = document.getElementById(targetId || "");
+      
+      if (targetElement) {
+        // Add offset for navbar height
+        const navbarHeight = 70; // Approximate navbar height
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+      
+      // Close mobile menu if open
+      if (mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    }
+  };
+  
   return (
-    <motion.header 
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+    <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300", 
-        isScrolled 
-          ? "bg-cyber-darker/80 backdrop-blur-md border-b border-cyber-neon/20 py-2" 
-          : "bg-transparent py-4"
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3",
+        scrolled 
+          ? "bg-cyber-darker/90 backdrop-blur-sm shadow-lg" 
+          : "bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <motion.div
-            onClick={() => handleNavigation("home")}
-            className="text-xl font-bold text-gradient cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            Asraf<span className="text-cyber-neon">.</span>
-          </motion.div>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-2">
-              {sections.map((section) => (
-                <NavItem 
-                  key={section.id} 
-                  href={`#${section.id}`}
-                  onClick={() => handleNavigation(section.id)}
-                  label={section.label} 
-                  active={activeSection === section.id} 
-                />
-              ))}
-            </ul>
-          </nav>
-          
-          <div className="flex items-center space-x-3">
-            {/* Social Media Icons */}
-            <div className="hidden md:block">
-              <SocialLinks className="mr-2" />
-            </div>
-            
-            {/* Theme Toggle */}
-            <ThemeToggle />
-            
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full text-gray-300 hover:text-cyber-neon transition-all duration-300 hover:scale-110 md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <motion.div
-                initial={false}
-                animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+      <div className="container mx-auto px-4 flex justify-between items-center">
+        {/* Logo */}
+        <WebsiteLogo />
+        
+        {/* Desktop Navigation */}
+        {!isMobile && (
+          <nav className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <NavItem
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.isAnchor)}
               >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </motion.div>
-            </Button>
-          </div>
+                {item.label}
+              </NavItem>
+            ))}
+          </nav>
+        )}
+        
+        {/* Right side items */}
+        <div className="flex items-center space-x-3">
+          {/* Social links - visible only on desktop */}
+          {!isMobile && (
+            <div className="hidden lg:flex items-center mr-2">
+              <SocialLinks />
+            </div>
+          )}
+          
+          {/* Theme toggle */}
+          <ThemeToggle />
+          
+          {/* Mobile menu button */}
+          {isMobile && (
+            <button 
+              onClick={toggleMobileMenu}
+              className="text-white p-2 rounded-md hover:bg-white/10 transition-colors"
+              aria-label="Toggle menu"
+            >
+              <Menu size={24} />
+            </button>
+          )}
         </div>
-      </div>
-      
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
+        
+        {/* Mobile menu overlay */}
+        {isMobile && (
           <MobileMenu 
-            sections={sections} 
-            activeSection={activeSection} 
-            onItemClick={handleNavigation}
+            isOpen={mobileMenuOpen} 
+            onClose={() => setMobileMenuOpen(false)}
+            navItems={navItems}
+            onNavClick={handleNavClick}
           />
         )}
-      </AnimatePresence>
-    </motion.header>
+      </div>
+    </header>
   );
 }
