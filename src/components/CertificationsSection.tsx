@@ -1,6 +1,7 @@
+
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { FileCheck, CheckCircle, Eye, Download } from "lucide-react";
+import { FileCheck, CheckCircle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
@@ -57,18 +58,6 @@ export function CertificationsSection() {
 
   const handleViewCertificate = (cert: Certification) => {
     setSelectedCert(cert);
-  };
-  
-  const handleDownloadCertificate = (cert: Certification) => {
-    if (cert.image) {
-      // Create an anchor element
-      const link = document.createElement('a');
-      link.href = cert.image;
-      link.download = `${cert.title} - ${cert.issuer} Certificate.jpg`; 
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
   };
 
   return (
@@ -160,15 +149,6 @@ export function CertificationsSection() {
                     <Eye size={16} className="mr-1" />
                     View
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-                    onClick={() => handleDownloadCertificate(cert)}
-                  >
-                    <Download size={16} className="mr-1" />
-                    Download
-                  </Button>
                 </div>
               </div>
             </div>
@@ -192,17 +172,6 @@ export function CertificationsSection() {
               />
             </div>
           )}
-          
-          <div className="flex justify-end mt-4">
-            <Button
-              variant="outline"
-              className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 hover:scale-105 transition-transform hover:shadow-md hover:shadow-cyber-neon/20"
-              onClick={() => selectedCert && handleDownloadCertificate(selectedCert)}
-            >
-              <Download size={16} className="mr-2" />
-              Download
-            </Button>
-          </div>
         </DialogContent>
       </Dialog>
     </section>

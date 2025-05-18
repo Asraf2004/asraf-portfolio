@@ -1,3 +1,4 @@
+
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -5,6 +6,7 @@ import { useRef, useEffect, useState } from "react";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { SocialLinks } from "./navbar/SocialLinks";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -121,9 +123,8 @@ export function HeroSection() {
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
           </motion.p>
           
-          {/* Only keep the Download Resume button */}
           <div className={cn(
-            "flex flex-wrap justify-center",
+            "flex flex-wrap justify-center gap-4",
             isVisible && "is-visible"
           )}>
             <Button 
@@ -137,6 +138,14 @@ export function HeroSection() {
               Download Resume
               <Download size={16} />
             </Button>
+            
+            {/* Social links */}
+            <div className={cn(
+              "flex items-center justify-center",
+              isVisible && "is-visible"
+            )}>
+              <SocialLinks iconSize={20} className="flex gap-3" />
+            </div>
           </div>
         </div>
       </div>

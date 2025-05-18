@@ -11,7 +11,7 @@ interface ContactInfoItemProps {
 }
 
 export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: ContactInfoItemProps) => {
-  // Animation variants for each contact info item
+  // Animation variants for each contact info item with bottom-to-top animation
   const itemVariant = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -29,6 +29,8 @@ export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: C
     <motion.div 
       className="flex items-start"
       variants={itemVariant}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
     >
       <div className="bg-white/5 rounded-full p-3 mr-4">
         {icon}
