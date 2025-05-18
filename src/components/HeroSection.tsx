@@ -1,8 +1,7 @@
-import { ArrowRight, Github, Linkedin, Download, Mail, Cloud } from "lucide-react";
+import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRef, useEffect, useState } from "react";
-import { TryHackMe } from "./icons/TryHackMe";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
@@ -122,9 +121,9 @@ export function HeroSection() {
             Passionate about bug bounty, CTFs, secure coding, and web pentesting. Loves solving real-world cyber challenges.
           </motion.p>
           
-          {/* Animated buttons */}
+          {/* Only keep the Download Resume button */}
           <div className={cn(
-            "flex flex-wrap justify-center gap-3",
+            "flex flex-wrap justify-center",
             isVisible && "is-visible"
           )}>
             <Button 
@@ -138,75 +137,6 @@ export function HeroSection() {
               Download Resume
               <Download size={16} />
             </Button>
-            
-            <Button 
-              variant="outline" 
-              className={cn(
-                "hover-button border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10 gap-2 transition-all fade-in-component", 
-                isVisible && "is-visible"
-              )}
-              style={{transitionDelay: "0.2s"}}
-              onClick={() => {
-                const contactSection = document.getElementById("contact");
-                if (contactSection) {
-                  const navbarHeight = 70;
-                  const elementPosition = contactSection.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-                  
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-            >
-              Contact Me
-              <ArrowRight size={16} />
-            </Button>
-            
-            <a 
-              href="https://github.com/Asraf2004" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={cn(
-                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
-                isVisible && "is-visible"
-              )}
-              style={{transitionDelay: "0.3s"}}
-            >
-              <Github size={18} />
-              GitHub
-            </a>
-            
-            <a 
-              href="https://www.linkedin.com/in/asrafahamed/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={cn(
-                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
-                isVisible && "is-visible"
-              )}
-              style={{transitionDelay: "0.4s"}}
-            >
-              <Linkedin size={18} />
-              LinkedIn
-            </a>
-            
-            <motion.a 
-              href="https://tryhackme.com/p/asrafahamed08" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={cn(
-                "hover-button inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm font-medium bg-white/5 text-white hover:bg-white/10 transition-all fade-in-component", 
-                isVisible && "is-visible"
-              )}
-              style={{transitionDelay: "0.5s"}}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Cloud size={18} className="text-cyber-neon" />
-              TryHackMe
-            </motion.a>
           </div>
         </div>
       </div>
