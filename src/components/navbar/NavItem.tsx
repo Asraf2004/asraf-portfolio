@@ -46,15 +46,16 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         
         {/* Hover state underline - only for non-active items - exact text width */}
         {!active && (
-          <span 
+          <motion.span 
             className="absolute h-0.5 bg-cyber-neon origin-left"
             style={{ 
               width: textRef.current ? textRef.current.offsetWidth : 'auto',
               left: 0,
-              bottom: -4,
-              transform: 'scaleX(0)',
-              transition: 'transform 0.3s ease-in-out'
+              bottom: -4
             }}
+            initial={{ scaleX: 0 }}
+            whileHover={{ scaleX: 1 }}
+            transition={{ duration: 0.3 }}
           />
         )}
       </a>

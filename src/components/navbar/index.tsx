@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { WebsiteLogo } from "./WebsiteLogo";
 import { NavItem } from "./NavItem";
@@ -165,12 +164,6 @@ export function NavBar() {
           />
         )}
       </div>
-      
-      <style jsx global>{`
-        .group:hover span + span {
-          transform: scaleX(1);
-        }
-      `}</style>
     </header>
   );
 }
