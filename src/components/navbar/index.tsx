@@ -29,25 +29,19 @@ export function NavBar() {
     
     // Update active section based on scroll position
     const sections = [
-      { id: "home", offset: 0 },
-      { id: "about", offset: document.getElementById("about")?.offsetTop || 0 },
-      { id: "skills", offset: document.getElementById("skills")?.offsetTop || 0 },
-      { id: "projects", offset: document.getElementById("projects")?.offsetTop || 0 },
-      { id: "achievements", offset: document.getElementById("achievements")?.offsetTop || 0 },
-      { id: "certifications", offset: document.getElementById("certifications")?.offsetTop || 0 },
-      { id: "education", offset: document.getElementById("education")?.offsetTop || 0 },
-      { id: "experience", offset: document.getElementById("experience")?.offsetTop || 0 },
-      { id: "contact", offset: document.getElementById("contact")?.offsetTop || 0 },
+      "home", "about", "skills", "projects", "achievements", 
+      "certifications", "education", "experience", "contact"
     ];
     
-    // Add buffer for navbar height (adjust as needed)
+    // Add buffer for navbar height
     const navbarHeight = 100;
     const scrollPosition = offset + navbarHeight;
     
-    // Find the current section (scan from bottom to top)
+    // Find the current section (start from bottom to top)
     for (let i = sections.length - 1; i >= 0; i--) {
-      if (scrollPosition >= sections[i].offset) {
-        setActiveSection(sections[i].id);
+      const section = document.getElementById(sections[i]);
+      if (section && (scrollPosition >= section.offsetTop)) {
+        setActiveSection(sections[i]);
         break;
       }
     }
@@ -76,14 +70,13 @@ export function NavBar() {
   ];
   
   // Handle smooth scroll for anchor links with proper active section updating
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, isAnchor: boolean) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, isAnchor: boolean) => {
     if (isAnchor) {
       e.preventDefault();
-      const targetId = e.currentTarget.getAttribute("href")?.replace("#", "");
       
-      if (targetId) {
-        setActiveSection(targetId);
-        scrollToElement(targetId);
+      if (sectionId) {
+        setActiveSection(sectionId);
+        scrollToElement(sectionId);
       }
       
       // Close mobile menu if open
@@ -115,7 +108,7 @@ export function NavBar() {
                   key={item.id}
                   href={item.href}
                   active={activeSection === item.id}
-                  onClick={(e) => handleNavClick(e, item.isAnchor)}
+                  onClick={(e) => handleNavClick(e, item.id, item.isAnchor)}
                 >
                   {item.label}
                 </NavItem>

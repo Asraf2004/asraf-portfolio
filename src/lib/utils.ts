@@ -20,7 +20,7 @@ export function scrollToElement(elementId: string, offset: number = 80) {
   const element = document.getElementById(elementId);
   if (element) {
     // Calculate position with consistent offset
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const elementPosition = element.getBoundingClientRect().top + window.scrollY;
     const offsetPosition = elementPosition - offset;
     
     // Scroll with smooth behavior

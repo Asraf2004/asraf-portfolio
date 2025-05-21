@@ -42,7 +42,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
           >
             <a 
               href={`#${section.id}`} 
-              className={`block py-2 text-base transition-colors duration-200 ${
+              className={`relative block py-2 text-base transition-colors duration-200 ${
                 activeSection === section.id ? "text-cyber-neon" : "text-gray-300"
               }`}
               onClick={(e) => {
@@ -51,6 +51,10 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               }}
             >
               {section.label}
+              {/* Underline for active section */}
+              {activeSection === section.id && (
+                <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-cyber-neon" />
+              )}
             </a>
           </motion.li>
         ))}

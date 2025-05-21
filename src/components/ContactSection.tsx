@@ -9,12 +9,30 @@ export function ContactSection() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Add a small delay before showing the content
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
+    // Create intersection observer to detect when contact section enters viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Add a small delay before showing the content for a smoother effect
+          setTimeout(() => {
+            setIsVisible(true);
+          }, 300);
+        }
+      },
+      {
+        threshold: 0.1 // Trigger when 10% of the section is visible
+      }
+    );
     
-    return () => clearTimeout(timer);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -34,9 +52,9 @@ export function ContactSection() {
         </motion.h2>
         
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 10 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
         >
           {/* Contact Information */}
