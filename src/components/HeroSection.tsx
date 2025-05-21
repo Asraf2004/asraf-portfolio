@@ -26,7 +26,7 @@ export function HeroSection() {
       } else {
         clearInterval(typingInterval);
       }
-    }, 50);
+    }, 35); // Increased speed from 50ms to 35ms for snappier typing
     
     return () => clearInterval(typingInterval);
   }, [isVisible]);

@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { WebsiteLogo } from "./WebsiteLogo";
 import { NavItem } from "./NavItem";
@@ -41,23 +42,43 @@ export function NavBar() {
       setIsScrolled(false);
     }
     
-    // Improved active section detection
-    // Add some buffer to prevent rapid switching
+    // Improved active section detection with debounce-like behavior
     const scrollPosition = window.scrollY + 100;
-    let currentSectionId = null;
+    let newSectionId = null;
+    let bestVisibleRatio = 0;
     
     // Find the section that's most visible in the viewport
-    // Using the midpoint of each section for better detection
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const section = document.getElementById(sections[i].id);
-      if (section) {
-        const { top, bottom, height } = section.getBoundingClientRect();
-        const sectionTop = section.offsetTop;
+    // Using visibility ratio for better accuracy
+    for (const section of sections) {
+      const element = document.getElementById(section.id);
+      if (element) {
+        const { top, bottom, height } = element.getBoundingClientRect();
+        const sectionTop = element.offsetTop;
+        const viewportHeight = window.innerHeight;
         
-        // Consider a section active if we're within its boundaries
-        // with a preference for sections that are more fully visible
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + height) {
-          currentSectionId = sections[i].id;
+        // How much of this section is visible as a ratio
+        let visibleHeight = 0;
+        
+        if (top >= 0 && top < viewportHeight) {
+          // Section top is in viewport
+          visibleHeight = Math.min(viewportHeight - top, height);
+        } else if (top < 0 && bottom > 0) {
+          // Section top is above viewport but bottom is in viewport
+          visibleHeight = bottom;
+        }
+        
+        const visibilityRatio = visibleHeight / height;
+        
+        // Consider a section active if it has the highest visibility ratio
+        // and exceeds minimum threshold
+        if (visibilityRatio > 0.2 && visibilityRatio > bestVisibleRatio) {
+          bestVisibleRatio = visibilityRatio;
+          newSectionId = section.id;
+        }
+        
+        // Special case for sections that fill most of the viewport
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + height && visibilityRatio > 0.5) {
+          newSectionId = section.id;
           break;
         }
       }
@@ -65,12 +86,12 @@ export function NavBar() {
     
     // Special case for top of page / home section
     if (offset < 100) {
-      currentSectionId = "home";
+      newSectionId = "home";
     }
     
     // Only update if we have a valid section and it's different from current
-    if (currentSectionId && currentSectionId !== activeSection) {
-      setActiveSection(currentSectionId);
+    if (newSectionId && newSectionId !== activeSection) {
+      setActiveSection(newSectionId);
     }
   }, [activeSection, sections]);
   

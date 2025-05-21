@@ -19,16 +19,32 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
         )}
       >
-        <span className="relative">
+        <span className="relative inline-block">
           {children}
           
-          {/* Underline for active state - clean single element implementation */}
-          <span 
-            className={cn(
-              "absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon",
-              active ? "w-full" : "w-0 group-hover:w-full transition-[width] duration-300 ease-in-out"
-            )} 
-          />
+          {/* Active state underline (permanently visible) */}
+          {active && (
+            <span 
+              className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full"
+              style={{
+                transition: "transform 0.3s ease-out",
+                transform: "scaleX(1)",
+                transformOrigin: "left"
+              }}
+            />
+          )}
+          
+          {/* Hover state underline (only visible on non-active items) */}
+          {!active && (
+            <span 
+              className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full"
+              style={{
+                transition: "transform 0.3s ease-out",
+                transform: "scaleX(0)",
+                transformOrigin: "left"
+              }}
+            />
+          )}
         </span>
       </a>
     </li>
