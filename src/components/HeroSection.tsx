@@ -7,8 +7,8 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { SocialLinks } from "./navbar/SocialLinks";
-// Import jsPDF with type declaration
-import { jsPDF } from "jspdf";
+// Import jsPDF correctly
+import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 export function HeroSection() {
@@ -267,3 +267,4 @@ export function HeroSection() {
     </section>
   );
 }
+
