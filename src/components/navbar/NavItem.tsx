@@ -22,14 +22,14 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         <span className="relative">
           {children}
           
-          {/* Underline for active state - no animations */}
+          {/* Underline for active state */}
           {active && (
-            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full" />
+            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full transition-none" />
           )}
           
-          {/* Underline for hover state (only for non-active items) - no animations */}
+          {/* Underline for hover state with left-to-right animation (only for non-active items) */}
           {!active && (
-            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full opacity-0 group-hover:opacity-100" />
+            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-0 group-hover:w-full transition-[width] duration-300 ease-in-out" />
           )}
         </span>
       </a>

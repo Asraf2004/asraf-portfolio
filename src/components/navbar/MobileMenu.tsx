@@ -25,14 +25,14 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
                 <span className="relative">
                   {section.label}
                   
-                  {/* Active section underline - no animations */}
+                  {/* Active section underline */}
                   {activeSection === section.id && (
-                    <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full" />
+                    <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full transition-none" />
                   )}
                   
-                  {/* Hover underline - only for non-active items - no animations */}
+                  {/* Hover underline with left-to-right animation - only for non-active items */}
                   {activeSection !== section.id && (
-                    <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full opacity-0 group-hover:opacity-100" />
+                    <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-0 group-hover:w-full transition-[width] duration-300 ease-in-out" />
                   )}
                 </span>
               </a>

@@ -37,6 +37,9 @@ export function NavBar() {
     // In reverse order to prioritize the section that appears first in the DOM
     const scrollPosition = window.scrollY + 150; // Add offset for better detection
     
+    // Store the section with highest priority that's in view
+    let newActiveSection = activeSection;
+    
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = document.getElementById(sections[i]);
       if (section) {
@@ -45,16 +48,21 @@ export function NavBar() {
         
         if (scrollPosition >= sectionTop && scrollPosition <= sectionTop + sectionHeight) {
           if (activeSection !== sections[i]) {
-            setActiveSection(sections[i]);
+            newActiveSection = sections[i];
+            break;
           }
-          break;
         }
       }
     }
     
     // Special case for home section when at the top
-    if (offset < 100 && activeSection !== "home") {
-      setActiveSection("home");
+    if (offset < 100) {
+      newActiveSection = "home";
+    }
+    
+    // Only update state if the active section has actually changed
+    if (newActiveSection !== activeSection) {
+      setActiveSection(newActiveSection);
     }
   }, [activeSection]);
   
