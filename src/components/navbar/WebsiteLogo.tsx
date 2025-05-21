@@ -20,7 +20,7 @@ export const WebsiteLogo = ({ className, isVisible = true }: WebsiteLogoProps) =
       transition={{ duration: 0.5 }}
     >
       <Globe size={18} className="text-cyber-neon" />
-      <span className="font-medium text-white">Asraf's Portfolio</span>
+      <span className="font-medium text-white">Asraf</span>
     </motion.div>
   );
 };

@@ -1,7 +1,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 
 interface NavItemProps {
   href: string;
@@ -11,6 +11,8 @@ interface NavItemProps {
 }
 
 export const NavItem = ({ href, active = false, onClick, children }: NavItemProps) => {
+  const textRef = useRef<HTMLSpanElement>(null);
+  
   return (
     <motion.li 
       whileHover={{ scale: 1.03 }} 
@@ -25,12 +27,16 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
         )}
       >
-        {children}
+        <span ref={textRef}>{children}</span>
         
-        {/* Active state underline */}
+        {/* Active state underline - exact text width */}
         {active && (
           <motion.span 
-            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-full"
+            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon"
+            style={{ 
+              width: textRef.current ? textRef.current.offsetWidth : 'auto',
+              left: 0
+            }}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             exit={{ scaleX: 0 }}
@@ -38,10 +44,14 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
           />
         )}
         
-        {/* Hover state underline - only for non-active items */}
+        {/* Hover state underline - only for non-active items - exact text width */}
         {!active && (
           <motion.span 
-            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
+            className="absolute -bottom-1 h-0.5 bg-cyber-neon origin-left"
+            style={{ 
+              width: textRef.current ? textRef.current.offsetWidth : 'auto',
+              left: 0
+            }}
             initial={{ scaleX: 0 }}
             whileHover={{ scaleX: 1 }}
             transition={{ duration: 0.3 }}

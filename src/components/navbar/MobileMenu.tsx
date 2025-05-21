@@ -1,6 +1,7 @@
 
 import { SocialLinks } from "./SocialLinks";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 export interface MobileMenuProps {
   activeSection: string;
@@ -30,49 +31,59 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
           }
         }}
       >
-        {sections.map((section) => (
-          <motion.li 
-            key={section.id} 
-            className="px-6 py-2 list-none"
-            variants={{
-              hidden: { opacity: 0, x: -20 },
-              visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
-            }}
-            whileHover={{ x: 5 }}
-          >
-            <a 
-              href={`#${section.id}`} 
-              className="relative block py-2 text-base transition-colors duration-200 group"
-              onClick={(e) => {
-                e.preventDefault();
-                onItemClick(section.id);
+        {sections.map((section) => {
+          const textRef = useRef<HTMLSpanElement>(null);
+          
+          return (
+            <motion.li 
+              key={section.id} 
+              className="px-6 py-2 list-none"
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
               }}
+              whileHover={{ x: 5 }}
             >
-              {section.label}
-              
-              {/* Active section underline */}
-              {activeSection === section.id && (
-                <motion.span 
-                  className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-full"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  exit={{ scaleX: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-              
-              {/* Hover underline animation - only for non-active items */}
-              {activeSection !== section.id && (
-                <motion.span 
-                  className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-            </a>
-          </motion.li>
-        ))}
+              <a 
+                href={`#${section.id}`} 
+                className="relative block py-2 text-base transition-colors duration-200 group"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onItemClick(section.id);
+                }}
+              >
+                <span ref={textRef}>{section.label}</span>
+                
+                {/* Active section underline - exact text width */}
+                {activeSection === section.id && (
+                  <motion.span 
+                    className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon"
+                    style={{ 
+                      width: textRef.current ? textRef.current.offsetWidth : 'auto'
+                    }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    exit={{ scaleX: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+                
+                {/* Hover underline animation - only for non-active items - exact text width */}
+                {activeSection !== section.id && (
+                  <motion.span 
+                    className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
+                    style={{ 
+                      width: textRef.current ? textRef.current.offsetWidth : 'auto'
+                    }}
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+              </a>
+            </motion.li>
+          );
+        })}
         
         {/* Mobile Social Media Links */}
         <motion.li 
