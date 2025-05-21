@@ -9,74 +9,17 @@ import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { scrollToElement } from "@/lib/utils";
+import { motion, useScroll } from "framer-motion";
 
 export function NavBar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
-  
-  // Handle scroll event to change navbar appearance and active section
-  const handleScroll = useCallback(() => {
-    const offset = window.scrollY;
-    
-    // Set navbar background on scroll
-    if (offset > 50) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-    
-    // Update active section based on scroll position
-    const sections = [
-      "home", "about", "skills", "projects", "achievements", 
-      "certifications", "education", "experience", "contact"
-    ];
-    
-    // Check each section to determine which one is currently in view
-    // In reverse order to prioritize the section that appears first in the DOM
-    const scrollPosition = window.scrollY + 150; // Add offset for better detection
-    
-    // Store the section with highest priority that's in view
-    let newActiveSection = activeSection;
-    
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const section = document.getElementById(sections[i]);
-      if (section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition <= sectionTop + sectionHeight) {
-          if (activeSection !== sections[i]) {
-            newActiveSection = sections[i];
-            break;
-          }
-        }
-      }
-    }
-    
-    // Special case for home section when at the top
-    if (offset < 100) {
-      newActiveSection = "home";
-    }
-    
-    // Only update state if the active section has actually changed
-    if (newActiveSection !== activeSection) {
-      setActiveSection(newActiveSection);
-    }
-  }, [activeSection]);
-  
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Initial call to set the correct active section on mount
-    setTimeout(handleScroll, 100);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll]);
+  const { scrollY } = useScroll();
   
   // Navigation links
-  const navItems = [
+  const sections = [
     { id: "home", href: "#home", label: "Home", isAnchor: true },
     { id: "about", href: "#about", label: "About", isAnchor: true },
     { id: "skills", href: "#skills", label: "Skills", isAnchor: true },
@@ -88,12 +31,65 @@ export function NavBar() {
     { id: "contact", href: "#contact", label: "Contact", isAnchor: true },
   ];
   
+  // Handle scroll event to change navbar appearance and active section
+  const handleScroll = useCallback(() => {
+    const offset = window.scrollY;
+    
+    // Set navbar background on scroll
+    if (offset > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+    
+    // Improved active section detection
+    // Add some buffer to prevent rapid switching
+    const scrollPosition = window.scrollY + 100;
+    let currentSectionId = null;
+    
+    // Find the section that's most visible in the viewport
+    // Using the midpoint of each section for better detection
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = document.getElementById(sections[i].id);
+      if (section) {
+        const { top, bottom, height } = section.getBoundingClientRect();
+        const sectionTop = section.offsetTop;
+        
+        // Consider a section active if we're within its boundaries
+        // with a preference for sections that are more fully visible
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + height) {
+          currentSectionId = sections[i].id;
+          break;
+        }
+      }
+    }
+    
+    // Special case for top of page / home section
+    if (offset < 100) {
+      currentSectionId = "home";
+    }
+    
+    // Only update if we have a valid section and it's different from current
+    if (currentSectionId && currentSectionId !== activeSection) {
+      setActiveSection(currentSectionId);
+    }
+  }, [activeSection, sections]);
+  
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Initial call to set the correct active section on mount
+    setTimeout(handleScroll, 100);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+  
   // Handle smooth scroll for anchor links with proper active section updating
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, isAnchor: boolean) => {
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, isAnchor: boolean) => {
     if (isAnchor) {
       e.preventDefault();
       
-      if (sectionId) {
+      if (sectionId && sectionId !== activeSection) {
         setActiveSection(sectionId);
         scrollToElement(sectionId);
       }
@@ -106,12 +102,15 @@ export function NavBar() {
   };
   
   return (
-    <header
+    <motion.header 
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
       className={cn(
-        "fixed top-0 left-0 w-full z-50 py-3",
-        scrolled 
-          ? "bg-cyber-darker/90 backdrop-blur-sm shadow-lg" 
-          : "bg-transparent"
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300", 
+        isScrolled 
+          ? "bg-cyber-darker/80 backdrop-blur-md border-b border-cyber-neon/20 py-2" 
+          : "bg-transparent py-4"
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -127,7 +126,7 @@ export function NavBar() {
                   key={item.id}
                   href={item.href}
                   active={activeSection === item.id}
-                  onClick={(e) => handleNavClick(e, item.id, item.isAnchor)}
+                  onClick={(e) => handleNavigation(e, item.id, item.isAnchor)}
                 >
                   {item.label}
                 </NavItem>
@@ -164,7 +163,7 @@ export function NavBar() {
         {isMobile && mobileMenuOpen && (
           <MobileMenu 
             activeSection={activeSection}
-            sections={navItems.map(item => ({ id: item.id, label: item.label }))}
+            sections={sections.map(item => ({ id: item.id, label: item.label }))}
             onItemClick={(sectionId) => {
               scrollToElement(sectionId);
               setActiveSection(sectionId);
@@ -173,6 +172,6 @@ export function NavBar() {
           />
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }
