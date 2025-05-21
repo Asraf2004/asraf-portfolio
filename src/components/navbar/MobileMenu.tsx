@@ -18,7 +18,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
       className="md:hidden absolute top-full left-0 right-0 bg-cyber-darker/95 backdrop-blur-lg border-b border-cyber-neon/20"
     >
       <motion.ul 
-        className="flex flex-col py-4"
+        className="flex flex-col py-4 list-none"
         initial="hidden"
         animate="visible"
         variants={{
@@ -33,7 +33,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
         {sections.map((section) => (
           <motion.li 
             key={section.id} 
-            className="px-6 py-2"
+            className="px-6 py-2 list-none"
             variants={{
               hidden: { opacity: 0, x: -20 },
               visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
@@ -57,7 +57,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
         
         {/* Mobile Social Media Links */}
         <motion.li 
-          className="px-6 py-4"
+          className="px-6 py-4 list-none"
           variants={{
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { delay: 0.3 } }

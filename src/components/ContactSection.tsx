@@ -9,7 +9,12 @@ export function ContactSection() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    // Add a small delay before showing the content
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -31,7 +36,7 @@ export function ContactSection() {
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 10 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
         >
           {/* Contact Information */}

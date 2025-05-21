@@ -8,6 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 // Helper function for smooth scrolling to elements
 export function scrollToElement(elementId: string, offset: number = 80) {
+  // Home is a special case - scroll to top
   if (elementId === "home") {
     window.scrollTo({
       top: 0,
@@ -18,16 +19,15 @@ export function scrollToElement(elementId: string, offset: number = 80) {
   
   const element = document.getElementById(elementId);
   if (element) {
-    // Wait a small amount of time to make sure the element's position is accurate
-    setTimeout(() => {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }, 10);
+    // Calculate position with consistent offset
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - offset;
+    
+    // Scroll with smooth behavior
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   }
 }
 

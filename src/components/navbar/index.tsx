@@ -40,19 +40,18 @@ export function NavBar() {
       { id: "contact", offset: document.getElementById("contact")?.offsetTop || 0 },
     ];
     
-    // Add offset for navbar height
-    const scrollPosition = offset + 100;
+    // Add buffer for navbar height (adjust as needed)
+    const navbarHeight = 100;
+    const scrollPosition = offset + navbarHeight;
     
-    // Find the current section (scan from bottom to top to find the first visible one)
+    // Find the current section (scan from bottom to top)
     for (let i = sections.length - 1; i >= 0; i--) {
       if (scrollPosition >= sections[i].offset) {
-        if (activeSection !== sections[i].id) {
-          setActiveSection(sections[i].id);
-        }
+        setActiveSection(sections[i].id);
         break;
       }
     }
-  }, [activeSection]);
+  }, []);
   
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -76,15 +75,15 @@ export function NavBar() {
     { id: "contact", href: "#contact", label: "Contact", isAnchor: true },
   ];
   
-  // Handle smooth scroll for anchor links
+  // Handle smooth scroll for anchor links with proper active section updating
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, isAnchor: boolean) => {
     if (isAnchor) {
       e.preventDefault();
       const targetId = e.currentTarget.getAttribute("href")?.replace("#", "");
       
       if (targetId) {
-        scrollToElement(targetId);
         setActiveSection(targetId);
+        scrollToElement(targetId);
       }
       
       // Close mobile menu if open
@@ -109,17 +108,19 @@ export function NavBar() {
         
         {/* Desktop Navigation */}
         {!isMobile && (
-          <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <NavItem
-                key={item.id}
-                href={item.href}
-                active={activeSection === item.id}
-                onClick={(e) => handleNavClick(e, item.isAnchor)}
-              >
-                {item.label}
-              </NavItem>
-            ))}
+          <nav className="hidden md:flex items-center">
+            <ul className="flex space-x-1 list-none">
+              {navItems.map((item) => (
+                <NavItem
+                  key={item.id}
+                  href={item.href}
+                  active={activeSection === item.id}
+                  onClick={(e) => handleNavClick(e, item.isAnchor)}
+                >
+                  {item.label}
+                </NavItem>
+              ))}
+            </ul>
           </nav>
         )}
         

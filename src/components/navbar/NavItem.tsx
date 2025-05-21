@@ -15,6 +15,7 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
     <motion.li 
       whileHover={{ scale: 1.03 }} 
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      className="list-none" // Ensure no list styling
     >
       <a 
         href={href} 
@@ -28,11 +29,12 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         <motion.span 
           className={cn(
             "absolute left-0 -bottom-1 h-0.5 bg-cyber-neon",
-            active ? "w-full" : "w-0"
+            active ? "w-full" : "w-0 group-hover:w-full"
           )}
           initial={false}
           animate={{ width: active ? "100%" : "0%" }}
           transition={{ duration: 0.3 }}
+          whileHover={{ width: "100%" }}
         />
       </a>
     </motion.li>
