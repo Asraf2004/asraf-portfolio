@@ -1,6 +1,5 @@
 
 import { cn } from "@/lib/utils";
-import { useRef } from "react";
 
 interface NavItemProps {
   href: string;
@@ -10,8 +9,6 @@ interface NavItemProps {
 }
 
 export const NavItem = ({ href, active = false, onClick, children }: NavItemProps) => {
-  const textRef = useRef<HTMLSpanElement>(null);
-  
   return (
     <li className="list-none">
       <a 
@@ -22,31 +19,19 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
         )}
       >
-        <span ref={textRef}>{children}</span>
-        
-        {/* Active state underline - exact text width */}
-        {active && (
-          <span 
-            className="absolute h-0.5 bg-cyber-neon"
-            style={{ 
-              width: textRef.current ? textRef.current.offsetWidth : 'auto',
-              left: 0,
-              bottom: -4
-            }}
-          />
-        )}
-        
-        {/* Hover state underline - only for non-active items - exact text width */}
-        {!active && (
-          <span 
-            className="absolute h-0.5 bg-cyber-neon opacity-0 group-hover:opacity-100"
-            style={{ 
-              width: textRef.current ? textRef.current.offsetWidth : 'auto',
-              left: 0,
-              bottom: -4
-            }}
-          />
-        )}
+        <span className="relative">
+          {children}
+          
+          {/* Underline for active state - no animations */}
+          {active && (
+            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full" />
+          )}
+          
+          {/* Underline for hover state (only for non-active items) - no animations */}
+          {!active && (
+            <span className="absolute left-0 bottom-[-4px] h-0.5 bg-cyber-neon w-full opacity-0 group-hover:opacity-100" />
+          )}
+        </span>
       </a>
     </li>
   );
