@@ -15,7 +15,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
-      className="md:hidden bg-cyber-darker/95 backdrop-blur-lg border-b border-cyber-neon/20"
+      className="md:hidden absolute top-full left-0 right-0 bg-cyber-darker/95 backdrop-blur-lg border-b border-cyber-neon/20"
     >
       <motion.ul 
         className="flex flex-col py-4"

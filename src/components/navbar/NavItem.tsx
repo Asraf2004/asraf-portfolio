@@ -5,14 +5,12 @@ import { ReactNode } from "react";
 
 interface NavItemProps {
   href: string;
+  active?: boolean;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   children: ReactNode;
 }
 
-export const NavItem = ({ href, onClick, children }: NavItemProps) => {
-  const active = window.location.pathname === href || 
-                (window.location.pathname === "/" && href === "/");
-                
+export const NavItem = ({ href, active = false, onClick, children }: NavItemProps) => {
   return (
     <motion.li 
       whileHover={{ scale: 1.03 }} 
@@ -36,7 +34,6 @@ export const NavItem = ({ href, onClick, children }: NavItemProps) => {
           animate={{ width: active ? "100%" : "0%" }}
           transition={{ duration: 0.3 }}
         />
-        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyber-neon group-hover:w-full transition-all duration-300"></span>
       </a>
     </motion.li>
   );

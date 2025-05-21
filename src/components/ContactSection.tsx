@@ -2,34 +2,9 @@
 import { useRef } from "react";
 import { ContactInfo } from "./contact/ContactInfo";
 import { ContactForm } from "./contact/ContactForm";
-import { useSectionAnimation } from "@/hooks/useSectionAnimation";
-import { motion } from "framer-motion";
 
 export function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { isVisible } = useSectionAnimation(sectionRef);
-
-  // Animation variants for smooth, staggered children
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-        duration: 0.5
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
 
   return (
     <section 
@@ -37,43 +12,26 @@ export function ContactSection() {
       ref={sectionRef} 
       className="py-16 bg-cyber-dark min-h-screen flex flex-col justify-center items-center"
     >
-      <motion.div 
-        className="container mx-auto px-4"
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        <motion.h2 
-          className="text-3xl font-bold mb-6 text-white text-center section-header mx-auto"
-          variants={itemVariants}
-        >
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-6 text-white text-center section-header mx-auto">
           Contact Me
-        </motion.h2>
+        </h2>
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Contact Information */}
-          <motion.div 
-            className="hover-card glass-card p-6 rounded-lg"
-            variants={itemVariants}
-          >
-            <ContactInfo isInView={isVisible} />
-          </motion.div>
+          <div className="hover-card glass-card p-6 rounded-lg">
+            <ContactInfo />
+          </div>
           
           {/* Contact Form */}
-          <motion.div 
-            className="hover-card glass-card p-6 rounded-lg"
-            variants={itemVariants}
-          >
-            <motion.h3 
-              className="text-xl text-white font-semibold mb-4"
-              variants={itemVariants}
-            >
+          <div className="hover-card glass-card p-6 rounded-lg">
+            <h3 className="text-xl text-white font-semibold mb-4">
               Send a Message
-            </motion.h3>
-            <ContactForm isInView={isVisible} />
-          </motion.div>
+            </h3>
+            <ContactForm />
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

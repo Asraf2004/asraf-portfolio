@@ -6,13 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { LoaderIcon } from "./icons/LoaderIcon";
-import { motion } from "framer-motion";
 
-interface ContactFormProps {
-  isInView: boolean;
-}
-
-export const ContactForm = ({ isInView }: ContactFormProps) => {
+export const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,29 +47,10 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
     }, 1500);
   };
 
-  // Animation variants for form elements - smooth bottom-to-top without blinking
-  const formItemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: (custom: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: { 
-        duration: 0.5, 
-        ease: "easeOut",
-        delay: custom * 0.1
-      }
-    })
-  };
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-4">
-        <motion.div
-          custom={1}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="name" className="text-sm text-gray-300 mb-1 block">
             Full Name
           </label>
@@ -90,14 +66,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             />
             <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
-        </motion.div>
+        </div>
         
-        <motion.div
-          custom={2}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="email" className="text-sm text-gray-300 mb-1 block">
             Email Address
           </label>
@@ -114,14 +85,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             />
             <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
-        </motion.div>
+        </div>
         
-        <motion.div
-          custom={3}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <label htmlFor="message" className="text-sm text-gray-300 mb-1 block">
             Message
           </label>
@@ -134,14 +100,9 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
             required
             className="bg-white/5 border-white/10 focus:border-cyber-neon/50 min-h-32"
           />
-        </motion.div>
+        </div>
         
-        <motion.div
-          custom={4}
-          variants={formItemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div>
           <Button 
             type="submit" 
             className="w-full flex items-center justify-center gap-2 bg-cyber-neon hover:bg-cyber-neon/80 text-black font-medium"
@@ -164,7 +125,7 @@ export const ContactForm = ({ isInView }: ContactFormProps) => {
               </>
             )}
           </Button>
-        </motion.div>
+        </div>
       </div>
     </form>
   );

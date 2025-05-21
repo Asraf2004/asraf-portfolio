@@ -1,37 +1,14 @@
 
-import { motion } from "framer-motion";
-
 interface ContactInfoItemProps {
   icon: React.ReactNode;
   label: string;
   value: string;
   href: string;
-  index: number;
-  isInView: boolean;
 }
 
-export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: ContactInfoItemProps) => {
-  // Animation variants for each contact info item with smooth bottom-to-top animation
-  const itemVariant = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { 
-        duration: 0.5, 
-        ease: "easeOut",
-        delay: index * 0.1
-      }
-    }
-  };
-
+export const ContactInfoItem = ({ icon, label, value, href }: ContactInfoItemProps) => {
   return (
-    <motion.div 
-      className="flex items-start"
-      variants={itemVariant}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-    >
+    <div className="flex items-start">
       <div className="bg-white/5 rounded-full p-3 mr-4">
         {icon}
       </div>
@@ -47,6 +24,6 @@ export const ContactInfoItem = ({ icon, label, value, href, index, isInView }: C
           {value}
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 };
