@@ -7,6 +7,8 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { SocialLinks } from "./navbar/SocialLinks";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -32,40 +34,124 @@ export function HeroSection() {
   }, [isVisible]);
   
   const handleDownloadResume = () => {
-    // Using a base64-encoded PDF for immediate download since we're having issues with file paths
-    // Note: In a production environment, you'd still want to serve actual PDF files from your server
-    
-    // Create a base64 string of a simple PDF (this is just a placeholder for demonstration)
-    // In production, you should replace this with your actual resume PDF encoded as base64
-    const pdfBase64 = "JVBERi0xLjcKJeLjz9MKNSAwIG9iago8PAovRmlsdGVyIC9GbGF0ZURlY29kZQovTGVuZ3RoIDM4Cj4+CnN0cmVhbQp4nCvkMlAwUDC1NNUzNVcwMDJRCEksSVVwSsxLUfBIzcnJ5DIAAAD//wMAUfoJWQplbmRzdHJlYW0KZW5kb2JqCjQgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KL1Jlc291cmNlcyA8PAo+PgovQ29udGVudHMgNSAwIFIKL1BhcmVudCAyIDAgUgo+PgplbmRvYmoKMiAwIG9iago8PAovVHlwZSAvUGFnZXMKL0tpZHMgWzQgMCBSXQovQ291bnQgMQo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjMgMCBvYmoKPDwKL3RyYXBwZWQgKGZhbHNlKQovQ3JlYXRvciAoQXNyYWYgQWhhbWVkIFJlc3VtZSkKL1RpdGxlIChBc3JhZiBBaGFtZWQgUmVzdW1lKQovTW9kRGF0ZSAoRDoyMDIzMDcxNTEyNDQ1NVopCi9DcmVhdGlvbkRhdGUgKEQ6MjAyMzA3MTUxMjQ0NTVaKQo+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMjgzIDAwMDAwIG4gCjAwMDAwMDAyMjQgMDAwMDAgbiAKMDAwMDAwMDMzMiAwMDAwMCBuIAowMDAwMDAwMTIwIDAwMDAwIG4gCjAwMDAwMDAwMTUgMDAwMDAgbiAKdHJhaWxlcgo8PAovUm9vdCAxIDAgUgovSW5mbyAzIDAgUgovU2l6ZSA2Cj4+CnN0YXJ0eHJlZgo0ODUKJSVFT0YK";
-    
     try {
-      // Create a Blob from the base64 PDF
-      const byteCharacters = atob(pdfBase64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      // Create a new PDF document
+      const doc = new jsPDF();
       
-      // Create a URL for the Blob
-      const url = URL.createObjectURL(blob);
+      // Set font styles
+      doc.setFont("helvetica", "normal");
       
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = "asraf-ahamed-resume.pdf";
-      document.body.appendChild(link);
+      // Add name at the top
+      doc.setFontSize(20);
+      doc.setFont("helvetica", "bold");
+      doc.text("Asraf Ahamed A", doc.internal.pageSize.width / 2, 20, { align: "center" });
       
-      // Attempt to download the file
-      link.click();
+      // Add contact information
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("+91 6383066908 | Salem, Tamil Nadu | asrafahamed09@gmail.com | LinkedIn | GitHub | TryHackMe", 
+        doc.internal.pageSize.width / 2, 30, { align: "center" });
       
-      // Clean up
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Add horizontal line
+      doc.setLineWidth(0.5);
+      doc.line(20, 35, doc.internal.pageSize.width - 20, 35);
       
-      // Show toast notification
+      // PERSONAL STATEMENT
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("PERSONAL STATEMENT", 20, 45);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      const statement = "Cybersecurity enthusiast with hands-on experience in Web Penetration Testing, Secure Coding, and Security Analysis. Strong background in Python, C, and MySQL with expertise in security tools like Metasploit and Burp Suite. Passionate about bug bounty and Capture The Flag (CTF) challenges.";
+      const splitStatement = doc.splitTextToSize(statement, doc.internal.pageSize.width - 40);
+      doc.text(splitStatement, 20, 55);
+      
+      // EDUCATION
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("EDUCATION", 20, 75);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("K S Rangasamy College of Technology, Salem, Tamil Nadu", 20, 85);
+      doc.setFont("helvetica", "normal");
+      doc.text("Bachelor of Engineering (Computer Science Engineering)", 20, 92);
+      doc.text("CGPA: 8.88/10 (Till 5th semester)", 20, 99);
+      doc.setFont("helvetica", "normal");
+      doc.text("2022 - Present", 180, 85, { align: "right" });
+      
+      // INTERNSHIP
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("INTERNSHIP", 20, 115);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("Junior Associate Developer (10 weeks)", 20, 125);
+      doc.setFont("helvetica", "normal");
+      doc.text("Calaniyam Consultancies and Technologies", 20, 132);
+      doc.text("March 2024 - May 2024", 180, 125, { align: "right" });
+      
+      // Bullet points for internship
+      doc.setFont("helvetica", "normal");
+      doc.text("• Developed a Human Resource Management System (HRMS) using HTML, CSS, JavaScript, PHP, and", 25, 142);
+      doc.text("  MySQL as part of a full-stack web application project.", 25, 149);
+      doc.text("• Gained experience in full-stack development, database management, and the project lifecycle, ensuring timely", 25, 156);
+      doc.text("  delivery of assigned tasks.", 25, 163);
+      
+      // CERTIFICATIONS
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("CERTIFICATIONS", 20, 180);
+      
+      // TryHackMe
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("TryHackMe", 20, 190);
+      doc.setFont("helvetica", "normal");
+      doc.text("• Pre Security", 25, 197);
+      doc.text("• Cyber security 101", 25, 204);
+      
+      // NPTEL
+      doc.setFont("helvetica", "bold");
+      doc.text("NPTEL", 120, 190);
+      doc.setFont("helvetica", "normal");
+      doc.text("• Cyber Security and Privacy", 125, 197);
+      doc.text("• A Joy of Computing Using python", 125, 204);
+      doc.text("• Problem Solving through Programming in C", 125, 211);
+      doc.text("• Privacy and Security in Online Social Media", 125, 218);
+      
+      // SELFMADE NINJA ACADEMY
+      doc.setFont("helvetica", "bold");
+      doc.text("SELFMADE NINJA ACADEMY(SNA)", 20, 230);
+      doc.setFont("helvetica", "normal");
+      doc.text("• Learn Art Hacking Through Programming Basic (LAHTP)", 25, 237);
+      
+      // SKILLS
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("SKILLS", 20, 250);
+      
+      // Two column skills layout
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("Programming:", 20, 260);
+      doc.setFont("helvetica", "normal");
+      doc.text("Python, C, PHP", 85, 260);
+      
+      doc.setFont("helvetica", "bold");
+      doc.text("Databases:", 120, 260);
+      doc.setFont("helvetica", "normal");
+      doc.text("MySQL", 170, 260);
+      
+      doc.setFont("helvetica", "bold");
+      doc.text("Security Tools:", 20, 267);
+      doc.setFont("helvetica", "normal");
+      const securityTools = "OWASP, Metasploit, Burp Suite, Wireshark, Nmap, GitHub, Linux, Docker";
+      doc.text(securityTools, 85, 267);
+      
+      // Save the PDF
+      doc.save("asraf-ahamed-resume.pdf");
+      
+      // Show success toast notification
       toast({
         title: "Resume downloaded",
         description: "Thank you for your interest in my resume!",
