@@ -1,15 +1,18 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { ReactNode } from "react";
 
 interface NavItemProps {
   href: string;
-  label: string;
-  active: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  children: ReactNode;
 }
 
-export const NavItem = ({ href, label, active, onClick }: NavItemProps) => {
+export const NavItem = ({ href, onClick, children }: NavItemProps) => {
+  const active = window.location.pathname === href || 
+                (window.location.pathname === "/" && href === "/");
+                
   return (
     <motion.li 
       whileHover={{ scale: 1.03 }} 
@@ -17,16 +20,13 @@ export const NavItem = ({ href, label, active, onClick }: NavItemProps) => {
     >
       <a 
         href={href} 
-        onClick={(e) => {
-          e.preventDefault();
-          if (onClick) onClick();
-        }}
+        onClick={onClick}
         className={cn(
           "px-3 py-2 text-sm transition-colors duration-300 relative group",
           active ? "text-cyber-neon" : "text-gray-300 hover:text-cyber-neon"
         )}
       >
-        {label}
+        {children}
         <motion.span 
           className={cn(
             "absolute left-0 -bottom-1 h-0.5 bg-cyber-neon",

@@ -2,7 +2,7 @@
 import { SocialLinks } from "./SocialLinks";
 import { motion } from "framer-motion";
 
-interface MobileMenuProps {
+export interface MobileMenuProps {
   sections: Array<{ id: string; label: string }>;
   activeSection: string;
   onItemClick: (sectionId: string) => void;
@@ -75,4 +75,4 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
       </motion.ul>
     </motion.nav>
   );
-};
+}

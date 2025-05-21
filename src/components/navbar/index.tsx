@@ -7,12 +7,12 @@ import { SocialLinks } from "./SocialLinks";
 import { MobileMenu } from "./MobileMenu";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -130,10 +130,21 @@ export function NavBar() {
         {/* Mobile menu overlay */}
         {isMobile && (
           <MobileMenu 
-            isOpen={mobileMenuOpen} 
-            onClose={() => setMobileMenuOpen(false)}
-            navItems={navItems}
-            onNavClick={handleNavClick}
+            activeSection=""
+            sections={navItems.map(item => ({ id: item.href.replace('#', ''), label: item.label }))}
+            onItemClick={(sectionId) => {
+              const targetItem = navItems.find(item => 
+                item.href === `/${sectionId}` || item.href === `#${sectionId}`
+              );
+              if (targetItem) {
+                const mockEvent = { 
+                  preventDefault: () => {},
+                  currentTarget: { getAttribute: () => targetItem.href }
+                } as unknown as React.MouseEvent<HTMLAnchorElement>;
+                handleNavClick(mockEvent, targetItem.isAnchor);
+              }
+              setMobileMenuOpen(false);
+            }}
           />
         )}
       </div>
