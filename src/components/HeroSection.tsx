@@ -32,13 +32,14 @@ export function HeroSection() {
   }, [isVisible]);
   
   const handleDownloadResume = () => {
+    // Direct path to the resume PDF in the public folder
     const fileName = "asraf-ahamed-resume.pdf";
     const fileUrl = `/${fileName}`;
     
     // Create a temporary link element
     const link = document.createElement('a');
     link.href = fileUrl;
-    link.download = "Asraf-Ahamed-Resume.pdf";
+    link.download = fileName;
     document.body.appendChild(link);
     
     // Attempt to download the file
@@ -49,8 +50,8 @@ export function HeroSection() {
     
     // Show toast notification
     toast({
-      title: "Resume download initiated",
-      description: "If the download doesn't start, please check if the resume file exists in the public folder.",
+      title: "Resume downloaded",
+      description: "Thank you for your interest in my resume!",
       variant: "default",
     });
   };

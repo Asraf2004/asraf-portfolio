@@ -58,12 +58,12 @@ export function ContactSection() {
           className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
         >
           {/* Contact Information */}
-          <div className="hover-card glass-card p-6 rounded-lg">
+          <div className="hover-card glass-card p-6 rounded-lg transform hover:scale-[1.02] hover:shadow-glow transition-all">
             <ContactInfo />
           </div>
           
           {/* Contact Form */}
-          <div className="hover-card glass-card p-6 rounded-lg">
+          <div className="hover-card glass-card p-6 rounded-lg transform hover:scale-[1.02] hover:shadow-glow transition-all">
             <h3 className="text-xl text-white font-semibold mb-4">
               Send a Message
             </h3>

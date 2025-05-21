@@ -25,6 +25,7 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
                 }}
               >
                 {section.label}
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-cyber-neon transform ${isActive ? 'scale-x-100' : 'scale-x-0'} hover:scale-x-100 transition-transform origin-bottom-right hover:origin-bottom-left`}></span>
               </a>
             </li>
           );

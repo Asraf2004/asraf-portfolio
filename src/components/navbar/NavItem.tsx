@@ -20,6 +20,10 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         )}
       >
         {children}
+        <span className={cn(
+          "absolute bottom-0 left-0 w-full h-0.5 bg-cyber-neon transform scale-x-0 group-hover:scale-x-100 transition-transform origin-bottom-right group-hover:origin-bottom-left",
+          active && "scale-x-100 origin-bottom-left"
+        )}></span>
       </a>
     </li>
   );
