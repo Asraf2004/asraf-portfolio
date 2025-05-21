@@ -17,7 +17,7 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
     <motion.li 
       whileHover={{ scale: 1.03 }} 
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      className="list-none" // No list styling
+      className="list-none" 
     >
       <a 
         href={href} 
@@ -32,29 +32,29 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         {/* Active state underline - exact text width */}
         {active && (
           <motion.span 
-            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon"
+            className="absolute h-0.5 bg-cyber-neon"
             style={{ 
               width: textRef.current ? textRef.current.offsetWidth : 'auto',
-              left: 0
+              left: 0,
+              bottom: -4
             }}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            exit={{ scaleX: 0 }}
             transition={{ duration: 0.3 }}
           />
         )}
         
         {/* Hover state underline - only for non-active items - exact text width */}
         {!active && (
-          <motion.span 
-            className="absolute -bottom-1 h-0.5 bg-cyber-neon origin-left"
+          <span 
+            className="absolute h-0.5 bg-cyber-neon origin-left"
             style={{ 
               width: textRef.current ? textRef.current.offsetWidth : 'auto',
-              left: 0
+              left: 0,
+              bottom: -4,
+              transform: 'scaleX(0)',
+              transition: 'transform 0.3s ease-in-out'
             }}
-            initial={{ scaleX: 0 }}
-            whileHover={{ scaleX: 1 }}
-            transition={{ duration: 0.3 }}
           />
         )}
       </a>

@@ -57,27 +57,29 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
                 {/* Active section underline - exact text width */}
                 {activeSection === section.id && (
                   <motion.span 
-                    className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon"
+                    className="absolute h-0.5 bg-cyber-neon"
                     style={{ 
-                      width: textRef.current ? textRef.current.offsetWidth : 'auto'
+                      width: textRef.current ? textRef.current.offsetWidth : 'auto',
+                      left: 0,
+                      bottom: -4
                     }}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    exit={{ scaleX: 0 }}
                     transition={{ duration: 0.3 }}
                   />
                 )}
                 
                 {/* Hover underline animation - only for non-active items - exact text width */}
                 {activeSection !== section.id && (
-                  <motion.span 
-                    className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
+                  <span 
+                    className="absolute h-0.5 bg-cyber-neon origin-left"
                     style={{ 
-                      width: textRef.current ? textRef.current.offsetWidth : 'auto'
+                      width: textRef.current ? textRef.current.offsetWidth : 'auto',
+                      left: 0,
+                      bottom: -4,
+                      transform: 'scaleX(0)',
+                      transition: 'transform 0.3s ease-in-out'
                     }}
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3 }}
                   />
                 )}
               </a>

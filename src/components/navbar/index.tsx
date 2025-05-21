@@ -165,6 +165,12 @@ export function NavBar() {
           />
         )}
       </div>
+      
+      <style jsx global>{`
+        .group:hover span + span {
+          transform: scaleX(1);
+        }
+      `}</style>
     </header>
   );
 }
