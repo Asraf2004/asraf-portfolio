@@ -27,12 +27,13 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
       >
         {children}
         
-        {/* Active state underline - only shown when active */}
+        {/* Active state underline */}
         {active && (
           <motion.span 
             className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-full"
-            initial={false}
-            animate={{ width: "100%" }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            exit={{ scaleX: 0 }}
             transition={{ duration: 0.3 }}
           />
         )}

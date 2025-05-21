@@ -28,6 +28,9 @@ export function scrollToElement(elementId: string, offset: number = 80) {
       top: offsetPosition,
       behavior: 'smooth'
     });
+    
+    // Update URL hash without causing a jump
+    history.pushState(null, '', `#${elementId}`);
   }
 }
 

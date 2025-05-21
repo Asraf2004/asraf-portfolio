@@ -52,7 +52,13 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               
               {/* Active section underline */}
               {activeSection === section.id && (
-                <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-cyber-neon" />
+                <motion.span 
+                  className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-full"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  exit={{ scaleX: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               )}
               
               {/* Hover underline animation - only for non-active items */}

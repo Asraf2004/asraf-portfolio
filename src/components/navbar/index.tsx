@@ -33,22 +33,33 @@ export function NavBar() {
       "certifications", "education", "experience", "contact"
     ];
     
-    // Add buffer for navbar height
-    const navbarHeight = 100;
-    const scrollPosition = offset + navbarHeight;
+    // Check each section to determine which one is currently in view
+    // In reverse order to prioritize the section that appears first in the DOM
+    const scrollPosition = window.scrollY + 150; // Add offset for better detection
     
-    // Find the current section (start from bottom to top)
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = document.getElementById(sections[i]);
-      if (section && (scrollPosition >= section.offsetTop)) {
-        setActiveSection(sections[i]);
-        break;
+      if (section) {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition <= sectionTop + sectionHeight) {
+          if (activeSection !== sections[i]) {
+            setActiveSection(sections[i]);
+          }
+          break;
+        }
       }
     }
-  }, []);
+    
+    // Special case for home section when at the top
+    if (offset < 100 && activeSection !== "home") {
+      setActiveSection("home");
+    }
+  }, [activeSection]);
   
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     // Initial call to set the correct active section on mount
     setTimeout(handleScroll, 100);
     return () => {
