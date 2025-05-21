@@ -51,13 +51,6 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
               }}
             >
               {section.label}
-              {activeSection === section.id && (
-                <motion.span 
-                  layoutId="mobileActiveIndicator"
-                  className="ml-2 inline-block w-1 h-1 bg-cyber-neon rounded-full"
-                  transition={{ duration: 0.3 }}
-                />
-              )}
             </a>
           </motion.li>
         ))}

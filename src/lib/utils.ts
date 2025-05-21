@@ -18,13 +18,16 @@ export function scrollToElement(elementId: string, offset: number = 80) {
   
   const element = document.getElementById(elementId);
   if (element) {
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - offset;
-    
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+    // Wait a small amount of time to make sure the element's position is accurate
+    setTimeout(() => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }, 10);
   }
 }
 

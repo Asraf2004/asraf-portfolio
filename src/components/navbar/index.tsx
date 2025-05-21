@@ -41,27 +41,29 @@ export function NavBar() {
     ];
     
     // Add offset for navbar height
-    const scrollPosition = offset + 100; // Adding extra offset to account for navbar height
+    const scrollPosition = offset + 100;
     
-    // Find the current section
+    // Find the current section (scan from bottom to top to find the first visible one)
     for (let i = sections.length - 1; i >= 0; i--) {
       if (scrollPosition >= sections[i].offset) {
-        setActiveSection(sections[i].id);
+        if (activeSection !== sections[i].id) {
+          setActiveSection(sections[i].id);
+        }
         break;
       }
     }
-  }, []);
+  }, [activeSection]);
   
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     // Initial call to set the correct active section on mount
-    handleScroll();
+    setTimeout(handleScroll, 100);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
   
-  // Navigation links - ensuring Home section is properly identified
+  // Navigation links
   const navItems = [
     { id: "home", href: "#home", label: "Home", isAnchor: true },
     { id: "about", href: "#about", label: "About", isAnchor: true },
@@ -80,32 +82,9 @@ export function NavBar() {
       e.preventDefault();
       const targetId = e.currentTarget.getAttribute("href")?.replace("#", "");
       
-      // Special handling for home section
-      if (targetId === "home") {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-        setActiveSection("home");
-      } else {
-        const targetElement = document.getElementById(targetId || "");
-        
-        if (targetElement) {
-          // Add offset for navbar height
-          const navbarHeight = 80; // Slightly increased to ensure better positioning
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-          
-          // Update active section immediately without waiting for scroll event
-          if (targetId) {
-            setActiveSection(targetId);
-          }
-        }
+      if (targetId) {
+        scrollToElement(targetId);
+        setActiveSection(targetId);
       }
       
       // Close mobile menu if open
@@ -174,14 +153,8 @@ export function NavBar() {
             activeSection={activeSection}
             sections={navItems.map(item => ({ id: item.id, label: item.label }))}
             onItemClick={(sectionId) => {
-              const targetItem = navItems.find(item => item.id === sectionId);
-              if (targetItem) {
-                const mockEvent = { 
-                  preventDefault: () => {},
-                  currentTarget: { getAttribute: () => targetItem.href }
-                } as unknown as React.MouseEvent<HTMLAnchorElement>;
-                handleNavClick(mockEvent, targetItem.isAnchor);
-              }
+              scrollToElement(sectionId);
+              setActiveSection(sectionId);
               setMobileMenuOpen(false);
             }}
           />
