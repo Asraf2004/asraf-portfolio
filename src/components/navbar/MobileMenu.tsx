@@ -3,8 +3,8 @@ import { SocialLinks } from "./SocialLinks";
 import { motion } from "framer-motion";
 
 export interface MobileMenuProps {
-  sections: Array<{ id: string; label: string }>;
   activeSection: string;
+  sections: Array<{ id: string; label: string }>;
   onItemClick: (sectionId: string) => void;
 }
 

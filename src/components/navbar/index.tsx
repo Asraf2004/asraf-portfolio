@@ -8,6 +8,7 @@ import { MobileMenu } from "./MobileMenu";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { scrollToElement } from "@/lib/utils";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,9 +61,9 @@ export function NavBar() {
     };
   }, [handleScroll]);
   
-  // Navigation links
+  // Navigation links - ensuring Home section is properly identified
   const navItems = [
-    { id: "home", href: "/", label: "Home", isAnchor: false },
+    { id: "home", href: "#home", label: "Home", isAnchor: true },
     { id: "about", href: "#about", label: "About", isAnchor: true },
     { id: "skills", href: "#skills", label: "Skills", isAnchor: true },
     { id: "projects", href: "#projects", label: "Projects", isAnchor: true },
@@ -78,22 +79,32 @@ export function NavBar() {
     if (isAnchor) {
       e.preventDefault();
       const targetId = e.currentTarget.getAttribute("href")?.replace("#", "");
-      const targetElement = document.getElementById(targetId || "");
       
-      if (targetElement) {
-        // Add offset for navbar height
-        const navbarHeight = 70; // Approximate navbar height
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-        
+      // Special handling for home section
+      if (targetId === "home") {
         window.scrollTo({
-          top: offsetPosition,
+          top: 0,
           behavior: 'smooth'
         });
+        setActiveSection("home");
+      } else {
+        const targetElement = document.getElementById(targetId || "");
         
-        // Update active section immediately without waiting for scroll event
-        if (targetId) {
-          setActiveSection(targetId);
+        if (targetElement) {
+          // Add offset for navbar height
+          const navbarHeight = 80; // Slightly increased to ensure better positioning
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Update active section immediately without waiting for scroll event
+          if (targetId) {
+            setActiveSection(targetId);
+          }
         }
       }
       
@@ -125,7 +136,7 @@ export function NavBar() {
                 key={item.id}
                 href={item.href}
                 active={activeSection === item.id}
-                onClick={(e) => handleNavClick(e, item.isAnchor || false)}
+                onClick={(e) => handleNavClick(e, item.isAnchor)}
               >
                 {item.label}
               </NavItem>
@@ -157,7 +168,7 @@ export function NavBar() {
           )}
         </div>
         
-        {/* Mobile menu overlay */}
+        {/* Mobile menu */}
         {isMobile && mobileMenuOpen && (
           <MobileMenu 
             activeSection={activeSection}
@@ -169,7 +180,7 @@ export function NavBar() {
                   preventDefault: () => {},
                   currentTarget: { getAttribute: () => targetItem.href }
                 } as unknown as React.MouseEvent<HTMLAnchorElement>;
-                handleNavClick(mockEvent, targetItem.isAnchor || false);
+                handleNavClick(mockEvent, targetItem.isAnchor);
               }
               setMobileMenuOpen(false);
             }}

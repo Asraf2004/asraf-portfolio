@@ -7,7 +7,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Helper function for smooth scrolling to elements
-export function scrollToElement(elementId: string, offset: number = 70) {
+export function scrollToElement(elementId: string, offset: number = 80) {
+  if (elementId === "home") {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    return;
+  }
+  
   const element = document.getElementById(elementId);
   if (element) {
     const elementPosition = element.getBoundingClientRect().top;
