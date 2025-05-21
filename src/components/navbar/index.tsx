@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { WebsiteLogo } from "./WebsiteLogo";
 import { NavItem } from "./NavItem";
@@ -99,7 +100,7 @@ export function NavBar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3",
+        "fixed top-0 left-0 w-full z-50 py-3",
         scrolled 
           ? "bg-cyber-darker/90 backdrop-blur-sm shadow-lg" 
           : "bg-transparent"
@@ -143,7 +144,7 @@ export function NavBar() {
           {isMobile && (
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white p-2 rounded-md hover:bg-white/10 transition-colors"
+              className="text-white p-2 rounded-md hover:bg-white/10"
               aria-label="Toggle menu"
             >
               <Menu size={24} />
