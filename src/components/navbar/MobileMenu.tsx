@@ -42,18 +42,27 @@ export const MobileMenu = ({ sections, activeSection, onItemClick }: MobileMenuP
           >
             <a 
               href={`#${section.id}`} 
-              className={`relative block py-2 text-base transition-colors duration-200 ${
-                activeSection === section.id ? "text-cyber-neon" : "text-gray-300"
-              }`}
+              className="relative block py-2 text-base transition-colors duration-200 group"
               onClick={(e) => {
                 e.preventDefault();
                 onItemClick(section.id);
               }}
             >
               {section.label}
-              {/* Underline for active section */}
+              
+              {/* Active section underline */}
               {activeSection === section.id && (
                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-cyber-neon" />
+              )}
+              
+              {/* Hover underline animation - only for non-active items */}
+              {activeSection !== section.id && (
+                <motion.span 
+                  className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
               )}
             </a>
           </motion.li>

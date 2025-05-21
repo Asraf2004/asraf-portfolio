@@ -26,23 +26,23 @@ export const NavItem = ({ href, active = false, onClick, children }: NavItemProp
         )}
       >
         {children}
-        {/* Underline animation - separate for active state vs hover */}
-        <motion.span 
-          className={cn(
-            "absolute left-0 -bottom-1 h-0.5 bg-cyber-neon",
-            active ? "w-full" : "w-0"
-          )}
-          initial={false}
-          animate={{ width: active ? "100%" : "0%" }}
-          transition={{ duration: 0.3 }}
-        />
         
-        {/* Hover animation - only shows when not active */}
+        {/* Active state underline - only shown when active */}
+        {active && (
+          <motion.span 
+            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-full"
+            initial={false}
+            animate={{ width: "100%" }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
+        
+        {/* Hover state underline - only for non-active items */}
         {!active && (
           <motion.span 
-            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon w-0 group-hover:w-full"
-            initial={{ width: "0%" }}
-            whileHover={{ width: "100%" }}
+            className="absolute left-0 -bottom-1 h-0.5 bg-cyber-neon origin-left"
+            initial={{ scaleX: 0 }}
+            whileHover={{ scaleX: 1 }}
             transition={{ duration: 0.3 }}
           />
         )}
