@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { WebsiteLogo } from "./WebsiteLogo";
 import { NavItem } from "./NavItem";
@@ -121,7 +120,7 @@ export function NavBar() {
         {!isMobile && (
           <nav className="hidden md:flex items-center">
             <ul className="flex space-x-1 list-none">
-              {navItems.map((item) => (
+              {sections.map((item) => (
                 <NavItem
                   key={item.id}
                   href={item.href}
