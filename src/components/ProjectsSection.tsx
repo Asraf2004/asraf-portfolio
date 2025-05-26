@@ -1,3 +1,4 @@
+
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Github, ExternalLink, Eye } from "lucide-react";
@@ -71,7 +72,7 @@ export function ProjectsSection() {
             <div 
               key={index}
               className={cn(
-                "bg-white/5 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component group",
+                "bg-white/5 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component group flex flex-col h-full",
                 isVisible && "is-visible"
               )}
               style={{transitionDelay: `${0.1 * (index + 1)}s`}}
@@ -82,16 +83,16 @@ export function ProjectsSection() {
               </div>
               
               {/* Project Info */}
-              <div className="p-3 sm:p-4 lg:p-6">
+              <div className="p-3 sm:p-4 lg:p-6 flex flex-col flex-1">
                 <h3 className="text-sm sm:text-base lg:text-xl font-semibold text-white mb-2 sm:mb-3 line-clamp-2">
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-3 lg:line-clamp-2">
+                <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-3 lg:line-clamp-2 flex-1">
                   {project.description}
                 </p>
                 
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-auto">
                   <a 
                     href={project.github} 
                     target="_blank" 
