@@ -10,6 +10,7 @@ interface Achievement {
   title: string;
   provider: string;
   date: string;
+  description: string;
   image: string;
 }
 
@@ -24,6 +25,7 @@ export function AchievementSection() {
       title: "Cyberthon 2025 Participation",
       provider: "Cyberthon",
       date: "March 2025",
+      description: "Participated in Cyberthon 2025, a premier cybersecurity competition featuring various challenges in penetration testing, digital forensics, and security analysis.",
       image: "/lovable-uploads/071dd221-43fa-4a4a-b866-b04e53fad7ab.png"
     },
     {
@@ -31,6 +33,7 @@ export function AchievementSection() {
       title: "Bug Hunting Workshop",
       provider: "Yugam 2025",
       date: "March 2025",
+      description: "Completed an intensive bug hunting workshop at Yugam 2025, learning advanced techniques for vulnerability discovery and responsible disclosure practices.",
       image: "/lovable-uploads/8125c437-d33f-4560-87bf-330c5a7fbc4b.png"
     },
     {
@@ -38,6 +41,7 @@ export function AchievementSection() {
       title: "KPR CTF Challenge 2025",
       provider: "KPR Institute",
       date: "April 2025",
+      description: "Successfully participated in the KPR CTF Challenge 2025, demonstrating skills in cryptography, reverse engineering, and web application security.",
       image: "/lovable-uploads/4f0c28c8-767d-4a46-b33b-4822c76783ed.png"
     }
   ];
@@ -105,6 +109,10 @@ export function AchievementSection() {
                 <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
                   {achievement.title}
                 </h3>
+                
+                <p className="text-gray-300 text-sm mb-3 leading-relaxed">
+                  {achievement.description}
+                </p>
                 
                 <div className="flex items-center">
                   <span className="text-gray-400 text-sm">
