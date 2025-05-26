@@ -21,7 +21,7 @@ export function CertificationsSection() {
     {
       title: "Pre-Security Learning Path",
       issuer: "TryHackMe",
-      description: "Completed comprehensive cybersecurity fundamentals covering networking, web security, and Linux basics.",
+      description: "Comprehensive cybersecurity fundamentals covering networking, web security, and Linux basics.",
       image: "/lovable-uploads/e52f5fda-e212-4a4f-9f91-ff3df0299194.png"
     },
     {
@@ -53,12 +53,6 @@ export function CertificationsSection() {
       issuer: "NPTEL",
       description: "Elite certification covering privacy protection and security measures in social media platforms.",
       image: "/lovable-uploads/d35d8877-217c-4350-bbc2-109b32206b22.png"
-    },
-    {
-      title: "Bug Bounty Workshop",
-      issuer: "Yugam 2025",
-      description: "Participated in the Yugam Bug Bounty Workshop at Kumaraguru Institutions and was rewarded ₹200 bounty for finding a valid bug.",
-      image: "/lovable-uploads/8125c437-d33f-4560-87bf-330c5a7fbc4b.png"
     },
     {
       title: "LAHTP – Basic",
@@ -95,7 +89,8 @@ export function CertificationsSection() {
           Certifications
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 2x4 Grid Layout */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {certifications.map((cert, index) => (
             <div 
               key={index}
@@ -116,49 +111,34 @@ export function CertificationsSection() {
               </div>
               
               {/* Certificate Info */}
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  <div className="mr-3 p-2 bg-white/10 rounded-full">
-                    <FileCheck className="text-cyber-neon" size={24} />
+              <div className="p-4">
+                <div className="flex items-center mb-2">
+                  <div className="mr-2 p-1 bg-white/10 rounded-full">
+                    <FileCheck className="text-cyber-neon" size={16} />
                   </div>
-                  <div className="text-cyber-neon text-sm font-medium">
+                  <div className="text-cyber-neon text-xs font-medium">
                     {cert.issuer}
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+                <h3 className="text-sm font-semibold text-white mb-1 line-clamp-2">
                   {cert.title}
                 </h3>
-                
-                <p className="text-gray-300 text-sm mb-3 leading-relaxed">
-                  {cert.description}
-                </p>
               </div>
             </div>
           ))}
-        </div>
-        
-        <div className={cn(
-          "text-center mt-12 max-w-3xl mx-auto fade-in-component",
-          isVisible && "is-visible"
-        )}
-        style={{transitionDelay: "0.5s"}}
-        >
-          <p className="text-gray-300 text-lg">
-            These certifications represent my commitment to continuous learning and professional development in cybersecurity and technology.
-          </p>
         </div>
       </div>
       
       {/* Certificate Dialog/Modal */}
       <Dialog open={!!selectedCert} onOpenChange={(open) => !open && setSelectedCert(null)}>
-        <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/90 border-0">
-          <div className="relative w-full h-full flex items-center justify-center">
+        <DialogContent className="max-w-5xl w-[95vw] h-[95vh] p-0 bg-black/95 border border-cyber-neon/20">
+          <div className="relative w-full h-full flex items-center justify-center overflow-auto">
             {selectedCert?.image && (
               <img
                 src={selectedCert.image}
                 alt={selectedCert.title}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full h-auto object-contain p-4"
               />
             )}
           </div>

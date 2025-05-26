@@ -1,12 +1,15 @@
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Briefcase, Calendar, CheckCircle } from "lucide-react";
+import { Briefcase, Calendar, CheckCircle, Eye } from "lucide-react";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(sectionRef);
+  const [showCertificateModal, setShowCertificateModal] = useState(false);
   
   const responsibilities = [
     "Developed full-stack web components using PHP and MySQL",
@@ -14,6 +17,10 @@ export function ExperienceSection() {
     "Created responsive UI elements with HTML, CSS, and JavaScript",
     "Participated in code reviews and security testing"
   ];
+
+  const handleViewCertificate = () => {
+    setShowCertificateModal(true);
+  };
 
   return (
     <section 
@@ -42,7 +49,7 @@ export function ExperienceSection() {
                 <Briefcase size={28} className="text-cyber-neon" />
               </div>
               
-              <div>
+              <div className="flex-1">
                 <h3 className="text-xl font-semibold text-white">
                   Junior Associate Developer
                 </h3>
@@ -58,6 +65,21 @@ export function ExperienceSection() {
                 <Calendar size={16} className="text-gray-400 mr-2" />
                 <span className="text-gray-300 text-sm">Mar - May 2024</span>
               </div>
+            </div>
+            
+            {/* View Certificate Button */}
+            <div className={cn(
+              "mb-4 fade-in-component", 
+              isVisible && "is-visible"
+            )} style={{transitionDelay: "0.35s"}}>
+              <Button 
+                onClick={handleViewCertificate}
+                className="bg-cyber-neon/20 text-cyber-neon hover:bg-cyber-neon/30 border border-cyber-neon/30 gap-2"
+                size="sm"
+              >
+                View Certificate
+                <Eye size={16} />
+              </Button>
             </div>
             
             <div className="pl-0 md:pl-16 mt-6">
@@ -98,6 +120,19 @@ export function ExperienceSection() {
           </div>
         </div>
       </div>
+
+      {/* Certificate Modal */}
+      <Dialog open={showCertificateModal} onOpenChange={setShowCertificateModal}>
+        <DialogContent className="max-w-5xl w-[95vw] h-[95vh] p-0 bg-black/95 border border-cyber-neon/20">
+          <div className="relative w-full h-full flex items-center justify-center overflow-auto">
+            <img
+              src="/lovable-uploads/3b7f49f9-c68a-43ac-987b-38aa400f3d68.png"
+              alt="Internship Completion Certificate"
+              className="max-w-full h-auto object-contain p-4"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

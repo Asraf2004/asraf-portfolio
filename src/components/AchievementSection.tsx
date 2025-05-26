@@ -33,7 +33,7 @@ export function AchievementSection() {
       title: "Bug Hunting Workshop",
       provider: "Yugam 2025",
       date: "March 2025",
-      description: "Completed an intensive bug hunting workshop at Yugam 2025, learning advanced techniques for vulnerability discovery and responsible disclosure practices.",
+      description: "I participated in the Yugam Bug Bounty Workshop and earned a **₹200 bounty**.",
       image: "/lovable-uploads/8125c437-d33f-4560-87bf-330c5a7fbc4b.png"
     },
     {
@@ -84,12 +84,12 @@ export function AchievementSection() {
                     />
                   </div>
                 </DialogTrigger>
-                <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/90 border-0">
-                  <div className="relative w-full h-full flex items-center justify-center">
+                <DialogContent className="max-w-5xl w-[95vw] h-[95vh] p-0 bg-black/95 border border-cyber-neon/20">
+                  <div className="relative w-full h-full flex items-center justify-center overflow-auto">
                     <img
                       src={achievement.image}
                       alt={achievement.title}
-                      className="max-w-full max-h-full object-contain"
+                      className="max-w-full h-auto object-contain p-4"
                     />
                   </div>
                 </DialogContent>
@@ -110,8 +110,10 @@ export function AchievementSection() {
                   {achievement.title}
                 </h3>
                 
-                <p className="text-gray-300 text-sm mb-3 leading-relaxed">
-                  {achievement.description}
+                <p className="text-gray-300 text-sm mb-3 leading-relaxed"
+                   dangerouslySetInnerHTML={{ 
+                     __html: achievement.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                   }}>
                 </p>
                 
                 <div className="flex items-center">
@@ -122,17 +124,6 @@ export function AchievementSection() {
               </div>
             </div>
           ))}
-        </div>
-        
-        <div className={cn(
-          "text-center mt-12 max-w-3xl mx-auto fade-in-component",
-          isVisible && "is-visible"
-        )}
-        style={{transitionDelay: "0.5s"}}
-        >
-          <p className="text-gray-300 text-lg">
-            These certificates represent my commitment to continuous learning and professional development in cybersecurity and technology.
-          </p>
         </div>
       </div>
     </section>

@@ -136,12 +136,12 @@ export function HeroSection() {
 
       {/* Resume Modal */}
       <Dialog open={showResumeModal} onOpenChange={setShowResumeModal}>
-        <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/90 border-0">
-          <div className="relative w-full h-full flex items-center justify-center">
+        <DialogContent className="max-w-5xl w-[95vw] h-[95vh] p-0 bg-black/95 border border-cyber-neon/20">
+          <div className="relative w-full h-full flex items-center justify-center overflow-auto">
             <img
               src="/lovable-uploads/3f841fa5-9aca-434a-bbf8-94d6b1f31528.png"
               alt="Asraf Ahamed Resume"
-              className="max-w-full max-h-full object-contain"
+              className="max-w-full h-auto object-contain p-4"
             />
           </div>
         </DialogContent>
