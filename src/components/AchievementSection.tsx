@@ -1,8 +1,9 @@
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Trophy, Target, Award } from "lucide-react";
+import { Trophy, Target, Award, X } from "lucide-react";
 import { useSectionAnimation } from "@/hooks/useSectionAnimation";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface Achievement {
   icon: React.ReactNode;
@@ -15,6 +16,7 @@ interface Achievement {
 export function AchievementSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(sectionRef);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const achievements: Achievement[] = [
     {
@@ -67,14 +69,27 @@ export function AchievementSection() {
               )}
               style={{transitionDelay: `${0.1 * (index + 1)}s`}}
             >
-              {/* Certificate Image */}
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={achievement.image}
-                  alt={achievement.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
+              {/* Certificate Image - Clickable */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <div className="aspect-[4/3] overflow-hidden cursor-pointer">
+                    <img
+                      src={achievement.image}
+                      alt={achievement.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/90 border-0">
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <img
+                      src={achievement.image}
+                      alt={achievement.title}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
               
               {/* Certificate Info */}
               <div className="p-6">
@@ -91,13 +106,10 @@ export function AchievementSection() {
                   {achievement.title}
                 </h3>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <span className="text-gray-400 text-sm">
                     {achievement.date}
                   </span>
-                  <button className="text-cyber-neon hover:text-white text-sm font-medium transition-colors duration-200">
-                    View Certificate
-                  </button>
                 </div>
               </div>
             </div>
