@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Github, ExternalLink, Eye } from "lucide-react";
@@ -92,12 +91,12 @@ export function ProjectsSection() {
                   {project.description}
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex gap-2">
                   <a 
                     href={project.github} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded text-xs font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all hover:shadow-md hover:shadow-cyber-neon/30"
+                    className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded text-xs font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all hover:shadow-md hover:shadow-cyber-neon/30 flex-1"
                   >
                     <Github size={12} className="sm:size-3.5" />
                     <span className="hidden sm:inline">GitHub</span>
@@ -106,7 +105,7 @@ export function ProjectsSection() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20 text-xs h-7 px-2 sm:px-3"
+                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20 text-xs h-7 px-2 sm:px-3 flex-1"
                     onClick={() => setSelectedProject(project)}
                   >
                     <Eye size={12} className="sm:size-3.5 mr-1" />
