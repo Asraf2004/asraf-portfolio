@@ -13,7 +13,6 @@ interface Project {
   technologies: string[];
   github: string;
   demoLink?: string;
-  image: string;
 }
 
 export function ProjectsSection() {
@@ -26,29 +25,25 @@ export function ProjectsSection() {
       title: "PenTesting Framework - GUI Based",
       description: "A user-friendly GUI-based penetration testing toolkit with comprehensive scanning capabilities.",
       technologies: ["Python", "Flask", "SQLite", "JavaScript", "HTML/CSS"],
-      github: "https://github.com/Asraf2004",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop"
+      github: "https://github.com/Asraf2004"
     },
     {
       title: "ARP Spoofer/Sniffer",
       description: "Tool using libpcap to detect and analyze ARP spoofing attacks in real-time on local networks.",
       technologies: ["C", "libpcap", "Network Security", "Linux"],
-      github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop"
+      github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main"
     },
     {
       title: "Socket-Based Message Echo Server",
       description: "TCP Python server that handles and echoes complete client messages with robust error handling.",
       technologies: ["Python", "Networking", "Socket Programming", "Multithreading"],
-      github: "https://github.com/Asraf2004/Socket",
-      image: "https://images.unsplash.com/photo-1551808525-51a94da548ce?w=400&h=300&fit=crop"
+      github: "https://github.com/Asraf2004/Socket"
     },
     {
       title: "IoT-Based Smart Egg Incubator",
       description: "Automated temperature and humidity control system for optimal egg incubation with remote monitoring.",
       technologies: ["IoT", "Arduino", "Sensors", "Mobile App"],
-      github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator",
-      image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=300&fit=crop"
+      github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator"
     }
   ];
 
@@ -72,7 +67,7 @@ export function ProjectsSection() {
         </h2>
         
         {/* 2x2 Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {projects.map((project, index) => (
             <div 
               key={index}
@@ -82,42 +77,20 @@ export function ProjectsSection() {
               )}
               style={{transitionDelay: `${0.1 * (index + 1)}s`}}
             >
-              {/* Project Image */}
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+              {/* GitHub Logo */}
+              <div className="aspect-[4/3] flex items-center justify-center bg-white/2">
+                <Github size={80} className="text-white/70 group-hover:text-cyber-neon transition-colors duration-300" />
               </div>
               
               {/* Project Info */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
+                <h3 className="text-xl font-semibold text-white mb-3">
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-3">
+                <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">
                   {project.description}
                 </p>
-                
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                      <span 
-                        key={techIndex}
-                        className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10">
-                        +{project.technologies.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                </div>
                 
                 <div className="flex gap-2">
                   <a 
