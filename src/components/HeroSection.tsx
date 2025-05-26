@@ -1,5 +1,5 @@
 
-import { Download } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRef, useEffect, useState } from "react";
@@ -7,14 +7,13 @@ import { useSectionAnimation } from "@/hooks/useSectionAnimation";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { SocialLinks } from "./navbar/SocialLinks";
-// Import jsPDF correctly
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { isVisible } = useSectionAnimation(ref);
   const [typedText, setTypedText] = useState("");
+  const [showResumeModal, setShowResumeModal] = useState(false);
   const fullText = "Cybersecurity Enthusiast | Web Pentester | Developer";
   const { toast } = useToast();
   
@@ -29,143 +28,13 @@ export function HeroSection() {
       } else {
         clearInterval(typingInterval);
       }
-    }, 35); // Increased speed from 50ms to 35ms for snappier typing
+    }, 35);
     
     return () => clearInterval(typingInterval);
   }, [isVisible]);
   
-  const handleDownloadResume = () => {
-    try {
-      // Create a new PDF document
-      const doc = new jsPDF();
-      
-      // Set font styles
-      doc.setFont("helvetica", "normal");
-      
-      // Add name at the top
-      doc.setFontSize(20);
-      doc.setFont("helvetica", "bold");
-      doc.text("Asraf Ahamed A", doc.internal.pageSize.width / 2, 20, { align: "center" });
-      
-      // Add contact information
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      doc.text("+91 6383066908 | Salem, Tamil Nadu | asrafahamed09@gmail.com | LinkedIn | GitHub | TryHackMe", 
-        doc.internal.pageSize.width / 2, 30, { align: "center" });
-      
-      // Add horizontal line
-      doc.setLineWidth(0.5);
-      doc.line(20, 35, doc.internal.pageSize.width - 20, 35);
-      
-      // PERSONAL STATEMENT
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("PERSONAL STATEMENT", 20, 45);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      const statement = "Cybersecurity enthusiast with hands-on experience in Web Penetration Testing, Secure Coding, and Security Analysis. Strong background in Python, C, and MySQL with expertise in security tools like Metasploit and Burp Suite. Passionate about bug bounty and Capture The Flag (CTF) challenges.";
-      const splitStatement = doc.splitTextToSize(statement, doc.internal.pageSize.width - 40);
-      doc.text(splitStatement, 20, 55);
-      
-      // EDUCATION
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("EDUCATION", 20, 75);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text("K S Rangasamy College of Technology, Salem, Tamil Nadu", 20, 85);
-      doc.setFont("helvetica", "normal");
-      doc.text("Bachelor of Engineering (Computer Science Engineering)", 20, 92);
-      doc.text("CGPA: 8.88/10 (Till 5th semester)", 20, 99);
-      doc.setFont("helvetica", "normal");
-      doc.text("2022 - Present", 180, 85, { align: "right" });
-      
-      // INTERNSHIP
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("INTERNSHIP", 20, 115);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text("Junior Associate Developer (10 weeks)", 20, 125);
-      doc.setFont("helvetica", "normal");
-      doc.text("Calaniyam Consultancies and Technologies", 20, 132);
-      doc.text("March 2024 - May 2024", 180, 125, { align: "right" });
-      
-      // Bullet points for internship
-      doc.setFont("helvetica", "normal");
-      doc.text("• Developed a Human Resource Management System (HRMS) using HTML, CSS, JavaScript, PHP, and", 25, 142);
-      doc.text("  MySQL as part of a full-stack web application project.", 25, 149);
-      doc.text("• Gained experience in full-stack development, database management, and the project lifecycle, ensuring timely", 25, 156);
-      doc.text("  delivery of assigned tasks.", 25, 163);
-      
-      // CERTIFICATIONS
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("CERTIFICATIONS", 20, 180);
-      
-      // TryHackMe
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text("TryHackMe", 20, 190);
-      doc.setFont("helvetica", "normal");
-      doc.text("• Pre Security", 25, 197);
-      doc.text("• Cyber security 101", 25, 204);
-      
-      // NPTEL
-      doc.setFont("helvetica", "bold");
-      doc.text("NPTEL", 120, 190);
-      doc.setFont("helvetica", "normal");
-      doc.text("• Cyber Security and Privacy", 125, 197);
-      doc.text("• A Joy of Computing Using python", 125, 204);
-      doc.text("• Problem Solving through Programming in C", 125, 211);
-      doc.text("• Privacy and Security in Online Social Media", 125, 218);
-      
-      // SELFMADE NINJA ACADEMY
-      doc.setFont("helvetica", "bold");
-      doc.text("SELFMADE NINJA ACADEMY(SNA)", 20, 230);
-      doc.setFont("helvetica", "normal");
-      doc.text("• Learn Art Hacking Through Programming Basic (LAHTP)", 25, 237);
-      
-      // SKILLS
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("SKILLS", 20, 250);
-      
-      // Two column skills layout
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text("Programming:", 20, 260);
-      doc.setFont("helvetica", "normal");
-      doc.text("Python, C, PHP", 85, 260);
-      
-      doc.setFont("helvetica", "bold");
-      doc.text("Databases:", 120, 260);
-      doc.setFont("helvetica", "normal");
-      doc.text("MySQL", 170, 260);
-      
-      doc.setFont("helvetica", "bold");
-      doc.text("Security Tools:", 20, 267);
-      doc.setFont("helvetica", "normal");
-      const securityTools = "OWASP, Metasploit, Burp Suite, Wireshark, Nmap, GitHub, Linux, Docker";
-      doc.text(securityTools, 85, 267);
-      
-      // Save the PDF
-      doc.save("asraf-ahamed-resume.pdf");
-      
-      // Show success toast notification
-      toast({
-        title: "Resume downloaded",
-        description: "Thank you for your interest in my resume!",
-        variant: "default",
-      });
-    } catch (error) {
-      console.error("Error downloading resume:", error);
-      toast({
-        title: "Download failed",
-        description: "There was an issue downloading the resume. Please try again.",
-        variant: "destructive",
-      });
-    }
+  const handleViewResume = () => {
+    setShowResumeModal(true);
   };
   
   return (
@@ -247,10 +116,10 @@ export function HeroSection() {
                   isVisible && "is-visible"
                 )}
                 style={{transitionDelay: "0.1s"}}
-                onClick={handleDownloadResume}
+                onClick={handleViewResume}
               >
-                Download Resume
-                <Download size={16} />
+                View Resume
+                <Eye size={16} />
               </Button>
             </div>
             
@@ -264,7 +133,19 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Resume Modal */}
+      <Dialog open={showResumeModal} onOpenChange={setShowResumeModal}>
+        <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/90 border-0">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <img
+              src="/lovable-uploads/3f841fa5-9aca-434a-bbf8-94d6b1f31528.png"
+              alt="Asraf Ahamed Resume"
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
-
