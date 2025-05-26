@@ -13,7 +13,6 @@ interface Project {
   technologies: string[];
   github: string;
   demoLink?: string;
-  direction: "left" | "right";
   image: string;
 }
 
@@ -28,32 +27,28 @@ export function ProjectsSection() {
       description: "A user-friendly GUI-based penetration testing toolkit with comprehensive scanning capabilities.",
       technologies: ["Python", "Flask", "SQLite", "JavaScript", "HTML/CSS"],
       github: "https://github.com/Asraf2004",
-      direction: "left",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop"
     },
     {
       title: "ARP Spoofer/Sniffer",
       description: "Tool using libpcap to detect and analyze ARP spoofing attacks in real-time on local networks.",
       technologies: ["C", "libpcap", "Network Security", "Linux"],
       github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main",
-      direction: "right",
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop"
     },
     {
       title: "Socket-Based Message Echo Server",
       description: "TCP Python server that handles and echoes complete client messages with robust error handling.",
       technologies: ["Python", "Networking", "Socket Programming", "Multithreading"],
       github: "https://github.com/Asraf2004/Socket",
-      direction: "left",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1551808525-51a94da548ce?w=400&h=300&fit=crop"
     },
     {
       title: "IoT-Based Smart Egg Incubator",
       description: "Automated temperature and humidity control system for optimal egg incubation with remote monitoring.",
       technologies: ["IoT", "Arduino", "Sensors", "Mobile App"],
       github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator",
-      direction: "right",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=300&fit=crop"
     }
   ];
 
@@ -66,112 +61,84 @@ export function ProjectsSection() {
         isVisible && "is-visible"
       )}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-7xl">
         <h2 
           className={cn(
-            "text-3xl font-bold mb-6 text-white text-center section-header mx-auto",
+            "text-4xl font-bold mb-12 text-white text-center section-header mx-auto",
             isVisible && "is-visible"
           )}
         >
           Projects
         </h2>
         
-        {/* Project Images Grid - 1 row x 4 columns */}
-        <div className="mb-12 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {projects.map((project, index) => (
-              <div 
-                key={`image-${index}`}
-                className={cn(
-                  "relative overflow-hidden rounded-lg group fade-in-component aspect-[4/3]",
-                  isVisible && "is-visible"
-                )}
-                style={{ transitionDelay: `${0.05 * index}s` }}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white font-medium text-sm text-center px-2">
-                    {project.title}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+        {/* 2x2 Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <div 
               key={index}
               className={cn(
-                "glass-card p-4 rounded-lg border border-white/5 hover:border-cyber-neon/30 group hover:scale-[1.01] hover:shadow-lg hover:shadow-cyber-neon/20 transition-all duration-300 fade-in-component h-full",
+                "bg-white/5 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden hover:border-cyber-neon/30 hover:shadow-lg hover:shadow-cyber-neon/10 transition-all duration-300 fade-in-component group",
                 isVisible && "is-visible"
               )}
-              style={{ transitionDelay: `${0.1 * index}s` }}
+              style={{transitionDelay: `${0.1 * (index + 1)}s`}}
             >
-              <div className="h-28 rounded-lg bg-white/5 mb-3 flex items-center justify-center overflow-hidden">
-                <div className="text-cyber-neon text-4xl opacity-30 group-hover:opacity-50 transition-opacity">
-                  &lt;/&gt;
-                </div>
+              {/* Project Image */}
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
               
-              <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-cyber-neon transition-colors flex items-center">
-                {project.title}
-                <a 
-                  href={project.github} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="ml-2 text-gray-400 hover:text-cyber-neon transition-colors"
-                  aria-label={`Visit GitHub repository for ${project.title}`}
-                >
-                  <Github size={16} />
-                </a>
-              </h3>
-              
-              <p className="text-gray-400 mb-3 text-sm">
-                {project.description}
-              </p>
-              
-              <div className="mb-3">
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span 
-                      key={techIndex}
-                      className={cn(
-                        "px-2 py-0.5 text-xs rounded bg-white/5 text-gray-300 border border-white/10 group-hover:border-cyber-neon/20 transition-colors fade-in-component",
-                        isVisible && "is-visible"
-                      )}
-                      style={{ transitionDelay: `${0.05 * techIndex + 0.2}s` }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              {/* Project Info */}
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
+                  {project.title}
+                </h3>
+                
+                <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-3">
+                  {project.description}
+                </p>
+                
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      <span 
+                        key={techIndex}
+                        className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span className="px-2 py-1 text-xs rounded bg-white/5 text-gray-300 border border-white/10">
+                        +{project.technologies.length - 3} more
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex gap-2 mt-3">
-                <a 
-                  href={project.github} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1 px-3 py-1.5 rounded text-xs font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all hover:shadow-md hover:shadow-cyber-neon/30"
-                >
-                  <Github size={14} />
-                  GitHub
-                </a>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20 text-xs h-7 px-3"
-                  onClick={() => setSelectedProject(project)}
-                >
-                  <Eye size={14} className="mr-1" />
-                  Details
-                </Button>
+                
+                <div className="flex gap-2">
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 px-3 py-1.5 rounded text-xs font-medium bg-white/5 text-white hover:bg-cyber-neon hover:text-black transition-all hover:shadow-md hover:shadow-cyber-neon/30"
+                  >
+                    <Github size={14} />
+                    GitHub
+                  </a>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-cyber-neon/50 text-cyber-neon hover:bg-cyber-neon/10 transition-transform hover:shadow-md hover:shadow-cyber-neon/20 text-xs h-7 px-3"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <Eye size={14} className="mr-1" />
+                    Details
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
