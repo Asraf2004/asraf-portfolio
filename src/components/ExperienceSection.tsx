@@ -123,12 +123,12 @@ export function ExperienceSection() {
 
       {/* Certificate Modal */}
       <Dialog open={showCertificateModal} onOpenChange={setShowCertificateModal}>
-        <DialogContent className="max-w-5xl w-[95vw] h-[95vh] p-0 bg-black/95 border border-cyber-neon/20">
-          <div className="relative w-full h-full flex items-center justify-center overflow-auto">
+        <DialogContent className="max-w-[90vw] max-h-[90vh] w-auto h-auto p-0 bg-black/95 border border-cyber-neon/20">
+          <div className="relative w-full h-full flex items-center justify-center p-4">
             <img
               src="/lovable-uploads/3b7f49f9-c68a-43ac-987b-38aa400f3d68.png"
               alt="Internship Completion Certificate"
-              className="max-w-full h-auto object-contain p-4"
+              className="max-w-full max-h-[85vh] w-auto h-auto object-contain"
             />
           </div>
         </DialogContent>

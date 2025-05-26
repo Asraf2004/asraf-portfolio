@@ -14,6 +14,7 @@ interface Project {
   github: string;
   demoLink?: string;
   direction: "left" | "right";
+  image: string;
 }
 
 export function ProjectsSection() {
@@ -27,28 +28,32 @@ export function ProjectsSection() {
       description: "A user-friendly GUI-based penetration testing toolkit with comprehensive scanning capabilities.",
       technologies: ["Python", "Flask", "SQLite", "JavaScript", "HTML/CSS"],
       github: "https://github.com/Asraf2004",
-      direction: "left"
+      direction: "left",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop"
     },
     {
       title: "ARP Spoofer/Sniffer",
       description: "Tool using libpcap to detect and analyze ARP spoofing attacks in real-time on local networks.",
       technologies: ["C", "libpcap", "Network Security", "Linux"],
       github: "https://github.com/Asraf2004/ARP-Sniffer/tree/main",
-      direction: "right"
+      direction: "right",
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop"
     },
     {
       title: "Socket-Based Message Echo Server",
       description: "TCP Python server that handles and echoes complete client messages with robust error handling.",
       technologies: ["Python", "Networking", "Socket Programming", "Multithreading"],
       github: "https://github.com/Asraf2004/Socket",
-      direction: "left"
+      direction: "left",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop"
     },
     {
       title: "IoT-Based Smart Egg Incubator",
       description: "Automated temperature and humidity control system for optimal egg incubation with remote monitoring.",
       technologies: ["IoT", "Arduino", "Sensors", "Mobile App"],
       github: "https://github.com/Asraf2004/IOT-based-smart-egg-incubator",
-      direction: "right"
+      direction: "right",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop"
     }
   ];
 
@@ -70,6 +75,33 @@ export function ProjectsSection() {
         >
           Projects
         </h2>
+        
+        {/* Project Images Grid - 1 row x 4 columns */}
+        <div className="mb-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {projects.map((project, index) => (
+              <div 
+                key={`image-${index}`}
+                className={cn(
+                  "relative overflow-hidden rounded-lg group fade-in-component aspect-[4/3]",
+                  isVisible && "is-visible"
+                )}
+                style={{ transitionDelay: `${0.05 * index}s` }}
+              >
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white font-medium text-sm text-center px-2">
+                    {project.title}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {projects.map((project, index) => (
